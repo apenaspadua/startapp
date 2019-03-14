@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#345D7E</color>
+    <color name="colorPrimaryDark">#345D7E</color>
+    <color name="colorAccent">#F27281</color>
+    <color name="botaoLogin">#F8B195</color>
+    <color name="botaFacebook">#3B5998</color>
+    <color name="botaoTwitter">#00ACED</color>
+    <color name="botaoGoogle">#DD4B39</color>
 </resources>
