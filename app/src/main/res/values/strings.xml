@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">StartApp</string>
+    <string name="label_email_login">Endereço de e-mail</string>
+    <string name="label_senha_login">Senha</string>
+    <string name="label_botao_logar_login">LOG IN</string>
 </resources>

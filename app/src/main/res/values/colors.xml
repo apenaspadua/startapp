@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#345D7E</color>
-    <color name="colorPrimaryDark">#345D7E</color>
-    <color name="colorAccent">#F27281</color>
-    <color name="botaoLogin">#F8B195</color>
-    <color name="botaFacebook">#3B5998</color>
-    <color name="botaoTwitter">#00ACED</color>
-    <color name="botaoGoogle">#DD4B39</color>
+    <color name="colorPrimary">#22252C</color>
+    <color name="colorPrimaryDark">#22252C</color>
+    <color name="colorRoxo">#3F3250</color>
+    <color name="colorRoxoLight">#946BDB</color>
+    <color name="colorVermelho">#CF6766</color>
+    <color name="colorCinza">#696969</color>
+    <color name="colorCinzaLight">#A7A7A7</color>
+    <color name="colorWhite">#fff</color>
+    <color name="colorBage">#C0B3A0</color>
+    <color name="Facebook">#3B5998</color>
+    <color name="Twitter">#00ACED</color>
+    <color name="Google">#DD4B39</color>
+
+
 </resources>

@@ -1,145 +1,163 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    android:layout_height="wrap_content">
 
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="330dp"
-        android:layout_height="52dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="139dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="25dp"
-        android:ems="10"
-        android:hint="Username"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/editText2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/editText2"
-        android:layout_width="330dp"
-        android:layout_height="52dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="65dp"
-        android:ems="10"
-        android:hint="Senha"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        <android.support.design.widget.TextInputLayout style="@style/TextInputRegister">
+            <EditText
+                android:id="@+id/emailLogin_id"
+                style="@style/EditTextRegister"
+                android:hint="@string/label_email_login"
+                android:inputType="text"/>
+        </android.support.design.widget.TextInputLayout>
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="330dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="47dp"
-        android:background="@drawable/button_custom_login"
-        android:lineSpacingExtra="10sp"
-        android:text="LOG IN"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+        <android.support.design.widget.TextInputLayout style="@style/TextInputRegister">
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="330dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="18dp"
-        android:layout_marginLeft="18dp"
-        android:layout_marginEnd="18dp"
-        android:layout_marginRight="18dp"
-        android:layout_marginBottom="25dp"
-        android:background="@drawable/button_custom_facebook"
-        android:text="LOGIN COM FACEBOOK"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/button3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+            <EditText
+                android:id="@+id/senhaLogin_id"
+                style="@style/EditTextRegister"
+                android:hint="@string/label_senha_login"
+                android:inputType="textPassword"/>
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="330dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="18dp"
-        android:layout_marginLeft="18dp"
-        android:layout_marginEnd="18dp"
-        android:layout_marginRight="18dp"
-        android:layout_marginBottom="25dp"
-        android:background="@drawable/button_custom_twitter"
-        android:text="LOGIN COM TWITTER"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        </android.support.design.widget.TextInputLayout>
 
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="330dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="18dp"
-        android:layout_marginLeft="18dp"
-        android:layout_marginEnd="18dp"
-        android:layout_marginRight="18dp"
-        android:layout_marginBottom="52dp"
-        android:background="@drawable/button_custom_google"
-        android:text="LOGIN COM GOOGLE"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
+        <RelativeLayout
+            android:id="@+id/botao_login_id"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="6dp"
+            android:background="@drawable/button_ronded"
+            android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="25dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="22dp"
-        android:text="OR"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
-
-    <ScrollView
-        android:layout_width="24dp"
-        android:layout_height="738dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="394dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="150dp"
+                android:gravity="center_vertical"
+                android:text="@string/label_botao_logar_login"
+                android:textAllCaps="false"
+                android:textColor="@color/colorWhite"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginLeft="170dp" />
+        </RelativeLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
+            android:layout_marginTop="0dp"
+            style="@style/TextInputRegister">
 
-</android.support.constraint.ConstraintLayout>
+            <TextView
+                android:text="Ainda não possui conta? Casdastre-se."
+                style="@style/SubTitleCadastrar"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="0dp"
+            style="@style/TextInputRegister">
+
+            <TextView
+                android:text="OU"
+                style="@style/SubTitleRegister"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/botao_facebook_id"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="6dp"
+            android:background="@drawable/button_custom_facebook"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="22dp"
+                android:background="@drawable/ic_facebook_3x"
+                android:scaleType="fitXY"
+                android:layout_marginLeft="22dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="110dp"
+                android:gravity="center_vertical"
+                android:text="LOGIN COM FACEBOOK"
+                android:textAllCaps="false"
+                android:textColor="#3B5998"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginLeft="170dp" />
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/ic_arrow_right"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/botao_twitter_id"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="6dp"
+            android:background="@drawable/button_custom_twitter"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="22dp"
+                android:background="@drawable/ic_twitter_3x"
+                android:scaleType="fitXY"
+                android:layout_marginLeft="22dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="110dp"
+                android:gravity="center_vertical"
+                android:text="LOGIN COM TWITTER"
+                android:textAllCaps="false"
+                android:textColor="#00ACED"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginLeft="170dp" />
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/ic_arrow_right"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_marginTop="0dp"
+            style="@style/TextInputRegister">
+
+            <TextView
+                android:text="Projeto realizado pelos Alunos de  Sistemas
+                              Projeto Aplicado - FHO 2019"
+                style="@style/SubTitleCompany"
+                android:gravity="center"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+</ScrollView>
