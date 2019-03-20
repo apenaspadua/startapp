@@ -1,0 +1,42 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".LoginActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+             Nullam ultrices eleifend risus, a tincidunt leo cursus a. Etiam nisl erat,
+             imperdiet eu porttitor sit amet, ultricies in neque. Integer rutrum, libero
+             pretium venenatis porttitor, neque mauris aliquam augue, non sodales massa
+             augue vel ex. Pellentesque lobortis nisi a augue sodales, vitae dapibus quam
+             iaculis. Vivamus vel maximus mi, mattis semper sem. Quisque maximus accumsan
+             tempus. Aliquam erat volutpat. Nam laoreet nisl eget nunc malesuada, tristique
+             dictum ex faucibus. Aliquam sed ultricies sem. Mauris venenatis in sem vitae
+             Etiam euismod, nulla ut malesuada molestie, nulla ligula varius purus, vel ornare ex
+             tortor ut tortor. Nunc fermentum sapien nisi, nec interdum lorem tempor at. Phasellus
+             vitae enim diam. Integer luctus, nibh eu scelerisque faucibus, risus lacus maximus ante,
+             eu convallis urna sem volutpat massa.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+             Nullam ultrices eleifend risus, a tincidunt leo cursus a. Etiam nisl erat,
+             imperdiet eu porttitor sit amet, ultricies in neque. Integer rutrum, libero
+             pretium venenatis porttitor, neque mauris aliquam augue, non sodales massa
+             augue vel ex. Pellentesque lobortis nisi a augue sodales, vitae dapibus quam
+             iaculis. Vivamus vel maximus mi, mattis semper sem. Quisque maximus accumsan
+             tempus. Aliquam erat volutpat. Nam laoreet nisl eget nunc malesuada, tristique
+             dictum ex faucibus. Aliquam sed ultricies sem. Mauris venenatis in sem vitae
+             Etiam euismod, nulla ut malesuada molestie, nulla ligula varius purus, vel ornare ex
+             tortor ut tortor. Nunc fermentum sapien nisi, nec interdum lorem tempor at. Phasellus
+             vitae enim diam. Integer luctus, nibh eu scelerisque faucibus, risus lacus maximus ante,
+             eu convallis urna sem volutpat massa." />
+    </LinearLayout>
+</ScrollView>

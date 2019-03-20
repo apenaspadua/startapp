@@ -38,7 +38,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginStart="170dp"
+                android:layout_marginStart="150dp"
                 android:gravity="center_vertical"
                 android:text="@string/label_botao_logar_login"
                 android:textAllCaps="false"
@@ -53,6 +53,7 @@
             style="@style/TextInputRegister">
 
             <TextView
+                android:id="@+id/cadastrese_text_id"
                 android:text="Ainda não possui conta? Casdastre-se."
                 style="@style/SubTitleCadastrar"
                 android:gravity="center"/>
