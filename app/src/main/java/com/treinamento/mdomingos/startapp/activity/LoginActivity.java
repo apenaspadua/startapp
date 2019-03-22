@@ -1,5 +1,6 @@
-package com.treinamento.mdomingos.startapp;
+package com.treinamento.mdomingos.startapp.activity;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +12,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.treinamento.mdomingos.startapp.R;
 import com.treinamento.mdomingos.startapp.utils.Validator;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class LoginActivity extends AppCompatActivity {
 

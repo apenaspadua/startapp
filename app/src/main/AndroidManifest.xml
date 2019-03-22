@@ -9,10 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SobreActivity"></activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".activity.EnviandoEmailActivity"></activity>
+        <activity android:name=".activity.SplashScrean" />
+        <activity android:name=".activity.CadastroStartupActivity" />
+        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.SobreActivity" />
+        <activity android:name=".activity.MainActivity" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".activity.CadastroUsuarioActivity"
             android:label="Entre em sua conta">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

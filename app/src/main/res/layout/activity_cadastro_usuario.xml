@@ -3,78 +3,27 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".activity.LoginActivity">
+    tools:context=".activity.CadastroUsuarioActivity">
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <android.support.design.widget.TextInputLayout style="@style/TextInputRegister">
-            <EditText
-                android:id="@+id/emailLogin_id"
-                style="@style/EditTextRegister"
-                android:hint="@string/label_email_login"
-                android:inputType="text"/>
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout style="@style/TextInputRegister">
-
-            <EditText
-                android:id="@+id/senhaLogin_id"
-                style="@style/EditTextRegister"
-                android:hint="@string/label_senha_login"
-                android:inputType="textPassword"/>
-
-        </android.support.design.widget.TextInputLayout>
+        <!--<include-->
+            <!--android:id="@+id/toolbar_layout"-->
+            <!--layout="@layout/toolbar" />-->
+    <!---->
+        <TextView
+            style="@style/TitleRegister"
+            android:paddingTop="30dp"
+            android:paddingBottom="30dp"
+            android:text="Conecte as suas redes socias"
+            app:fontFamily="@font/lato_regular" />
 
         <RelativeLayout
-            android:id="@+id/botao_login_id"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_margin="6dp"
-            android:background="@drawable/button_ronded"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="150dp"
-                android:layout_marginLeft="170dp"
-                android:gravity="center_vertical"
-                android:text="@string/label_botao_logar_login"
-                android:textAllCaps="false"
-                android:textColor="@color/colorWhite"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:fontFamily="@font/poppins_medium" />
-        </RelativeLayout>
-
-        <LinearLayout
-            android:layout_marginTop="0dp"
-            style="@style/TextInputRegister">
-
-            <TextView
-                android:id="@+id/cadastrese_text_id"
-                style="@style/SubTitleCadastrar"
-                android:gravity="center"
-                android:text="Ainda não possui conta? Casdastre-se."
-                app:fontFamily="@font/lato_regular" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginTop="0dp"
-            style="@style/TextInputRegister">
-
-            <TextView
-                style="@style/SubTitleRegister"
-                android:gravity="center"
-                android:text="OU"
-                app:fontFamily="@font/poppins_medium" />
-        </LinearLayout>
-
-        <RelativeLayout
-            android:id="@+id/botao_facebook_id"
+            android:id="@+id/botao__conecta_facebook_id"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_margin="6dp"
@@ -96,7 +45,7 @@
                 android:layout_marginStart="110dp"
                 android:layout_marginLeft="170dp"
                 android:gravity="center_vertical"
-                android:text="LOGIN COM FACEBOOK"
+                android:text="CONECTAR AO FACEBOOK"
                 android:textAllCaps="false"
                 android:textColor="#3B5998"
                 android:textSize="14sp"
@@ -115,7 +64,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/botao_twitter_id"
+            android:id="@+id/botao_conecta_twitter_id"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_margin="6dp"
@@ -137,7 +86,7 @@
                 android:layout_marginStart="110dp"
                 android:layout_marginLeft="170dp"
                 android:gravity="center_vertical"
-                android:text="LOGIN COM TWITTER"
+                android:text="CONECTAR AO TWITTER"
                 android:textAllCaps="false"
                 android:textColor="#00ACED"
                 android:textSize="14sp"
@@ -153,21 +102,88 @@
                 android:background="@drawable/ic_arrow_right"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp" />
-
         </RelativeLayout>
 
         <LinearLayout
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="10dp"
             style="@style/TextInputRegister">
 
             <TextView
-                style="@style/SubTitleCompany"
+                style="@style/SubTitleRegister"
                 android:gravity="center"
-                android:text="Aplicativo realizado pelos alunos de Sistemas
-                                                     Projeto Aplicado - FHO 2019"
+                android:text=" OU SE PREFERIR"
                 app:fontFamily="@font/lato_regular" />
         </LinearLayout>
 
+        <TextView
+            style="@style/TitleRegister"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="Preencha os dados abaixo para o cadastro"
+            app:fontFamily="@font/lato_regular" />
+
+            <android.support.design.widget.TextInputLayout style="@style/TextInputRegister">
+                <EditText
+                    android:id="@+id/nome_cadastro_usuario_id"
+                    style="@style/EditTextRegister"
+                    android:hint="Nome Completo"
+                    android:inputType="text" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout style="@style/TextInputRegister">
+
+                <EditText
+                    android:id="@+id/email_cadastro_usuario_id"
+                    style="@style/EditTextRegister"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress" />
+            </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout style="@style/TextInputRegister">
+
+            <EditText
+                android:id="@+id/senha_cadastro_usuario_id"
+                style="@style/EditTextRegister"
+                android:hint="Senha"
+                android:inputType="textPassword" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout style="@style/TextInputRegister">
+
+            <EditText
+                android:id="@+id/comfirma_senha_cadastro_usuario_id"
+                style="@style/EditTextRegister"
+                android:hint="Confirma senha"
+                android:inputType="textPassword" />
+        </android.support.design.widget.TextInputLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/botao_cadastrar_id"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="6dp"
+            android:background="@drawable/button_ronded"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="150dp"
+                android:layout_marginLeft="170dp"
+                android:gravity="center_vertical"
+                android:text="CADASTRAR"
+                android:textAllCaps="false"
+                android:textColor="@color/colorWhite"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:fontFamily="@font/poppins_medium" />
+        </RelativeLayout>
+
+
 
     </LinearLayout>
-</ScrollView>
+
+    </ScrollView>
+
+

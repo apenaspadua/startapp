@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -9,13 +9,15 @@
     </style>
 
     <style name="EditTextRegister">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_regular</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
     <style name="TextInputRegister">
         <item name="android:padding">15dp</item>
+
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
@@ -36,13 +38,22 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/colorRoxo</item>
         <item name="android:textSize">14sp</item>
-    </style>
+    </style>z
 
     <style name="SubTitleCompany">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/colorCinzaLight</item>
         <item name="android:textSize">11sp</item>
+    </style>
+
+    <style name="TitleRegister">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">@font/poppins_bold</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/colorCinzaLight</item>
+        <item name="android:textSize">20sp</item>
     </style>
 
 
