@@ -55,5 +55,10 @@ public class InicialActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
 
+        progressBar.setVisibility(View.GONE);
+    }
 }
