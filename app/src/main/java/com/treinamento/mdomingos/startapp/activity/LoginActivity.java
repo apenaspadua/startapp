@@ -1,9 +1,12 @@
 package com.treinamento.mdomingos.startapp.activity;
 
-import android.content.Context;
+
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,13 +15,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.treinamento.mdomingos.startapp.R;
 import com.treinamento.mdomingos.startapp.utils.Validator;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
     private EditText usernane;
     private EditText passowrd;
     private RelativeLayout botaoLogin;
@@ -38,7 +48,6 @@ public class LoginActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.dropdown_menu_login, menu);
         return super.onCreateOptionsMenu(menu);
-
 
     }
 
@@ -61,55 +70,94 @@ public class LoginActivity extends AppCompatActivity {
         botaoFacebook = findViewById(R.id.botao_facebook_id);
         botaoTwitter = findViewById(R.id.botao_twitter_id);
 
-        retornaButton();
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
 
-        //Alterar buttons + functions
-        botaoLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { retornaButton();
 
-            String email = usernane.getText().toString();
-            String senha = passowrd.getText().toString();
+            retornaButton();
 
-            i = 4;
-            botaoLogin.setBackgroundResource(trocaBotaoAoClicar[i]);
+            //Alterar buttons + functions
+            botaoLogin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    retornaButton();
 
-            if(Validator.stringEmpty(email)){
-                usernane.setError("Insira seu email");
-                retornaButton();
-            }
-            if (Validator.stringEmpty(senha)){
-                passowrd.setError("Insira sua senha");
-                retornaButton();
-            }
+                    String email = usernane.getText().toString();
+                    String senha = passowrd.getText().toString();
 
-            }
-        });
-        botaoFacebook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            i = 3;
-            botaoFacebook.setBackgroundResource(trocaBotaoAoClicar[i]);
-            }
-        });
-        botaoTwitter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            i = 3;
-            botaoTwitter.setBackgroundResource(trocaBotaoAoClicar[i]);
-            }
-        });
-        botaoTextCadastrese.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                botaoTextCadastrese.setTextColor(Color.parseColor("#0289BE"));
-                Toast.makeText(LoginActivity.this, "teste", Toast.LENGTH_SHORT).show();
-            }
-        });
+                    i = 4;
+                    botaoLogin.setBackgroundResource(trocaBotaoAoClicar[i]);
+
+                    if (Validator.stringEmpty(email)) {
+                        usernane.setError("Insira seu email");
+                        retornaButton();
+
+                    } else if (Validator.stringEmpty(senha)) {
+                        passowrd.setError("Insira sua senha");
+                        retornaButton();
+
+                    } else {
+
+                        firebaseAuth.signInWithEmailAndPassword(email, senha).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+
+                                firebaseAuth = FirebaseAuth.getInstance();
+                                firebaseUser = firebaseAuth.getCurrentUser();
+
+                                if (task.isSuccessful()) {
+                                    if (firebaseUser.isEmailVerified()) {
+                                        Intent intent = new Intent(LoginActivity.this, SlidesPosCadastroActivity.class);
+                                        Log.i("userLogado", "Logado com sucesso!!!");
+                                        startActivity(intent);
+                                        finish();
+
+                                    } else {
+                                        Toast.makeText(LoginActivity.this, "Verifique seu email", Toast.LENGTH_LONG).show();
+
+                                    }
+
+
+                                } else {
+                                    Log.i("userLogado", "Falha ao Logar!!!");
+                                    Toast.makeText(LoginActivity.this, "Usuario ou senha incorretos!", Toast.LENGTH_SHORT).show();
+                                }
+
+                            }
+                        });
+
+
+                    }
+
+                }
+            });
+            botaoFacebook.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    i = 3;
+                    botaoFacebook.setBackgroundResource(trocaBotaoAoClicar[i]);
+                }
+            });
+            botaoTwitter.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    i = 3;
+                    botaoTwitter.setBackgroundResource(trocaBotaoAoClicar[i]);
+                }
+            });
+            botaoTextCadastrese.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    botaoTextCadastrese.setTextColor(Color.parseColor("#0289BE"));
+                    Intent intent = new Intent(LoginActivity.this, CadastroUsuarioActivity.class);
+                    startActivity(intent);
+                }
+            });
 
     }
 
-    public void retornaButton(){
+
+    public void retornaButton () {
         botaoLogin.setBackgroundResource(trocaBotaoAoClicar[0]);
         botaoFacebook.setBackgroundResource(trocaBotaoAoClicar[1]);
         botaoTwitter.setBackgroundResource(trocaBotaoAoClicar[2]);

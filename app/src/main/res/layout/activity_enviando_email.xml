@@ -21,19 +21,11 @@
             android:layout_height="100dp"/>
 
         <TextView
-            android:id="@+id/title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:text="Cadastro"
-            app:fontFamily="@font/lato_regular" />
-
-        <TextView
             android:id="@+id/title_status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:paddingTop="10dp"
             android:text="Seu cadastro foi enviado com sucesso"
             android:textSize="20sp"
             app:fontFamily="@font/lato_regular" />
@@ -44,6 +36,24 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Entre em seu email para validar sua conta."
+            android:textSize="14sp"
+            app:fontFamily="@font/lato_regular" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="bottom"
+        android:paddingBottom="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/ja_validei_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Já validei minha conta."
             android:textSize="14sp"
             app:fontFamily="@font/lato_regular" />
 

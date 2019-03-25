@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/slideLinearLayout"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/title_Slide_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:gravity="center"
+        android:text="Teste 1"
+        android:textColor="@color/colorWhite"
+        android:textSize="25sp"
+        app:fontFamily="@font/lato_regular" />
+
+    <TextView
+        android:id="@+id/subtitle_slide_id"
+        android:layout_width="390dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="Testando Slide"
+        android:textColor="@color/colorWhite"
+        android:textSize="16sp"
+        app:fontFamily="@font/lato_regular" />
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -41,7 +41,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_usuario);
-        getSupportActionBar().hide();
+
 
         //Instance
         botaoCadastrar = findViewById(R.id.botao_cadastrar_id);

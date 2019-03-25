@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorWhite">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical"
+        android:layout_alignParentLeft="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_name"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="180dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="Aqui vai algum texto para poder iniciar o aplicativo."
+                    android:textColor="@android:color/white"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/button_layout"
+            android:orientation="vertical">
+
+            <ProgressBar
+                android:id="@+id/inicial_progress_bar_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="150dp"
+                android:paddingBottom="15dp"
+                android:progressTint="@color/colorCinza"
+                app:layout_constraintBottom_toTopOf="@+id/button_layout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:visibility="gone"
+                android:layout_marginLeft="100dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cadastre-se em nosso app"
+                android:textAllCaps="false"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:paddingBottom="0dp"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/button_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom|center"
+            android:orientation="vertical"
+            android:padding="10dp"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <RelativeLayout
+                android:id="@+id/inicial_botao_cadastrar_id"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_margin="8dp"
+                android:background="@drawable/button_ronded"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:gravity="center_vertical"
+                    android:text="Me cadastrar"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/ic_arrow_right" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:orientation="vertical"
+                android:paddingLeft="0dp"
+                android:paddingRight="20dp">
+
+                <TextView
+                    android:id="@+id/incial_text_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Já possuo uma conta."
+                    android:textAllCaps="false"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/lato_regular"
+                    android:paddingBottom="20dp"/>
+            </LinearLayout>
+
+            <TextView
+                style="@style/SubTitleCompany"
+                android:gravity="center"
+                android:text="Aplicativo realizado pelos alunos de Sistemas
+                                                        Projeto Aplicado - FHO 2019"
+                app:fontFamily="@font/lato_regular" />
+        </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+</RelativeLayout>
