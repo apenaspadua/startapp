@@ -42,7 +42,7 @@ public class SlidesPosCadastroActivity extends AppCompatActivity {
         botaoProximo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SlidesPosCadastroActivity.this, CadastroUsuarioActivity.class);
+                Intent intent = new Intent(SlidesPosCadastroActivity.this, EscolherPlataformaActivity.class);
                 startActivity(intent);
             }
         });
