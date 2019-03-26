@@ -1,8 +1,11 @@
 package com.treinamento.mdomingos.startapp.activity;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +21,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.treinamento.mdomingos.startapp.R;
 import com.treinamento.mdomingos.startapp.utils.Validator;
 
@@ -60,68 +64,72 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-           final String nomeRecebido = nome.getText().toString();
-           final String emailRecebido = email.getText().toString();
-           final String senhaRecebida = senha.getText().toString();
-           final String confirmaSenhaRecebido = confirmaSenha.getText().toString();
+                final String nomeRecebido = nome.getText().toString();
+                final String emailRecebido = email.getText().toString();
+                final String senhaRecebida = senha.getText().toString();
+                final String confirmaSenhaRecebido = confirmaSenha.getText().toString();
 
-         //Criando Usuario
+                ConnectivityManager connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+                if (activeNetwork != null) { // conectado a internet
 
-                if(Validator.stringEmpty(nomeRecebido)){
-                    nome.setError("Insira seu nome");
+                    //Criando Usuario
 
-                }
-                else if (Validator.stringEmpty(emailRecebido)){
-                    email.setError("Insira seu email");
+                    if (Validator.stringEmpty(nomeRecebido)) {
+                        nome.setError("Insira seu nome");
 
-                }
-                else if(Validator.validateEmailFormat(emailRecebido) == false){
-                    email.setError("Insira um email válido");
+                    } else if (Validator.stringEmpty(emailRecebido)) {
+                        email.setError("Insira seu email");
 
-                }
-                else if(Validator.validaSenha(senhaRecebida) == false) {
-                    senha.setError("Senha muito curta");
+                    } else if (Validator.validateEmailFormat(emailRecebido) == false) {
+                        email.setError("Insira um email válido");
 
-                }
-                else if (Validator.stringEmpty(confirmaSenhaRecebido)){
+                    } else if (Validator.validaSenha(senhaRecebida) == false) {
+                        senha.setError("Senha muito curta");
+
+                    } else if (Validator.stringEmpty(confirmaSenhaRecebido)) {
                         confirmaSenha.setError("Confirme sua senha");
 
-                }
-                else if(checkBox.isChecked() == false){
-                    new AlertDialog.Builder(CadastroUsuarioActivity.this).setTitle("Aviso").
-                            setMessage("Leia e aceite os Termos de uso.")
-                            .setPositiveButton("Entendi",  new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
+                    } else if (checkBox.isChecked() == false) {
+                        new AlertDialog.Builder(CadastroUsuarioActivity.this).setTitle("Aviso").
+                                setMessage("Leia e aceite os Termos de uso.").setPositiveButton("Entendi", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
 
-                                }
-                            })
-                            .show();
-                }
+                            }
+                        }).show();
+                    } else if (confirmaSenhaRecebido.equals(senhaRecebida)) {
 
-                else if (confirmaSenhaRecebido.equals(senhaRecebida)){
+                        firebaseAuth.createUserWithEmailAndPassword(emailRecebido, senhaRecebida).addOnCompleteListener(CadastroUsuarioActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
 
-                    firebaseAuth.createUserWithEmailAndPassword(emailRecebido, senhaRecebida)
-                            .addOnCompleteListener(CadastroUsuarioActivity.this, new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-
-                                    if(task.isSuccessful()){
-                                        int createUser = Log.i("createUser", "Cadastrado com sucesso!!!");
-
+                                if (task.isSuccessful()) {
+                                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                    if(user != null){
+                                        Log.i("createUser", "Cadastrado com sucesso!!!");
                                         Intent intent = new Intent(CadastroUsuarioActivity.this, EnviandoEmailActivity.class);
                                         startActivity(intent);
                                         finish();
-
-                                    } else {
-                                        Log.i("createUser", "Falha ao cadastrar!!!");
-                                        Toast.makeText(CadastroUsuarioActivity.this, "Falha ao cadastrar!", Toast.LENGTH_SHORT).show();
                                     }
+
+                                } else {
+                                    Log.i("createUser", "Falha ao cadastrar!!!");
+                                    Toast.makeText(CadastroUsuarioActivity.this, "Falha ao cadastrar", Toast.LENGTH_SHORT).show();
                                 }
-                            });
-                } else {
-                    Toast.makeText(CadastroUsuarioActivity.this, "A senha não confere!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                    } else {
+                        Toast.makeText(CadastroUsuarioActivity.this, "A senha não confere!", Toast.LENGTH_SHORT).show();
+                    }
+
+                } else { // sem conexao
+
+                    Log.i("sem internet", "sem conexao");
+                    Toast.makeText(CadastroUsuarioActivity.this, "Sem conexão com a internet", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
 

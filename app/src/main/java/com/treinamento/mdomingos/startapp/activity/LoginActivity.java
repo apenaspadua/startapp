@@ -129,7 +129,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     }
 
-                } else {
+                } else { // sem conexao
                     Log.i("sem internet", "sem conexao");
                     Toast.makeText(LoginActivity.this, "Sem conexão com a internet", Toast.LENGTH_SHORT).show();
                 }
