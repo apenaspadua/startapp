@@ -15,7 +15,7 @@
         <activity android:name=".activity.SlidesPosCadastroActivity" />
         <activity android:name=".activity.CadastroStartupActivity" />
         <activity android:name=".activity.LoginActivity" />
-        <activity android:name=".activity.SobreActivity" />
+        <activity android:name=".activity.TermosActivity" />
         <activity android:name=".activity.CadastroUsuarioActivity" />
         <activity
             android:name=".activity.SplashScrean"

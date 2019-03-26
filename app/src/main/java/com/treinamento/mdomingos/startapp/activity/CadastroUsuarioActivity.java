@@ -1,13 +1,17 @@
 package com.treinamento.mdomingos.startapp.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,20 +32,13 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
     private EditText email;
     private EditText senha;
     private EditText confirmaSenha;
-    int i = 0;
-    final int [] trocaBotaoAoClicar = {
-            R.drawable.button_ronded,
-            R.drawable.button_custom_facebook,
-            R.drawable.button_custom_twitter,
-            R.drawable.button_rounded_precionado,
-            R.drawable.button_rounded_precionado_red
-    };
+    private CheckBox checkBox;
+    private TextView termosDeUso;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_usuario);
-
 
         //Instance
         botaoCadastrar = findViewById(R.id.botao_cadastrar_id);
@@ -51,15 +48,17 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
         email = findViewById(R.id.email_cadastro_usuario_id);
         senha = findViewById(R.id.senha_cadastro_usuario_id);
         confirmaSenha = findViewById(R.id.comfirma_senha_cadastro_usuario_id);
+        checkBox = findViewById(R.id.checkBox_termos_id);
+        termosDeUso = findViewById(R.id.termos_text_id);
+
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        retornaButton();
 
-        //Alterar buttons + functions
+        //functions
         botaoCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { retornaButton();
+            public void onClick(View v) {
 
            final String nomeRecebido = nome.getText().toString();
            final String emailRecebido = email.getText().toString();
@@ -68,25 +67,38 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
 
          //Criando Usuario
 
-                i = 4;
-                botaoCadastrar.setBackgroundResource(trocaBotaoAoClicar[i]);
-
                 if(Validator.stringEmpty(nomeRecebido)){
                     nome.setError("Insira seu nome");
-                    retornaButton();
+
                 }
                 else if (Validator.stringEmpty(emailRecebido)){
                     email.setError("Insira seu email");
-                    retornaButton();
+
                 }
-                else if (Validator.stringEmpty(senhaRecebida)){
-                    senha.setError("Insira sua senha");
-                    retornaButton();
+                else if(Validator.validateEmailFormat(emailRecebido) == false){
+                    email.setError("Insira um email válido");
+
+                }
+                else if(Validator.validaSenha(senhaRecebida) == false) {
+                    senha.setError("Senha muito curta");
+
                 }
                 else if (Validator.stringEmpty(confirmaSenhaRecebido)){
                         confirmaSenha.setError("Confirme sua senha");
-                    retornaButton();
+
                 }
+                else if(checkBox.isChecked() == false){
+                    new AlertDialog.Builder(CadastroUsuarioActivity.this).setTitle("Aviso").
+                            setMessage("Leia e aceite os Termos de uso.")
+                            .setPositiveButton("Entendi",  new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            })
+                            .show();
+                }
+
                 else if (confirmaSenhaRecebido.equals(senhaRecebida)){
 
                     firebaseAuth.createUserWithEmailAndPassword(emailRecebido, senhaRecebida)
@@ -113,27 +125,28 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
             }
         });
 
+        termosDeUso.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CadastroUsuarioActivity.this, TermosActivity.class);
+                startActivity(intent);
+            }
+        });
 
         botaoFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                i = 3;
-                botaoFacebook.setBackgroundResource(trocaBotaoAoClicar[i]);
+
             }
         });
         botaoTwitter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                i = 3;
-                botaoTwitter.setBackgroundResource(trocaBotaoAoClicar[i]);
+
             }
         });
     }
 
-    public void retornaButton(){
-        botaoCadastrar.setBackgroundResource(trocaBotaoAoClicar[0]);
-        botaoFacebook.setBackgroundResource(trocaBotaoAoClicar[1]);
-        botaoTwitter.setBackgroundResource(trocaBotaoAoClicar[2]);
-    }
+
 }
 

@@ -43,11 +43,29 @@
     <style name="SubTitleCompany">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/colorCinzaLight</item>
+        <item name="android:textColor">@color/colorWhite</item>
         <item name="android:textSize">11sp</item>
     </style>
 
     <style name="TitleRegister">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">@font/poppins_bold</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/colorCinzaLight</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="TitleText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">@font/poppins_bold</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="TitleText2">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:fontFamily" tools:targetApi="jelly_bean">@font/poppins_bold</item>
