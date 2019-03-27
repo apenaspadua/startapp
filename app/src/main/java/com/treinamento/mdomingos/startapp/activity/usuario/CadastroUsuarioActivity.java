@@ -1,12 +1,15 @@
-package com.treinamento.mdomingos.startapp.activity;
+package com.treinamento.mdomingos.startapp.activity.usuario;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,22 +25,21 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.ms_square.etsyblur.BlurSupport;
 import com.treinamento.mdomingos.startapp.R;
+import com.treinamento.mdomingos.startapp.activity.others.EnviandoEmailActivity;
+import com.treinamento.mdomingos.startapp.activity.others.TermosActivity;
 import com.treinamento.mdomingos.startapp.utils.Validator;
 
 public class CadastroUsuarioActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
 
-    private RelativeLayout botaoCadastrar;
-    private RelativeLayout botaoTwitter;
-    private RelativeLayout botaoFacebook;
-    private EditText nome;
-    private EditText email;
-    private EditText senha;
-    private EditText confirmaSenha;
+    private RelativeLayout botaoCadastrar, botaoTwitter, botaoFacebook;
+    private EditText nome, email, senha, confirmaSenha;
     private CheckBox checkBox;
     private TextView termosDeUso;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +56,9 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
         confirmaSenha = findViewById(R.id.comfirma_senha_cadastro_usuario_id);
         checkBox = findViewById(R.id.checkBox_termos_id);
         termosDeUso = findViewById(R.id.termos_text_id);
-
+        progressDialog = new ProgressDialog(CadastroUsuarioActivity.this);
 
         firebaseAuth = FirebaseAuth.getInstance();
-
 
         //functions
         botaoCadastrar.setOnClickListener(new View.OnClickListener() {
@@ -69,9 +70,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
                 final String senhaRecebida = senha.getText().toString();
                 final String confirmaSenhaRecebido = confirmaSenha.getText().toString();
 
-                ConnectivityManager connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-                NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
-                if (activeNetwork != null) { // conectado a internet
+                if(FirebaseConection()){
 
                     //Criando Usuario
 
@@ -91,14 +90,16 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
                         confirmaSenha.setError("Confirme sua senha");
 
                     } else if (checkBox.isChecked() == false) {
+
                         new AlertDialog.Builder(CadastroUsuarioActivity.this).setTitle("Aviso").
                                 setMessage("Leia e aceite os Termos de uso.").setPositiveButton("Entendi", new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
+                            public void onClick(DialogInterface dialogInterface, int i) {}}).show();
 
-                            }
-                        }).show();
                     } else if (confirmaSenhaRecebido.equals(senhaRecebida)) {
+
+                        progressDialog.setMessage("Estamos criando sua conta...");
+                        progressDialog.show();
 
                         firebaseAuth.createUserWithEmailAndPassword(emailRecebido, senhaRecebida).addOnCompleteListener(CadastroUsuarioActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
@@ -117,15 +118,22 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
                                     Log.i("createUser", "Falha ao cadastrar!!!");
                                     Toast.makeText(CadastroUsuarioActivity.this, "Falha ao cadastrar", Toast.LENGTH_SHORT).show();
                                 }
+
+                                final Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        progressDialog.dismiss();
+                                    }
+                                }, 500);
                             }
                         });
 
                     } else {
-                        Toast.makeText(CadastroUsuarioActivity.this, "A senha não confere!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CadastroUsuarioActivity.this, "A senha não confere", Toast.LENGTH_SHORT).show();
                     }
 
                 } else { // sem conexao
-
                     Log.i("sem internet", "sem conexao");
                     Toast.makeText(CadastroUsuarioActivity.this, "Sem conexão com a internet", Toast.LENGTH_SHORT).show();
                 }
@@ -153,6 +161,14 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public boolean FirebaseConection(){
+        ConnectivityManager connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+        if (activeNetwork != null) // conectado a internet
+            return true;
+        return false; // nao conectado
     }
 
 

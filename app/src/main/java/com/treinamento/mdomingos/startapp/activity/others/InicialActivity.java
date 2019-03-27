@@ -1,23 +1,26 @@
-package com.treinamento.mdomingos.startapp.activity;
+package com.treinamento.mdomingos.startapp.activity.others;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Display;
 import android.view.View;
 
 
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.treinamento.mdomingos.startapp.R;
+import com.treinamento.mdomingos.startapp.activity.usuario.CadastroUsuarioActivity;
+import com.treinamento.mdomingos.startapp.activity.usuario.LoginActivity;
 
 
 public class InicialActivity extends AppCompatActivity {
@@ -38,17 +41,20 @@ public class InicialActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.inicial_progress_bar_id);
         videoView = findViewById(R.id.videoView2);
 
-
-
         //functions
+
         botaoCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                progressBar.setVisibility(View.VISIBLE);
-                Intent intent = new Intent(InicialActivity.this, CadastroUsuarioActivity.class);
-                startActivity(intent);
-
+                if(FirebaseConection()) {
+                    progressBar.setVisibility(View.VISIBLE);
+                    Intent intent = new Intent(InicialActivity.this, CadastroUsuarioActivity.class);
+                    startActivity(intent);
+                }
+                else {
+                    Toast.makeText(InicialActivity.this, "Sem conexão com a internet", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -56,10 +62,14 @@ public class InicialActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                jaPossuoConta.setTextColor(Color.parseColor("#0289BE"));
-                Intent intent = new Intent(InicialActivity.this, LoginActivity.class);
-                startActivity(intent);
-
+                if(FirebaseConection()) {
+                    jaPossuoConta.setTextColor(Color.parseColor("#0289BE"));
+                    Intent intent = new Intent(InicialActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }
+                else {
+                    Toast.makeText(InicialActivity.this, "Sem conexão com a internet", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -82,5 +92,13 @@ public class InicialActivity extends AppCompatActivity {
 
         jaPossuoConta.setTextColor(Color.parseColor("#ffffff"));
         progressBar.setVisibility(View.GONE);
+    }
+
+    public boolean FirebaseConection(){
+        ConnectivityManager connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+        if (activeNetwork != null) // conectado a internet
+            return true;
+        return false; // nao conectado
     }
 }

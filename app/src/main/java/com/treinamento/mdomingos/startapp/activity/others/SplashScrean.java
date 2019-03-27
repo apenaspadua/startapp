@@ -1,4 +1,4 @@
-package com.treinamento.mdomingos.startapp.activity;
+package com.treinamento.mdomingos.startapp.activity.others;
 
 import android.content.Intent;
 import android.os.Handler;

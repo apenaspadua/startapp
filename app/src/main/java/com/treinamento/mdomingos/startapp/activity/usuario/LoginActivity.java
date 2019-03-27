@@ -1,7 +1,8 @@
-package com.treinamento.mdomingos.startapp.activity;
+package com.treinamento.mdomingos.startapp.activity.usuario;
 
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,13 +10,16 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +32,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.treinamento.mdomingos.startapp.R;
+import com.treinamento.mdomingos.startapp.activity.others.SlidesPosCadastroActivity;
 import com.treinamento.mdomingos.startapp.utils.Validator;
 
 
@@ -38,19 +43,9 @@ public class LoginActivity extends AppCompatActivity {
     private EditText usernane, passowrd;
     private RelativeLayout botaoLogin, botaoFacebook,  botaoTwitter;
     private TextView botaoTextEsqueceuSenha, botaoCadastrese;
+    private ProgressDialog progressDialog;
+    private ProgressBar progressBar;
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.dropdown_menu_login, menu);
-        return super.onCreateOptionsMenu(menu);
-
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(final MenuItem item) {
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +60,8 @@ public class LoginActivity extends AppCompatActivity {
         botaoFacebook = findViewById(R.id.botao_facebook_id);
         botaoTwitter = findViewById(R.id.botao_twitter_id);
         botaoCadastrese = findViewById(R.id.faca_cadastro_text_id);
+        progressDialog = new ProgressDialog(LoginActivity.this);
+        progressBar = findViewById(R.id.progressBarLogin);
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
@@ -75,13 +72,10 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 onResume();
 
-                String email = usernane.getText().toString();
-                String senha = passowrd.getText().toString();
+                final String email = usernane.getText().toString();
+                final String senha = passowrd.getText().toString();
 
-                ConnectivityManager connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-                NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
-                if (activeNetwork != null) { // conectado a internet
-
+                if(FirebaseConection()) {
                     if (Validator.stringEmpty(email)) {
                         usernane.setError("Insira seu email");
                         onResume();
@@ -92,7 +86,8 @@ public class LoginActivity extends AppCompatActivity {
 
                     } else {
 
-                        //progressBar
+                        progressDialog.setMessage("Logando...");
+                        progressDialog.show();
 
                         firebaseAuth.signInWithEmailAndPassword(email, senha).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
@@ -102,10 +97,16 @@ public class LoginActivity extends AppCompatActivity {
                                         Intent intent = new Intent(LoginActivity.this, SlidesPosCadastroActivity.class);
                                         Log.i("userLogado", "Logado com sucesso!!!");
                                         startActivity(intent);
+                                        progressDialog.dismiss();
                                         finish();
                                     } else {
-                                        //progressBar ivisible
-                                        Toast.makeText(LoginActivity.this, "Verifique seu email", Toast.LENGTH_LONG).show();
+                                        new AlertDialog.Builder(LoginActivity.this).setTitle("Você ainda não validou sua conta").
+                                                setMessage("Vá ao seu email para realizar a confirmação.").setPositiveButton("Entendi", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                progressDialog.dismiss();
+                                            }
+                                        }).show();
                                     }
                                 } else {
                                     Log.i("userLogado", "Falha ao Logar!!!");
@@ -113,26 +114,24 @@ public class LoginActivity extends AppCompatActivity {
                                             setMessage("Usuário ou senha incorretos.").setPositiveButton("Entendi", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int i) {
-
+                                            progressDialog.dismiss();
                                         }
                                     }).show();
                                 }
-                            }
+
+                           }
 
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(LoginActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
-                                //progressBar invisible
-                            }
+                            public void onFailure(@NonNull Exception e) {}
                         });
-
                     }
 
                 } else { // sem conexao
                     Log.i("sem internet", "sem conexao");
                     Toast.makeText(LoginActivity.this, "Sem conexão com a internet", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
 
@@ -155,6 +154,51 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 botaoTextEsqueceuSenha.setTextColor(Color.parseColor("#0289BE"));
 
+                if(!usernane.getText().toString().equals("")){
+                    final AlertDialog.Builder alerta = new AlertDialog.Builder(new ContextThemeWrapper(v.getContext(), android.R.style.Theme_DeviceDefault_Light_Dialog));
+                    alerta.setMessage("Há limites de vezes para alteração da senha. Deseja continuar?");
+                    alerta.setCancelable(true);
+                    alerta.setPositiveButton(getResources().getString(R.string.alertSim), new DialogInterface.OnClickListener(){
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            usernane.setEnabled(false);
+                            progressBar.setVisibility(View.VISIBLE);
+                            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                            firebaseAuth.sendPasswordResetEmail(usernane.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(LoginActivity.this, "Email de redefinição enviado", Toast.LENGTH_SHORT).show();
+                                        progressBar.setVisibility(View.GONE);
+                                        usernane.setEnabled(true);
+
+                                        onResume();
+                                    } else {
+                                        Toast.makeText(LoginActivity.this, "Falha na solicitação deste email", Toast.LENGTH_SHORT).show();
+                                        progressBar.setVisibility(View.GONE);
+                                        usernane.setEnabled(true);
+                                        onResume();
+                                    }
+                                }
+                            });
+                        }
+                    });
+
+                    alerta.setNegativeButton(getResources().getString(R.string.alertNao), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            onResume();
+                            return;
+                        }
+                    });
+
+                    AlertDialog alertDialog = alerta.create();
+                    alertDialog.show();
+
+                } else {
+                    Toast.makeText(LoginActivity.this, "Insira seu email", Toast.LENGTH_SHORT).show();
+                    onResume();
+                }
             }
         });
 
@@ -171,9 +215,17 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
+        progressBar.setVisibility(View.GONE);
         botaoTextEsqueceuSenha.setTextColor(Color.parseColor("#A7A7A7"));
         botaoCadastrese.setTextColor(Color.parseColor("#A7A7A7"));
 
+    }
+
+    public boolean FirebaseConection(){
+        ConnectivityManager connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+        if (activeNetwork != null) // conectado a internet
+            return true;
+        return false; // nao conectado
     }
 }

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".activity.CadastroUsuarioActivity">
+    tools:context=".activity.usuario.CadastroUsuarioActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -70,7 +70,7 @@
                 android:layout_marginStart="160dp"
                 android:layout_marginLeft="160dp"
                 android:gravity="center_vertical"
-                android:text="LOG IN"
+                android:text="LOGIN"
                 android:textAllCaps="false"
                 android:textColor="@color/colorWhite"
                 android:textSize="14sp"
@@ -88,7 +88,19 @@
                 android:gravity="center"
                 android:text="Esqueceu a senha?"
                 app:fontFamily="@font/lato_regular" />
+
         </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBarLogin"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:visibility="visible"
+            android:layout_marginLeft="150dp"
+            android:indeterminateTint="@color/colorCinza"/>
 
         <LinearLayout
             android:layout_marginTop="10dp"
@@ -99,6 +111,7 @@
                 android:gravity="center"
                 android:text="OU"
                 app:fontFamily="@font/lato_regular" />
+
         </LinearLayout>
 
 

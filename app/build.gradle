@@ -47,6 +47,8 @@ dependencies {
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.nolanlawson:supersaiyan-scrollview:1.2.0'
     implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
+
+    implementation 'com.ms-square:etsyblur:0.2.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

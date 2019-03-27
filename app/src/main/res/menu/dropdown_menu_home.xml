@@ -4,5 +4,5 @@
 
     <item
         android:id="@+id/sobre_item_dropdown_menu_id"
-        android:title="Sobre" />
+        android:title="LogOut" />
 </menu>

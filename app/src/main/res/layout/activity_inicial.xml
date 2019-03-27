@@ -59,7 +59,7 @@
                     android:layout_width="180dp"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="Aqui você chegará muito mais longe. Aqui é a StartAap!"
+                    android:text="Aqui você chegará muito mais longe."
                     android:textColor="@android:color/white"
                     android:textSize="28sp"
                     android:textStyle="bold" />
