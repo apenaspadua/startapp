@@ -9,13 +9,11 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView
     android:id="@+id/scrollView_id"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".activity.usuario.CadastroUsuarioActivity">
+    tools:context=".activity.login.CadastroLoginActivity">
 
 
     <LinearLayout
@@ -24,8 +22,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:visibility="visible">
-
-
 
 
         <RelativeLayout
@@ -49,8 +45,16 @@
                 <TextView
                     style="@style/TitleText"
                     android:paddingTop="30dp"
-                    android:paddingBottom="30dp"
-                    android:text="Conecte as suas redes socias"
+                    android:paddingBottom="20dp"
+                    android:text="Primeiro vamos configurar seu meio de login"
+                    app:fontFamily="@font/lato_regular" />
+
+                <TextView
+                    style="@style/TitleText"
+                    android:paddingTop="30dp"
+                    android:paddingBottom="10dp"
+                    android:textSize="18dp"
+                    android:text="você pode "
                     app:fontFamily="@font/lato_regular" />
 
                 <RelativeLayout
@@ -146,7 +150,8 @@
             <TextView
                 style="@style/SubTitleRegister"
                 android:gravity="center"
-                android:text=" OU SE PREFERIR"
+                android:text=" ou se preferir"
+                android:textSize="18dp"
                 app:fontFamily="@font/lato_regular" />
         </LinearLayout>
 
@@ -157,19 +162,11 @@
             android:text="Preencha os dados abaixo para o cadastro"
             app:fontFamily="@font/lato_regular" />
 
-        <android.support.design.widget.TextInputLayout style="@style/TextInputRegister">
-
-            <EditText
-                android:id="@+id/nome_cadastro_usuario_id"
-                style="@style/EditTextRegister"
-                android:hint="Nome Completo"
-                android:inputType="text" />
-        </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout style="@style/TextInputRegister">
 
             <EditText
-                android:id="@+id/email_cadastro_usuario_id"
+                android:id="@+id/email_cadastro_login_id"
                 style="@style/EditTextRegister"
                 android:hint="Email"
                 android:inputType="textEmailAddress" />
@@ -180,12 +177,10 @@
             app:passwordToggleEnabled="true">
 
             <EditText
-                android:id="@+id/senha_cadastro_usuario_id"
+                android:id="@+id/senha_cadastro_login_id"
                 style="@style/EditTextRegister"
                 android:hint="Senha"
-                android:inputType="textPassword"
-
-                />
+                android:inputType="textPassword" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -203,7 +198,7 @@
             app:passwordToggleEnabled="true">
 
             <EditText
-                android:id="@+id/comfirma_senha_cadastro_usuario_id"
+                android:id="@+id/comfirma_senha_cadastro_login_id"
                 style="@style/EditTextRegister"
                 android:layout_marginBottom="10dp"
                 android:hint="Confirma senha"
@@ -212,7 +207,7 @@
 
 
         <RelativeLayout
-            android:id="@+id/botao_cadastrar_id"
+            android:id="@+id/botao_cadastrar_login_id"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_margin="6dp"
@@ -223,10 +218,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginStart="140dp"
-                android:layout_marginLeft="140dp"
+                android:layout_marginStart="120dp"
+                android:layout_marginLeft="120dp"
                 android:gravity="center_vertical"
-                android:text="CADASTRAR"
+                android:text="CADASTRAR LOGIN"
                 android:textAllCaps="false"
                 android:textColor="@color/colorWhite"
                 android:textSize="14sp"
@@ -235,10 +230,10 @@
 
         </RelativeLayout>
 
+
         <LinearLayout
             style="@style/TextInputRegister"
             android:layout_marginTop="0dp">
-
             <CheckBox
                 android:id="@+id/checkBox_termos_id"
                 android:layout_width="wrap_content"

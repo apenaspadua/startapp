@@ -1,4 +1,4 @@
-package com.treinamento.mdomingos.startapp.activity.usuario;
+package com.treinamento.mdomingos.startapp.activity.login;
 
 
 import android.app.AlertDialog;
@@ -10,13 +10,10 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -31,8 +28,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentActivity;
+
 import com.treinamento.mdomingos.startapp.R;
-import com.treinamento.mdomingos.startapp.activity.others.SlidesPosCadastroActivity;
+
+
 import com.treinamento.mdomingos.startapp.utils.Validator;
 
 
@@ -47,10 +47,12 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressBar progressBar;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
 
         //Instance
         usernane = findViewById(R.id.emailLogin_id);
@@ -94,11 +96,13 @@ public class LoginActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     if (firebaseUser.isEmailVerified()) {
-                                        Intent intent = new Intent(LoginActivity.this, SlidesPosCadastroActivity.class);
-                                        Log.i("userLogado", "Logado com sucesso!!!");
-                                        startActivity(intent);
-                                        progressDialog.dismiss();
-                                        finish();
+
+                                                Intent intent = new Intent(LoginActivity.this, BaseFragmentActivity.class);
+                                                Log.i("userLogado", "Logado com sucesso!!!");
+                                                startActivity(intent);
+                                                progressDialog.dismiss();
+                                                finish();
+
                                     } else {
                                         new AlertDialog.Builder(LoginActivity.this).setTitle("Você ainda não validou sua conta").
                                                 setMessage("Vá ao seu email para realizar a confirmação.").setPositiveButton("Entendi", new DialogInterface.OnClickListener() {
@@ -206,7 +210,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 botaoCadastrese.setTextColor(Color.parseColor("#0289BE"));
-                Intent intent = new Intent(LoginActivity.this, CadastroUsuarioActivity.class);
+                Intent intent = new Intent(LoginActivity.this, CadastroLoginActivity.class);
                 startActivity(intent);
             }
         });

@@ -1,4 +1,4 @@
-package com.treinamento.mdomingos.startapp.activity.others;
+package com.treinamento.mdomingos.startapp.activity.inicialization;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,8 +19,8 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.treinamento.mdomingos.startapp.R;
-import com.treinamento.mdomingos.startapp.activity.usuario.CadastroUsuarioActivity;
-import com.treinamento.mdomingos.startapp.activity.usuario.LoginActivity;
+import com.treinamento.mdomingos.startapp.activity.login.CadastroLoginActivity;
+import com.treinamento.mdomingos.startapp.activity.login.LoginActivity;
 
 
 public class InicialActivity extends AppCompatActivity {
@@ -34,6 +34,7 @@ public class InicialActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicial);
+
 
         //Instance
         botaoCadastrar = findViewById(R.id.inicial_botao_cadastrar_id);
@@ -49,7 +50,7 @@ public class InicialActivity extends AppCompatActivity {
 
                 if(FirebaseConection()) {
                     progressBar.setVisibility(View.VISIBLE);
-                    Intent intent = new Intent(InicialActivity.this, CadastroUsuarioActivity.class);
+                    Intent intent = new Intent(InicialActivity.this, CadastroLoginActivity.class);
                     startActivity(intent);
                 }
                 else {

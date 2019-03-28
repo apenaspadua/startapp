@@ -9,17 +9,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.others.BaseFragmentActivity"></activity>
-        <activity android:name=".activity.others.InicialActivity" />
+        <activity android:name=".activity.startup.CadastroStartupActivity"></activity>
+        <activity android:name=".activity.investidor.CadastroInvestidorActivity" />
+        <activity android:name=".activity.inicialization.EscolherTipo" />
+        <activity android:name=".activity.others.SplashScrean" />
+        <activity android:name=".activity.home.BaseFragmentActivity" />
         <activity android:name=".activity.others.EnviandoEmailActivity" />
         <activity android:name=".activity.others.SlidesPosCadastroActivity" />
         <activity android:name=".activity.startup.CadastroStartupActivity" />
-        <activity android:name=".activity.usuario.LoginActivity" />
+        <activity android:name=".activity.login.LoginActivity" />
         <activity android:name=".activity.others.TermosActivity" />
-        <activity android:name=".activity.usuario.CadastroUsuarioActivity" />
-        <activity
-            android:name=".activity.others.SplashScrean"
-            android:label="Entre em sua conta">
+        <activity android:name=".activity.login.CadastroLoginActivity" />
+        <activity android:name=".activity.inicialization.InicialActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

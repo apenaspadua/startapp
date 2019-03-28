@@ -6,6 +6,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.PerfilFragment">
 
+
+
     <LinearLayout
         android:orientation="vertical"
         android:gravity="center"
@@ -21,6 +23,7 @@
             android:gravity="center"
             android:paddingTop="10dp"
             android:text="notificacoes"
+            android:textColor="@color/colorCinza"
             android:textSize="20sp"
             app:fontFamily="@font/lato_regular" />
 

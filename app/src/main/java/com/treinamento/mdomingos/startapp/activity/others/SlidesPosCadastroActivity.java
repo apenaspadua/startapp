@@ -11,6 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.treinamento.mdomingos.startapp.R;
+import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentActivity;
+import com.treinamento.mdomingos.startapp.activity.inicialization.EscolherTipo;
 import com.treinamento.mdomingos.startapp.adapter.SliderAdapter;
 
 public class SlidesPosCadastroActivity extends AppCompatActivity {
@@ -28,6 +30,7 @@ public class SlidesPosCadastroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_slides_pos_cadastro);
 
+
         //Intance
         mSlideViewPager = findViewById(R.id.slideViewPager);
         mDotLayout =  findViewById(R.id.dotsLayout);
@@ -42,7 +45,7 @@ public class SlidesPosCadastroActivity extends AppCompatActivity {
         botaoProximo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SlidesPosCadastroActivity.this, BaseFragmentActivity.class);
+                Intent intent = new Intent(SlidesPosCadastroActivity.this, EscolherTipo.class);
                 startActivity(intent);
             }
         });
