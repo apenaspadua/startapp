@@ -7,6 +7,7 @@ import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,9 +19,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.treinamento.mdomingos.startapp.R;
+import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentActivity;
 import com.treinamento.mdomingos.startapp.activity.login.CadastroLoginActivity;
 import com.treinamento.mdomingos.startapp.activity.login.LoginActivity;
+import com.treinamento.mdomingos.startapp.utils.HttpService;
 
 
 public class InicialActivity extends AppCompatActivity {
@@ -35,7 +40,6 @@ public class InicialActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicial);
 
-
         //Instance
         botaoCadastrar = findViewById(R.id.inicial_botao_cadastrar_id);
         jaPossuoConta = findViewById(R.id.incial_text_id);
@@ -43,6 +47,12 @@ public class InicialActivity extends AppCompatActivity {
         videoView = findViewById(R.id.videoView2);
 
         //functions
+
+//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//        if (user != null) {
+//            startActivity(new Intent(InicialActivity.this, BaseFragmentActivity.class));
+//            finish();
+//        }
 
         botaoCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,4 +112,8 @@ public class InicialActivity extends AppCompatActivity {
             return true;
         return false; // nao conectado
     }
+
+
 }
+
+

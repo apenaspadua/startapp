@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
@@ -28,19 +29,24 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.treinamento.mdomingos.startapp.R;
 import com.treinamento.mdomingos.startapp.activity.inicialization.EscolherTipo;
+import com.treinamento.mdomingos.startapp.activity.investidor.CadastroInvestidorActivity;
 import com.treinamento.mdomingos.startapp.activity.others.EnviandoEmailActivity;
 import com.treinamento.mdomingos.startapp.activity.others.TermosActivity;
+import com.treinamento.mdomingos.startapp.model.Startup;
+import com.treinamento.mdomingos.startapp.model.Usuarios;
 import com.treinamento.mdomingos.startapp.utils.Validator;
 
 public class CadastroLoginActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
 
-    private RelativeLayout botaoCadastrar, botaoTwitter, botaoFacebook;
+    private RelativeLayout botaoCadastrar, botaoTwitter, botaoFacebook, botaoSouInvestidor, botaoSouStartup;
     private EditText email, senha, confirmaSenha;
     private CheckBox checkBox;
     private TextView termosDeUso;
     private ProgressDialog progressDialog;
+    private int Id = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,14 +57,39 @@ public class CadastroLoginActivity extends AppCompatActivity {
         botaoCadastrar = findViewById(R.id.botao_cadastrar_login_id);
         botaoTwitter = findViewById(R.id.botao_conecta_twitter_id);
         botaoFacebook = findViewById(R.id.botao__conecta_facebook_id);
+        botaoSouInvestidor = findViewById(R.id.botao_sou_investidor_id);
+        botaoSouStartup = findViewById(R.id.botao_sou_startup_id);
         email = findViewById(R.id.email_cadastro_login_id);
         senha = findViewById(R.id.senha_cadastro_login_id);
         confirmaSenha = findViewById(R.id.comfirma_senha_cadastro_login_id);
         checkBox = findViewById(R.id.checkBox_termos_id);
         termosDeUso = findViewById(R.id.termos_text_id);
+
+
         progressDialog = new ProgressDialog(CadastroLoginActivity.this);
 
+
         firebaseAuth = FirebaseAuth.getInstance();
+
+
+        botaoSouInvestidor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Id = 1;
+                botaoSouInvestidor.setBackgroundResource(R.drawable.button_rounded_precionado);
+                botaoSouStartup.setBackgroundResource(R.drawable.button_escolhe);
+            }
+        });
+
+        botaoSouStartup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Id = 2;
+                botaoSouStartup.setBackgroundResource(R.drawable.button_rounded_precionado);
+                botaoSouInvestidor.setBackgroundResource(R.drawable.button_escolhe);
+            }
+        });
+
 
         //functions
         botaoCadastrar.setOnClickListener(new View.OnClickListener() {
@@ -88,6 +119,14 @@ public class CadastroLoginActivity extends AppCompatActivity {
                     } else if (Validator.stringEmpty(confirmaSenhaRecebido)) {
                         confirmaSenha.setError("Confirme sua senha");
 
+                    }else if(Id == 0){
+
+                        new AlertDialog.Builder(CadastroLoginActivity.this).setTitle("Aviso").
+                                setMessage("Escolha uma opção de conta.").setPositiveButton("Entendi", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {}}).show();
+
+
                     } else if (checkBox.isChecked() == false) {
 
                         new AlertDialog.Builder(CadastroLoginActivity.this).setTitle("Aviso").
@@ -108,7 +147,18 @@ public class CadastroLoginActivity extends AppCompatActivity {
                                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                                     if(user != null){
                                         Log.i("createUser", "Cadastrado com sucesso!!!");
-                                        Intent intent = new Intent(CadastroLoginActivity.this, EscolherTipo.class);
+
+
+                                              FirebaseUser firebaseUser = task.getResult().getUser();
+                                              Usuarios usuario = new Usuarios();
+
+                                              usuario.setId(firebaseUser.getUid());
+                                              usuario.setPerfil(Id);
+                                              usuario.setEmail(emailRecebido);
+                                              usuario.salvar();
+
+
+                                        Intent intent = new Intent(CadastroLoginActivity.this, EnviandoEmailActivity.class);
                                         startActivity(intent);
                                         finish();
                                     }

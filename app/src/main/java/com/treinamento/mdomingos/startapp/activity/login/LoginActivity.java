@@ -28,11 +28,20 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentActivity;
 
 import com.treinamento.mdomingos.startapp.R;
 
 
+import com.treinamento.mdomingos.startapp.activity.inicialization.EscolherTipo;
+import com.treinamento.mdomingos.startapp.activity.investidor.CadastroInvestidorActivity;
+import com.treinamento.mdomingos.startapp.activity.startup.CadastroStartupActivity;
+import com.treinamento.mdomingos.startapp.model.Usuarios;
+import com.treinamento.mdomingos.startapp.utils.FirebaseConfig;
 import com.treinamento.mdomingos.startapp.utils.Validator;
 
 
@@ -68,6 +77,8 @@ public class LoginActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
 
+
+
         //Alterar buttons + functions
         botaoLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,11 +108,43 @@ public class LoginActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     if (firebaseUser.isEmailVerified()) {
 
-                                                Intent intent = new Intent(LoginActivity.this, BaseFragmentActivity.class);
-                                                Log.i("userLogado", "Logado com sucesso!!!");
-                                                startActivity(intent);
-                                                progressDialog.dismiss();
-                                                finish();
+                                        DatabaseReference databaseReference = FirebaseConfig.getFirebase();
+                                        databaseReference.child("Usuarios").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                                Usuarios usuario =  dataSnapshot.getValue(Usuarios.class);
+
+                                                if(usuario.getPerfil() == 1){
+                                                    Intent intent = new Intent(LoginActivity.this, CadastroInvestidorActivity.class);
+                                                    startActivity(intent);
+                                                    progressDialog.dismiss();
+                                                    finish();
+
+                                                } else if (usuario.getPerfil() == 2){
+                                                    Intent intent = new Intent(LoginActivity.this, CadastroStartupActivity.class);
+                                                    startActivity(intent);
+                                                    progressDialog.dismiss();
+                                                    finish();
+                                                }
+                                                else {
+
+                                                    new AlertDialog.Builder(LoginActivity.this).setTitle("Alerta").
+                                                            setMessage("Sem perfil.").setPositiveButton("Entendi", new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                                            progressDialog.dismiss();
+                                                        }
+                                                    }).show();
+                                                }
+
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
 
                                     } else {
                                         new AlertDialog.Builder(LoginActivity.this).setTitle("Você ainda não validou sua conta").
