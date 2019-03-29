@@ -1,31 +1,284 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.startup.CadastroStartupActivity">
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:gravity="center"
+    <ScrollView
+        android:id="@+id/scrollView_id"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        tools:context=".activity.login.CadastroLoginActivity">
 
 
-        <TextView
-            android:id="@+id/title_status"
+        <LinearLayout
+            android:id="@+id/linearLayout_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingTop="10dp"
-            android:text="Cadastro Startup"
-            android:textColor="@color/colorCinza"
-            android:textSize="20sp"
-            app:fontFamily="@font/lato_regular" />
+            android:orientation="vertical"
+            android:visibility="visible">
+
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryDark"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        style="@style/TitleText"
+                        android:paddingTop="30dp"
+                        android:paddingBottom="10dp"
+                        android:text="Seja Bem-Vindo Startup"
+                        app:fontFamily="@font/lato_regular" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="20dp">
+
+                        <ImageView
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/startup_icon2"
+                            android:scaleType="fitXY" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
+            <TextView
+                style="@style/TitleRegister"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="Preencha os dados abaixo para o concluir seu cadastro"
+                app:fontFamily="@font/lato_regular" />
+
+
+            <android.support.design.widget.TextInputLayout style="@style/TextInputRegister">
+
+                <EditText
+                    android:id="@+id/nome_cadastro_investidor_id"
+                    style="@style/EditTextRegister"
+                    android:hint="Nome Completo *"
+                    android:inputType="text" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout style="@style/TextInputRegister">
+
+                <EditText
+                    android:id="@+id/email_cadastro_investidor_id"
+                    style="@style/EditTextRegister"
+                    android:hint="Email para contato *"
+                    android:inputType="textEmailAddress" />
+            </android.support.design.widget.TextInputLayout>
 
 
 
-    </LinearLayout>
+            <android.support.design.widget.TextInputLayout
+                style="@style/TextInputRegister">
 
-</android.support.constraint.ConstraintLayout>
+                <EditText
+                    android:id="@+id/data_nascimento_cadastro_investidor_id"
+                    style="@style/EditTextRegister"
+                    android:layout_marginBottom="10dp"
+                    android:hint="Data de Nascimento *"
+                    android:inputType="date" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                style="@style/TextInputRegister">
+
+                <EditText
+                    android:id="@+id/cep_cadastro_investidor_id"
+                    style="@style/EditTextRegister"
+                    android:layout_marginBottom="10dp"
+                    android:hint="CEP *"
+                    android:inputType="number" />
+            </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <ProgressBar
+                    android:id="@+id/cep_progress_bar_id"
+                    android:indeterminateTint="#22252C"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="160dp"
+                    android:paddingTop="5dp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginLeft="160dp" />
+            </LinearLayout>
+
+            <android.support.design.widget.TextInputLayout
+                style="@style/TextInputRegister">
+
+                <EditText
+                    android:id="@+id/rua_cadastro_investidor_id"
+                    style="@style/EditTextRegister"
+                    android:layout_marginBottom="10dp"
+                    android:hint="Logradouro"
+                    android:inputType="text" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                style="@style/TextInputRegister">
+
+                <EditText
+                    android:id="@+id/bairro_cadastro_investidor_id"
+                    style="@style/EditTextRegister"
+                    android:layout_marginBottom="10dp"
+                    android:hint="Bairro"
+                    android:inputType="text" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                style="@style/TextInputRegister">
+
+                <EditText
+                    android:id="@+id/cidade_cadastro_investidor_id"
+                    style="@style/EditTextRegister"
+                    android:layout_marginBottom="10dp"
+                    android:hint="Cidade"
+                    android:inputType="text" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                style="@style/TextInputRegister">
+
+                <EditText
+                    android:id="@+id/estado_cadastro_investidor_id"
+                    style="@style/EditTextRegister"
+                    android:layout_marginBottom="10dp"
+                    android:hint="Estado"
+                    android:inputType="text" />
+            </android.support.design.widget.TextInputLayout>
+
+
+
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/radioGroup"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp">
+
+                <RadioButton
+                    android:id="@+id/pessoaFisica"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pessoa Fisíca"
+                    android:textColor="@color/colorCinza"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="10dp"/>
+
+                <RadioButton
+                    android:id="@+id/pessoaJuridica"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pessoa Juriídica"
+                    android:textColor="@color/colorCinza"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="10dp"/>
+
+            </RadioGroup>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/textInputPF"
+                    style="@style/TextInputRegister"
+                    android:visibility="gone">
+
+
+                    <EditText
+                        android:id="@+id/cpf_cadastro_investidor_id"
+                        style="@style/EditTextRegister"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:hint="CPF *"
+                        android:inputType="number"
+                        android:visibility="gone" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/textInputPJ"
+                    style="@style/TextInputRegister"
+                    android:visibility="gone">
+
+                    <EditText
+                        android:id="@+id/cnpj_cadastro_investidor_id"
+                        style="@style/EditTextRegister"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:hint="CNPJ *"
+                        android:inputType="number"
+                        android:visibility="gone" />
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/botao_concluir_cadastro_investidor_id"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="6dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/button_ronded"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="120dp"
+                    android:layout_marginLeft="120dp"
+                    android:gravity="center_vertical"
+                    android:text="CONCLUIR CADASTRO"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:fontFamily="@font/poppins_medium" />
+
+            </RelativeLayout>
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</android.support.v4.widget.DrawerLayout>
