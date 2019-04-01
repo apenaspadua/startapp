@@ -1,5 +1,6 @@
 package com.treinamento.mdomingos.startapp.activity.home;
 
+import android.annotation.SuppressLint;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.treinamento.mdomingos.startapp.R;
@@ -24,22 +26,8 @@ public class BaseFragmentActivity extends AppCompatActivity {
     private FeedFragment feedFragment;
     private Toolbar toolbar;
     private TextView titulo;
+    private ImageView imageView;
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.dropdown_menu_home, menu);
-        return super.onCreateOptionsMenu(menu);
-
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +38,7 @@ public class BaseFragmentActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.vp_pagina_id);
         tabLayout = findViewById(R.id.tabLayout);
         toolbar = findViewById(R.id.toolbar);
+        imageView = findViewById(R.id.imageProfile_id);
 
 
         TabsAdapter tabsAdapter = new TabsAdapter(getSupportFragmentManager());
@@ -72,20 +61,29 @@ public class BaseFragmentActivity extends AppCompatActivity {
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 
+            @SuppressLint("ResourceAsColor")
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
 
                 if (tab.getPosition() == 0) {
                     titulo.setText("feed");
+                    toolbar.setBackgroundResource(R.color.colorPrimaryDark);
+                    imageView.setVisibility(View.VISIBLE);
                     tabLayout.getTabAt(0).setIcon(R.drawable.ic_feed_blue);
 
                 } else if (tab.getPosition() == 1) {
                     titulo.setText("notify");
+                    toolbar.setBackgroundResource(R.color.colorPrimaryDark);
+                    imageView.setVisibility(View.VISIBLE);
                     tabLayout.getTabAt(1).setIcon(R.drawable.ic_notifications_blue);
 
                 } else if (tab.getPosition() == 2) {
                     titulo.setText("perfil");
+                    toolbar.setBackgroundResource(R.color.colorTranspatenteLight);
+
+                    imageView.setVisibility(View.GONE);
+
                     tabLayout.getTabAt(2).setIcon(R.drawable.ic_account_blue);
                 }
             }

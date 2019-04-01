@@ -1,5 +1,6 @@
 package com.treinamento.mdomingos.startapp.activity.investidor;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -16,8 +17,14 @@ import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
+import com.github.rtoshiro.util.format.SimpleMaskFormatter;
+import com.github.rtoshiro.util.format.text.MaskTextWatcher;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.treinamento.mdomingos.startapp.R;
+import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentActivity;
 import com.treinamento.mdomingos.startapp.model.CEP;
 import com.treinamento.mdomingos.startapp.model.Investidor;
 import com.treinamento.mdomingos.startapp.utils.HttpService;
@@ -32,6 +39,12 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
     private TextInputLayout inputPf, inputPj;
     private RelativeLayout botaoConcluir;
     private ProgressBar progressBar;
+    private FirebaseDatabase firebaseDatabase;
+    private ProgressDialog progressDialog;
+
+
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +66,38 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
         botaoConcluir = findViewById(R.id.botao_concluir_cadastro_investidor_id);
         radioGroup = findViewById(R.id.radioGroup);
         progressBar = findViewById(R.id.cep_progress_bar_id);
+        progressDialog = new ProgressDialog(CadastroInvestidorActivity.this);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
+
+        //Mascaras
+        SimpleMaskFormatter simpleMaskFormatter = new SimpleMaskFormatter("NN/NN/NNNN"); //Mascara para data
+        MaskTextWatcher maskTextWatcher = new MaskTextWatcher(dataNasc, simpleMaskFormatter);
+        dataNasc.addTextChangedListener(maskTextWatcher);
+
+        SimpleMaskFormatter simpleMaskFormatterCpf = new SimpleMaskFormatter("NNN.NNN.NNN-NN"); //Mascara para cpf
+        MaskTextWatcher maskTextWatcherCpf = new MaskTextWatcher(cpf, simpleMaskFormatterCpf);
+        cpf.addTextChangedListener(maskTextWatcherCpf);
+
+        SimpleMaskFormatter simpleMaskFormatterCnpj = new SimpleMaskFormatter("NN.NNN.NNN/NNNN-NN"); //Mascara para cnpj
+        MaskTextWatcher maskTextWatcherCnpj = new MaskTextWatcher(cnpj, simpleMaskFormatterCnpj);
+        cnpj.addTextChangedListener(maskTextWatcherCnpj);
+
+//        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+
+//        databaseReference.child("Usuarios").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                InvestidorResponse investidor = dataSnapshot.getValue(InvestidorResponse.class);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -76,50 +121,52 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
         });
 
 
-        cep.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                progressBar.setVisibility(View.VISIBLE);
-            }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                try {
-                    CEP retorno = new HttpService(s.toString()).execute().get();
-
-                    if (retorno == null) {
-
-                        cep.setError("Cep inválido");
-                        progressBar.setVisibility(View.GONE);
-                    } else {
-
-                        if (retorno.getCidade() != null) {
-                            cidade.setText(retorno.getCidade());
-                            estado.setText(retorno.getEstado());
-                            rua.setText(retorno.getLogradouro());
-                            bairro.setText(retorno.getBairro());
-                            progressBar.setVisibility(View.GONE);
-                        } else {
-
-                            cep.setError("Cep inválido");
-                            progressBar.setVisibility(View.GONE);
-                        }
-
-
-                    }
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
+//
+//        cep.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//                progressBar.setVisibility(View.VISIBLE);
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                try {
+//                    CEP retorno = new HttpService(s.toString()).execute().get();
+//
+//                    if (retorno == null) {
+//
+//                        cep.setError("Cep inválido");
+//                        progressBar.setVisibility(View.GONE);
+//                    } else {
+//
+//                        if (retorno.getCidade() != null) {
+//                            cidade.setText(retorno.getCidade());
+//                            estado.setText(retorno.getEstado());
+//                            rua.setText(retorno.getLogradouro());
+//                            bairro.setText(retorno.getBairro());
+//                            progressBar.setVisibility(View.GONE);
+//                        } else {
+//
+//                            cep.setError("Cep inválido");
+//                            progressBar.setVisibility(View.GONE);
+//                        }
+//
+//
+//                    }
+//
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                } catch (ExecutionException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//
+//            }
+//        });
 
 
         botaoConcluir.setOnClickListener(new View.OnClickListener() {
@@ -138,54 +185,81 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
                     final String cpfRecebido = cpf.getText().toString();
                     final String cnpjRecebido = cnpj.getText().toString();
 
+                    String cpfSemFormatacao = cpfRecebido.replace(".", "");
+                    cpfSemFormatacao = cpfSemFormatacao.replace("-", "");
 
-                    if (Validator.stringEmpty(nomeRecebido) || nomeRecebido.equals("")) {
-                        email.setError("Insira seu nome");
+                    String cnpjSemFormatacao = cnpjRecebido.replace(".", "");
+                    cnpjSemFormatacao = cnpjSemFormatacao.replace("/", "");
+                    cnpjSemFormatacao = cnpjSemFormatacao.replace("-", "");
 
-                    } else if (Validator.stringEmpty(emailRecebido) || emailRecebido.equals("")) {
+
+
+                    if (Validator.stringEmpty(nomeRecebido)) {
+                        nome.setError("Insira seu nome");
+
+                    } else if (Validator.stringEmpty(emailRecebido)) {
                         email.setError("Insira seu email");
 
-                    } else if (Validator.validateEmailFormat(emailRecebido) == false) {
+                    } else if (Validator.validateEmailFormat(emailRecebido) ==  false) {
                         email.setError("Insira um email válido");
 
-                    } else if (Validator.stringEmpty(dataRecebida) || dataRecebida.equals("")) {
+                    } else if (Validator.stringEmpty(dataRecebida)) {
                         dataNasc.setError("Insira sua data de nascimento");
 
-                    } else if (Validator.stringEmpty(cepRecebido) || cepRecebido.equals("")) {
-                        cpf.setError("Insira seu cep");
+                    } else if (Validator.stringEmpty(cepRecebido)) {
+                        cep.setError("Insira seu cep");
 
-                    } else if (Validator.stringEmpty(ruaRecebida) || ruaRecebida.equals("")) {
+                    } else if (Validator.stringEmpty(ruaRecebida)) {
                         rua.setError("Insira seu logradouro");
 
-                    } else if (Validator.stringEmpty(bairroRecebido) || bairroRecebido.equals("")) {
+                    } else if (Validator.stringEmpty(bairroRecebido)) {
                         bairro.setError("Insira seu bairro");
 
-                    } else if (Validator.stringEmpty(cidadeRecebido) || cidadeRecebido.equals("")) {
+                    } else if (Validator.stringEmpty(cidadeRecebido)) {
                         cidade.setError("Insira sua cidade");
 
-                    } else if (Validator.stringEmpty(estadoRecebido) || estadoRecebido.equals("")) {
+                    } else if (Validator.stringEmpty(estadoRecebido)) {
                         estado.setError("Insira seu estado");
-
-                    } else if (Validator.isCPF(cpfRecebido)) {
-                        cpf.setError("Insira um cpf válido");
-
-                    } else if (Validator.isCNPJ(cnpjRecebido) == false) {
-                        cnpj.setError("Insira um cnpj válido");
 
                     } else {
 
-                        Investidor investidor = new Investidor();
-                        investidor.salvarInvestidor();
-                        Toast.makeText(CadastroInvestidorActivity.this, "Salvo com sucesso", Toast.LENGTH_SHORT).show();
-                    }
+                        if (radioGroup.getCheckedRadioButtonId() == R.id.pessoaFisica) {
+                            if (Validator.isCPF(cpfSemFormatacao) == false) {
+                                cpf.setError("Insira um CPF válido");
+                                return;
+                            } else {
+                                Investidor investidor = new Investidor(nomeRecebido, emailRecebido, dataRecebida, cepRecebido, ruaRecebida, bairroRecebido, cidadeRecebido, estadoRecebido, null, cpfRecebido);
+                                investidor.salvarInvestidor(firebaseUser.getUid());
+                                progressDialog.setMessage("Salvando dados...");
+                                progressDialog.show();
+                                Toast.makeText(CadastroInvestidorActivity.this, "Salvo com sucesso", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(CadastroInvestidorActivity.this, BaseFragmentActivity.class));
+                                finish();
 
+                            }
+                        } else if (radioGroup.getCheckedRadioButtonId() == R.id.pessoaJuridica) {
+                            if (Validator.isCNPJ(cnpjSemFormatacao) == false) {
+                                cnpj.setError("Insira um CNPJ válido");
+                            } else {
+                                Investidor investidor = new Investidor(nomeRecebido, emailRecebido, dataRecebida, cepRecebido, ruaRecebida, bairroRecebido, cidadeRecebido, estadoRecebido, cnpjRecebido, null);
+                                investidor.salvarInvestidor(firebaseUser.getUid());
+                                progressDialog.setMessage("Salvando dados...");
+                                progressDialog.show();
+                                startActivity(new Intent(CadastroInvestidorActivity.this, BaseFragmentActivity.class));
+                                finish();
+                            }
+
+                        }
+                    }
 
                 } else {
                     Log.i("sem internet", "sem conexao");
                     Toast.makeText(CadastroInvestidorActivity.this, "Sem conexão com a internet", Toast.LENGTH_SHORT).show();
+                    return;
                 }
             }
         });
+
     }
 
     public boolean FirebaseConection(){

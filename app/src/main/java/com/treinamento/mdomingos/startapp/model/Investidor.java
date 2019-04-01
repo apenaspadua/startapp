@@ -4,15 +4,17 @@ package com.treinamento.mdomingos.startapp.model;
 import com.google.firebase.database.DatabaseReference;
 import com.treinamento.mdomingos.startapp.utils.FirebaseConfig;
 
+import java.io.Serializable;
+
 /**
  * Created by Matheus de Padua on 29/03/2019.
  * mdomingos@luxfacta.com
  * For Luxfacta Soluções de TI
  * {@see more in https://www.luxfacta.com}
  */
-public class Investidor {
+public class Investidor implements Serializable {
 
-    private String Id;
+
     private String nome;
     private String email;
     private String data;
@@ -22,22 +24,30 @@ public class Investidor {
     private String cidade;
     private String estado;
     private String cnpj;
-    private int cpf;
+    private String cpf;
 
+    public Investidor() {
+    }
 
+    public Investidor(String nome, String email, String data, String cep, String rua, String bairro, String cidade, String estado, String cnpj, String cpf) {
+        this.nome = nome;
+        this.email = email;
+        this.data = data;
+        this.cep = cep;
+        this.rua = rua;
+        this.bairro = bairro;
+        this.cidade = cidade;
+        this.estado = estado;
+        this.cnpj = cnpj;
+        this.cpf = cpf;
+    }
 
-    public void salvarInvestidor(){
+    public void salvarInvestidor(String id){
         DatabaseReference databaseReference = FirebaseConfig.getFirebase();
-        databaseReference.child("Usuarios").child(getId()).child("detalhe_invstidor").setValue(this);
+        databaseReference.child("Usuarios").child(id).child("detalhe_investidor").setValue(this);
     }
 
-    public String getId() {
-        return Id;
-    }
 
-    public void setId(String id) {
-        Id = id;
-    }
 
     public String getNome() {
         return nome;
@@ -111,13 +121,15 @@ public class Investidor {
         this.cnpj = cnpj;
     }
 
-    public int getCpf() {
+    public String getCpf() {
         return cpf;
     }
 
-    public void setCpf(int cpf) {
+    public void setCpf(String cpf) {
         this.cpf = cpf;
     }
+
+
 }
 
 

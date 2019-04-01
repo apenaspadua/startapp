@@ -32,12 +32,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
-import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentActivity;
 
 import com.treinamento.mdomingos.startapp.R;
 
-
-import com.treinamento.mdomingos.startapp.activity.inicialization.EscolherTipo;
 import com.treinamento.mdomingos.startapp.activity.investidor.CadastroInvestidorActivity;
 import com.treinamento.mdomingos.startapp.activity.startup.CadastroStartupActivity;
 import com.treinamento.mdomingos.startapp.model.Usuarios;
@@ -73,6 +70,7 @@ public class LoginActivity extends AppCompatActivity {
         botaoCadastrese = findViewById(R.id.faca_cadastro_text_id);
         progressDialog = new ProgressDialog(LoginActivity.this);
         progressBar = findViewById(R.id.progressBarLogin);
+
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();

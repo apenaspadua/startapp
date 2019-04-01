@@ -11,12 +11,10 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activity.startup.CadastroStartupActivity"></activity>
         <activity android:name=".activity.investidor.CadastroInvestidorActivity" />
-        <activity android:name=".activity.inicialization.EscolherTipo" />
         <activity android:name=".activity.others.SplashScrean" />
         <activity android:name=".activity.home.BaseFragmentActivity" />
         <activity android:name=".activity.others.EnviandoEmailActivity" />
         <activity android:name=".activity.others.SlidesPosCadastroActivity" />
-        <activity android:name=".activity.startup.CadastroStartupActivity" />
         <activity android:name=".activity.login.LoginActivity" />
         <activity android:name=".activity.others.TermosActivity" />
         <activity android:name=".activity.login.CadastroLoginActivity" />

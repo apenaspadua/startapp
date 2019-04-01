@@ -1,25 +1,18 @@
 package com.treinamento.mdomingos.startapp.utils;
 
-import java.util.ArrayList;
+
 import java.util.InputMismatchException;
 
 public class Validator {
 
     public static boolean stringEmpty(String string){
 
-        if(string.isEmpty())
+        if(string.isEmpty() || string.equals(""))
             return true;
         else
             return false;
     }
 
-    public static boolean listLessThantwo(ArrayList arrayList){
-
-        if(arrayList.size() < 2)
-            return true;
-        else
-            return false;
-    }
 
     public static boolean validateEmailFormat(final String email) {
         if (android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {

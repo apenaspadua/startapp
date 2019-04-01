@@ -5,6 +5,6 @@
 
     <item
         android:id="@+id/sobre_item_dropdown_menu_id"
-        android:title="Log Out"
-        android:iconTint="@color/colorWhite"></item>
+        android:iconTint="@color/colorWhite"
+        android:title="Fazer Logout"></item>
 </menu>
