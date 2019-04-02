@@ -62,6 +62,7 @@ public class InicialActivity extends AppCompatActivity {
                     progressBar.setVisibility(View.VISIBLE);
                     Intent intent = new Intent(InicialActivity.this, CadastroLoginActivity.class);
                     startActivity(intent);
+                    finish();
                 }
                 else {
                     Toast.makeText(InicialActivity.this, "Sem conexão com a internet", Toast.LENGTH_SHORT).show();
@@ -77,6 +78,7 @@ public class InicialActivity extends AppCompatActivity {
                     jaPossuoConta.setTextColor(Color.parseColor("#0289BE"));
                     Intent intent = new Intent(InicialActivity.this, LoginActivity.class);
                     startActivity(intent);
+                    finish();
                 }
                 else {
                     Toast.makeText(InicialActivity.this, "Sem conexão com a internet", Toast.LENGTH_SHORT).show();

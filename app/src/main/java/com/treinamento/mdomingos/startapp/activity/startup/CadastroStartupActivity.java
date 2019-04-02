@@ -3,14 +3,18 @@ package com.treinamento.mdomingos.startapp.activity.startup;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.rtoshiro.util.format.SimpleMaskFormatter;
@@ -18,19 +22,23 @@ import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.treinamento.mdomingos.startapp.R;
-import com.treinamento.mdomingos.startapp.activity.others.SlidesPosCadastroActivity;
+import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentActivity;
+import com.treinamento.mdomingos.startapp.model.CEP;
 import com.treinamento.mdomingos.startapp.model.Startup;
+import com.treinamento.mdomingos.startapp.utils.HttpService;
 import com.treinamento.mdomingos.startapp.utils.Validator;
+
+import java.util.concurrent.ExecutionException;
 
 public class CadastroStartupActivity extends AppCompatActivity {
 
     private EditText razaoSocial, nomeFantasia, email, cep, cnpj, rua, cidade, bairro, estado;
     private RelativeLayout botaoConcluir;
+    private TextView irPerfil;
     private ProgressDialog progressDialog;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +55,7 @@ public class CadastroStartupActivity extends AppCompatActivity {
         bairro = findViewById(R.id.bairro_cadastro_startup_id);
         estado = findViewById(R.id.estado_cadastro_startup_id);
         botaoConcluir = findViewById(R.id.botao_terminar_cadastro_startup_id);
+        irPerfil = findViewById(R.id.ir_para_perfil_cadastro_startup);
         progressDialog = new ProgressDialog(CadastroStartupActivity.this);
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -57,7 +66,51 @@ public class CadastroStartupActivity extends AppCompatActivity {
         MaskTextWatcher maskTextWatcher = new MaskTextWatcher(cnpj, simpleMaskFormatter);
         cnpj.addTextChangedListener(maskTextWatcher);
 
-    botaoConcluir.setOnClickListener(new View.OnClickListener() {
+
+        irPerfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                irPerfil.setTextColor(Color.parseColor("#0289BE"));
+                startActivity(new Intent(CadastroStartupActivity.this, BaseFragmentActivity.class));
+                finish();
+            }
+        });
+
+
+        cep.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                try {
+                    CEP retorno = new HttpService(s.toString()).execute().get();
+
+                    if (retorno == null) {
+                        cep.setError("Cep inválido");
+                    } else {
+                        if (retorno.getCidade() != null) {
+                            cidade.setText(retorno.getCidade());
+                            estado.setText(retorno.getEstado());
+                            rua.setText(retorno.getLogradouro());
+                            bairro.setText(retorno.getBairro());
+                        } else {
+                            cep.setError("Cep inválido");
+                        }
+                    }
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
+        botaoConcluir.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
 
@@ -116,8 +169,6 @@ public class CadastroStartupActivity extends AppCompatActivity {
                 startup.salvarStartup(firebaseUser.getUid());
                 progressDialog.setMessage("Salvando dados...");
                 progressDialog.show();
-                startActivity(new Intent(CadastroStartupActivity.this, SlidesPosCadastroActivity.class));
-                finish();
             }
 
         }else {
@@ -128,6 +179,12 @@ public class CadastroStartupActivity extends AppCompatActivity {
         }
     });
 
+    }
+
+    @Override
+    protected void onResume() {
+        irPerfil.setTextColor(Color.parseColor("#ffffff"));
+        super.onResume();
     }
 
     public boolean FirebaseConection(){

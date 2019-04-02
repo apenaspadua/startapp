@@ -1,8 +1,7 @@
-package com.treinamento.mdomingos.startapp.fragments;
+package com.treinamento.mdomingos.startapp.fragments_investidor;
 
 
 import android.os.Bundle;
-import android.support.design.chip.ChipDrawable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -15,17 +14,17 @@ import android.view.ViewGroup;
 import com.google.firebase.auth.FirebaseAuth;
 import com.treinamento.mdomingos.startapp.R;
 
-public class PerfilFragment extends Fragment {
+public class PerfilFragment_Investidor extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
 
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("");
+//        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("");
 
 
-        return inflater.inflate(R.layout.fragment_perfil, container, false);
+        return inflater.inflate(R.layout.fragment_perfil_investidor, container, false);
 
     }
 

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments_investidor.FeedFragment_Investidor">
+
+    <ScrollView
+        android:id="@+id/scrollView_feed_investidor_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".activity.home.BaseFragmentActivity">
+
+        <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/title_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                 Nullam ultrices eleifend risus, a tincidunt leo cursus a. Etiam nisl erat,
+                 imperdiet eu porttitor sit amet, ultricies in neque. Integer rutrum, libero
+                 pretium venenatis porttitor, neque mauris aliquam augue, non sodales massa
+                 augue vel ex. Pellentesque lobortis nisi a augue sodales, vitae dapibus quam
+                 iaculis. Vivamus vel maximus mi, mattis semper sem. Quisque maximus accumsan
+                 tempus. Aliquam erat volutpat. Nam laoreet nisl eget nunc malesuada, tristique
+                 dictum ex faucibus. Aliquam sed ultricies sem. Mauris venenatis in sem vitae
+                 Etiam euismod, nulla ut malesuada molestie, nulla ligula varius purus, vel ornare ex
+                 tortor ut tortor. Nunc fermentum sapien nisi, nec interdum lorem tempor at. Phasellus
+                 vitae enim diam. Integer luctus, nibh eu scelerisque faucibus, risus lacus maximus ante,
+                 eu convallis urna sem volutpat massa.
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                 Nullam ultrices eleifend risus, a tincidunt leo cursus a. Etiam nisl erat,
+                 imperdiet eu porttitor sit amet, ultricies in neque. Integer rutrum, libero
+                 pretium venenatis porttitor, neque mauris aliquam augue, non sodales massa
+                 augue vel ex. Pellentesque lobortis nisi a augue sodales, vitae dapibus quam
+                 iaculis. Vivamus vel maximus mi, mattis semper sem. Quisque maximus accumsan
+                 tempus. Aliquam erat volutpat. Nam laoreet nisl eget nunc malesuada, tristique
+                 dictum ex faucibus. Aliquam sed ultricies sem. Mauris venenatis in sem vitae
+                 Etiam euismod, nulla ut malesuada molestie, nulla ligula varius purus, vel ornare ex
+                 tortor ut tortor. Nunc fermentum sapien nisi, nec interdum lorem tempor at. Phasellus
+                 vitae enim diam. Integer luctus, nibh eu scelerisque faucibus, risus lacus maximus ante,
+                 eu convallis urna sem volutpat massa."
+            android:textColor="@color/colorCinza"
+            android:textSize="20sp"
+            app:fontFamily="@font/lato_regular" />
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</FrameLayout>

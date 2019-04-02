@@ -3,6 +3,7 @@ package com.treinamento.mdomingos.startapp.activity.investidor;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.github.rtoshiro.util.format.SimpleMaskFormatter;
 import com.github.rtoshiro.util.format.text.MaskTextWatcher;
@@ -25,6 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.treinamento.mdomingos.startapp.R;
 import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentActivity;
+import com.treinamento.mdomingos.startapp.activity.startup.CadastroStartupActivity;
 import com.treinamento.mdomingos.startapp.model.CEP;
 import com.treinamento.mdomingos.startapp.model.Investidor;
 import com.treinamento.mdomingos.startapp.utils.HttpService;
@@ -38,7 +41,7 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
     private RadioGroup radioGroup;
     private TextInputLayout inputPf, inputPj;
     private RelativeLayout botaoConcluir;
-    private ProgressBar progressBar;
+    private TextView irPerfil;
     private FirebaseDatabase firebaseDatabase;
     private ProgressDialog progressDialog;
 
@@ -64,8 +67,8 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
         inputPf = findViewById(R.id.textInputPF);
         inputPj = findViewById(R.id.textInputPJ);
         botaoConcluir = findViewById(R.id.botao_concluir_cadastro_investidor_id);
+        irPerfil = findViewById(R.id.ir_para_perfil_cadastro_investidor);
         radioGroup = findViewById(R.id.radioGroup);
-        progressBar = findViewById(R.id.cep_progress_bar_id);
         progressDialog = new ProgressDialog(CadastroInvestidorActivity.this);
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -98,6 +101,14 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
 //            }
 //        });
 
+        irPerfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                irPerfil.setTextColor(Color.parseColor("#0289BE"));
+                startActivity(new Intent(CadastroInvestidorActivity.this, BaseFragmentActivity.class));
+                finish();
+            }
+        });
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -120,54 +131,36 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
             }
         });
 
+        cep.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                try {
+                    CEP retorno = new HttpService(s.toString()).execute().get();
+                    if (retorno == null) {
+                        cep.setError("Cep inválido");
+                    } else {
+                        if (retorno.getCidade() != null) {
+                            cidade.setText(retorno.getCidade());
+                            estado.setText(retorno.getEstado());
+                            rua.setText(retorno.getLogradouro());
+                            bairro.setText(retorno.getBairro());
+                        } else {
+                            cep.setError("Cep inválido");
+                        }
+                    }
 
-//
-//        cep.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//                progressBar.setVisibility(View.VISIBLE);
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                try {
-//                    CEP retorno = new HttpService(s.toString()).execute().get();
-//
-//                    if (retorno == null) {
-//
-//                        cep.setError("Cep inválido");
-//                        progressBar.setVisibility(View.GONE);
-//                    } else {
-//
-//                        if (retorno.getCidade() != null) {
-//                            cidade.setText(retorno.getCidade());
-//                            estado.setText(retorno.getEstado());
-//                            rua.setText(retorno.getLogradouro());
-//                            bairro.setText(retorno.getBairro());
-//                            progressBar.setVisibility(View.GONE);
-//                        } else {
-//
-//                            cep.setError("Cep inválido");
-//                            progressBar.setVisibility(View.GONE);
-//                        }
-//
-//
-//                    }
-//
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                } catch (ExecutionException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//            }
-//        });
-
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
 
         botaoConcluir.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,8 +184,6 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
                     String cnpjSemFormatacao = cnpjRecebido.replace(".", "");
                     cnpjSemFormatacao = cnpjSemFormatacao.replace("/", "");
                     cnpjSemFormatacao = cnpjSemFormatacao.replace("-", "");
-
-
 
                     if (Validator.stringEmpty(nomeRecebido)) {
                         nome.setError("Insira seu nome");
@@ -248,7 +239,6 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
                                 startActivity(new Intent(CadastroInvestidorActivity.this, BaseFragmentActivity.class));
                                 finish();
                             }
-
                         }
                     }
 
