@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.WindowManager;
 
 import com.treinamento.mdomingos.startapp.R;
-import com.treinamento.mdomingos.startapp.activity.inicialization.InicialActivity;
+import com.treinamento.mdomingos.startapp.activity.inicial.InicialActivity;
 
 
 public class SplashScrean extends AppCompatActivity {

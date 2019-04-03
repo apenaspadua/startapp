@@ -14,22 +14,21 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.github.rtoshiro.util.format.SimpleMaskFormatter;
 import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.treinamento.mdomingos.startapp.R;
-import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentActivity;
-import com.treinamento.mdomingos.startapp.activity.startup.CadastroStartupActivity;
+import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentInvestidor;
 import com.treinamento.mdomingos.startapp.model.CEP;
 import com.treinamento.mdomingos.startapp.model.Investidor;
+import com.treinamento.mdomingos.startapp.model.Usuarios;
 import com.treinamento.mdomingos.startapp.utils.HttpService;
 import com.treinamento.mdomingos.startapp.utils.Validator;
 
@@ -37,17 +36,16 @@ import java.util.concurrent.ExecutionException;
 
 public class CadastroInvestidorActivity extends AppCompatActivity {
 
-    private EditText nome, email, cep, cpf, cnpj, dataNasc, rua, cidade, bairro, estado;
+    private EditText nome, email, empresa, telefone, cep, cpf, cnpj, dataNasc, rua, cidade, bairro, estado;
     private RadioGroup radioGroup;
     private TextInputLayout inputPf, inputPj;
     private RelativeLayout botaoConcluir;
     private TextView irPerfil;
-    private FirebaseDatabase firebaseDatabase;
     private ProgressDialog progressDialog;
-
 
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +54,8 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
 
         nome = findViewById(R.id.nome_cadastro_investidor_id);
         email = findViewById(R.id.email_cadastro_investidor_id);
+        telefone = findViewById(R.id.telefone_cadastro_investidor_id);
+        empresa = findViewById(R.id.empresa_cadastro_investidor_id);
         dataNasc = findViewById(R.id.data_nascimento_cadastro_investidor_id);
         cep = findViewById(R.id.cep_cadastro_investidor_id);
         cpf = findViewById(R.id.cpf_cadastro_investidor_id);
@@ -75,6 +75,10 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
         firebaseUser = firebaseAuth.getCurrentUser();
 
         //Mascaras
+        SimpleMaskFormatter simpleMaskFormatterTel = new SimpleMaskFormatter("(NN)NNNNN-NNNN"); //Mascara para telefone
+        MaskTextWatcher maskTextWatcherTel = new MaskTextWatcher(telefone, simpleMaskFormatterTel);
+        telefone.addTextChangedListener(maskTextWatcherTel);
+
         SimpleMaskFormatter simpleMaskFormatter = new SimpleMaskFormatter("NN/NN/NNNN"); //Mascara para data
         MaskTextWatcher maskTextWatcher = new MaskTextWatcher(dataNasc, simpleMaskFormatter);
         dataNasc.addTextChangedListener(maskTextWatcher);
@@ -87,25 +91,12 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
         MaskTextWatcher maskTextWatcherCnpj = new MaskTextWatcher(cnpj, simpleMaskFormatterCnpj);
         cnpj.addTextChangedListener(maskTextWatcherCnpj);
 
-//        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-
-//        databaseReference.child("Usuarios").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                InvestidorResponse investidor = dataSnapshot.getValue(InvestidorResponse.class);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
 
         irPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 irPerfil.setTextColor(Color.parseColor("#0289BE"));
-                startActivity(new Intent(CadastroInvestidorActivity.this, BaseFragmentActivity.class));
+                startActivity(new Intent(CadastroInvestidorActivity.this, BaseFragmentInvestidor.class));
                 finish();
             }
         });
@@ -169,6 +160,8 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
 
                     final String nomeRecebido = nome.getText().toString();
                     final String emailRecebido = email.getText().toString();
+                    final String telefoneRecebido = telefone.getText().toString();
+                    final String empresaRecebida = empresa.getText().toString();
                     final String dataRecebida = dataNasc.getText().toString();
                     final String cepRecebido = cep.getText().toString();
                     final String ruaRecebida = rua.getText().toString();
@@ -194,6 +187,12 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
                     } else if (Validator.validateEmailFormat(emailRecebido) ==  false) {
                         email.setError("Insira um email válido");
 
+                    } else if (Validator.stringEmpty(telefoneRecebido)) {
+                        telefone.setError("Insira seu numero");
+
+                    } else if (Validator.stringEmpty(empresaRecebida)) {
+                        empresa.setError("Insira sua compania");
+
                     } else if (Validator.stringEmpty(dataRecebida)) {
                         dataNasc.setError("Insira sua data de nascimento");
 
@@ -218,13 +217,15 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
                             if (Validator.isCPF(cpfSemFormatacao) == false) {
                                 cpf.setError("Insira um CPF válido");
                                 return;
+
                             } else {
-                                Investidor investidor = new Investidor(nomeRecebido, emailRecebido, dataRecebida, cepRecebido, ruaRecebida, bairroRecebido, cidadeRecebido, estadoRecebido, null, cpfRecebido);
+
+                                Investidor investidor = new Investidor(nomeRecebido, emailRecebido, telefoneRecebido, empresaRecebida, dataRecebida, cepRecebido, ruaRecebida, bairroRecebido, cidadeRecebido, estadoRecebido, null, cpfRecebido);
+
                                 investidor.salvarInvestidor(firebaseUser.getUid());
-                                progressDialog.setMessage("Salvando dados...");
-                                progressDialog.show();
+
                                 Toast.makeText(CadastroInvestidorActivity.this, "Salvo com sucesso", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(CadastroInvestidorActivity.this, BaseFragmentActivity.class));
+                                startActivity(new Intent(CadastroInvestidorActivity.this, BaseFragmentInvestidor.class));
                                 finish();
 
                             }
@@ -232,11 +233,11 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
                             if (Validator.isCNPJ(cnpjSemFormatacao) == false) {
                                 cnpj.setError("Insira um CNPJ válido");
                             } else {
-                                Investidor investidor = new Investidor(nomeRecebido, emailRecebido, dataRecebida, cepRecebido, ruaRecebida, bairroRecebido, cidadeRecebido, estadoRecebido, cnpjRecebido, null);
+                                Investidor investidor = new Investidor(nomeRecebido, emailRecebido, telefoneRecebido, empresaRecebida, dataRecebida, cepRecebido, ruaRecebida, bairroRecebido, cidadeRecebido, estadoRecebido, cnpjRecebido, null);
                                 investidor.salvarInvestidor(firebaseUser.getUid());
                                 progressDialog.setMessage("Salvando dados...");
                                 progressDialog.show();
-                                startActivity(new Intent(CadastroInvestidorActivity.this, BaseFragmentActivity.class));
+                                startActivity(new Intent(CadastroInvestidorActivity.this, BaseFragmentInvestidor.class));
                                 finish();
                             }
                         }

@@ -14,6 +14,7 @@ public class Usuarios {
     private String id;
     private String email;
     private int perfil;
+    private int detalhes_completo;
 
 
     public Usuarios() {
@@ -49,6 +50,12 @@ public class Usuarios {
         this.perfil = perfil;
     }
 
+    public int getDetalhes_completo() {
+        return detalhes_completo;
+    }
 
+    public void setDetalhes_completo(int detalhes_completo) {
+        this.detalhes_completo = detalhes_completo;
+    }
 }
 

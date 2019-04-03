@@ -35,6 +35,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import com.treinamento.mdomingos.startapp.R;
 
+import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentInvestidor;
 import com.treinamento.mdomingos.startapp.activity.investidor.CadastroInvestidorActivity;
 import com.treinamento.mdomingos.startapp.activity.startup.CadastroStartupActivity;
 import com.treinamento.mdomingos.startapp.model.Usuarios;
@@ -51,7 +52,6 @@ public class LoginActivity extends AppCompatActivity {
     private TextView botaoTextEsqueceuSenha, botaoCadastrese;
     private ProgressDialog progressDialog;
     private ProgressBar progressBar;
-
 
 
     @Override
@@ -73,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
         firebaseAuth = FirebaseAuth.getInstance();
-        firebaseUser = firebaseAuth.getCurrentUser();
+
 
 
 
@@ -104,8 +104,8 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-
-                                    if (firebaseUser.isEmailVerified()) {
+                                    firebaseUser = firebaseAuth.getCurrentUser();
+                                    if (firebaseUser != null && firebaseUser.isEmailVerified()) {
 
                                         DatabaseReference databaseReference = FirebaseConfig.getFirebase();
                                         databaseReference.child("Usuarios").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
@@ -115,11 +115,17 @@ public class LoginActivity extends AppCompatActivity {
                                                 Usuarios usuario =  dataSnapshot.getValue(Usuarios.class);
 
                                                 if(usuario.getPerfil() == 1){
-                                                    Intent intent = new Intent(LoginActivity.this, CadastroInvestidorActivity.class);
-                                                    startActivity(intent);
-                                                    progressDialog.dismiss();
-                                                    finish();
-
+                                                    if(usuario.getDetalhes_completo() == 0 ) {
+                                                        Intent intent = new Intent(LoginActivity.this, CadastroInvestidorActivity.class);
+                                                        startActivity(intent);
+                                                        progressDialog.dismiss();
+                                                        finish();
+                                                    } else {
+                                                        Intent intent = new Intent(LoginActivity.this, BaseFragmentInvestidor.class);
+                                                        startActivity(intent);
+                                                        progressDialog.dismiss();
+                                                        finish();
+                                                    }
                                                 } else if (usuario.getPerfil() == 2){
                                                     Intent intent = new Intent(LoginActivity.this, CadastroStartupActivity.class);
                                                     startActivity(intent);

@@ -1,6 +1,10 @@
 package com.treinamento.mdomingos.startapp.model;
 
 
+import android.support.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.treinamento.mdomingos.startapp.utils.FirebaseConfig;
 
@@ -17,6 +21,8 @@ public class Investidor implements Serializable {
 
     private String nome;
     private String email;
+    private String telefone;
+    private String empresa;
     private String data;
     private String cep;
     private String rua;
@@ -29,9 +35,12 @@ public class Investidor implements Serializable {
     public Investidor() {
     }
 
-    public Investidor(String nome, String email, String data, String cep, String rua, String bairro, String cidade, String estado, String cnpj, String cpf) {
+
+    public Investidor(String nome, String email, String telefone, String empresa, String data, String cep, String rua, String bairro, String cidade, String estado, String cnpj, String cpf) {
         this.nome = nome;
         this.email = email;
+        this.telefone = telefone;
+        this.empresa = empresa;
         this.data = data;
         this.cep = cep;
         this.rua = rua;
@@ -45,8 +54,9 @@ public class Investidor implements Serializable {
     public void salvarInvestidor(String id){
         DatabaseReference databaseReference = FirebaseConfig.getFirebase();
         databaseReference.child("Usuarios").child(id).child("detalhe_investidor").setValue(this);
-    }
+        databaseReference.child("Usuarios").child(id).child("detalhes_completo").setValue(1);
 
+    }
 
 
     public String getNome() {
@@ -63,6 +73,22 @@ public class Investidor implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(String empresa) {
+        this.empresa = empresa;
     }
 
     public String getData() {

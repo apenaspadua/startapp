@@ -22,7 +22,7 @@ import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.treinamento.mdomingos.startapp.R;
-import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentActivity;
+import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentInvestidor;
 import com.treinamento.mdomingos.startapp.model.CEP;
 import com.treinamento.mdomingos.startapp.model.Startup;
 import com.treinamento.mdomingos.startapp.utils.HttpService;
@@ -71,7 +71,7 @@ public class CadastroStartupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 irPerfil.setTextColor(Color.parseColor("#0289BE"));
-                startActivity(new Intent(CadastroStartupActivity.this, BaseFragmentActivity.class));
+                startActivity(new Intent(CadastroStartupActivity.this, BaseFragmentInvestidor.class));
                 finish();
             }
         });

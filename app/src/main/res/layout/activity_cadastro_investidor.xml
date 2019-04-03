@@ -104,6 +104,25 @@
                     android:inputType="textEmailAddress" />
             </android.support.design.widget.TextInputLayout>
 
+            <android.support.design.widget.TextInputLayout style="@style/TextInputRegister">
+
+                <EditText
+                    android:id="@+id/telefone_cadastro_investidor_id"
+                    style="@style/EditTextRegister"
+                    android:hint="Número para contato *"
+                    android:inputType="number" />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout style="@style/TextInputRegister">
+
+                <EditText
+                    android:id="@+id/empresa_cadastro_investidor_id"
+                    style="@style/EditTextRegister"
+                    android:hint="Empresa (caso seja autônomo informe) *"
+                    android:inputType="text" />
+            </android.support.design.widget.TextInputLayout>
+
 
 
             <android.support.design.widget.TextInputLayout
