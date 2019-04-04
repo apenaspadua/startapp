@@ -30,7 +30,7 @@
                     style="@style/TitleText"
                     android:paddingTop="30dp"
                     android:paddingBottom="30dp"
-                    android:text="Faça seu Login"
+                    android:text="Faça o login em sua conta"
                     app:fontFamily="@font/lato_regular" />
             </LinearLayout>
         </RelativeLayout>

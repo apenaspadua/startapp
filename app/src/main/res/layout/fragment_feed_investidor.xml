@@ -49,7 +49,7 @@
                  vitae enim diam. Integer luctus, nibh eu scelerisque faucibus, risus lacus maximus ante,
                  eu convallis urna sem volutpat massa."
             android:textColor="@color/colorCinza"
-            android:textSize="20sp"
+            android:textSize="14sp"
             app:fontFamily="@font/lato_regular" />
         </LinearLayout>
 

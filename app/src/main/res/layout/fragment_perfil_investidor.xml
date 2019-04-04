@@ -126,14 +126,15 @@
                             android:layout_marginTop="20dp"
                             android:layout_marginRight="70dp"
                             android:background="@drawable/button_rounded_precionado_red"
+                            android:gravity="clip_vertical|center_horizontal"
                             android:orientation="horizontal">
 
                             <TextView
                                 android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_marginStart="30dp"
-                                android:layout_marginLeft="25dp"
-                                android:layout_marginTop="15dp"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentBottom="true"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginBottom="14dp"
                                 android:text="Iniciar Conversa "
                                 android:textColor="@color/colorWhite"
                                 android:textSize="14sp"
@@ -150,8 +151,9 @@
             <TextView
              style="@style/TitleRegister"
                 android:paddingTop="20dp"
-                android:text="Mais informaçōes"
-                app:fontFamily="@font/lato_regular" />
+                android:text="Mais informaçōes para contato"
+                app:fontFamily="@font/lato_regular"
+                android:layout_marginBottom="20dp"/>
 
 
         <LinearLayout

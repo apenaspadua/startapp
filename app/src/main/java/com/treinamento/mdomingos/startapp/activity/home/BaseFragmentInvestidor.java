@@ -1,6 +1,7 @@
 package com.treinamento.mdomingos.startapp.activity.home;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -12,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,6 +21,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.treinamento.mdomingos.startapp.R;
 import com.treinamento.mdomingos.startapp.activity.inicial.InicialActivity;
 import com.treinamento.mdomingos.startapp.activity.investidor.CadastroInvestidorActivity;
+import com.treinamento.mdomingos.startapp.activity.investidor.EditarPerfilInvestidorActivity;
 import com.treinamento.mdomingos.startapp.activity.login.LoginActivity;
 import com.treinamento.mdomingos.startapp.adapter.TabsAdapter;
 import com.treinamento.mdomingos.startapp.fragments_investidor.FeedFragment_Investidor;
@@ -31,9 +34,9 @@ public class BaseFragmentInvestidor extends AppCompatActivity {
     private ViewPager viewPager;
     private FeedFragment_Investidor feedFragmentInvestidor;
     private Toolbar toolbar;
+    private ProgressDialog progressDialog;
     private TextView titulo;
     private ImageView imageViewProfile, imageViewChat, imageViewBack;
-
 
     @Override
     protected void onResume() {
@@ -57,17 +60,17 @@ public class BaseFragmentInvestidor extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.logout_item_dropdown_menu_id){
+            progressDialog.setMessage("Saindo...");
+            progressDialog.show();
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
             mAuth.signOut();
-            startActivity(new Intent(BaseFragmentInvestidor.this, InicialActivity.class));
+            startActivity(new Intent(BaseFragmentInvestidor.this, LoginActivity.class));
             finish();
         } else {
             if (item.getItemId() == R.id.editar_perfil_item_dropdown_menu_id){
-                startActivity(new Intent(BaseFragmentInvestidor.this, CadastroInvestidorActivity.class));
+                startActivity(new Intent(BaseFragmentInvestidor.this, EditarPerfilInvestidorActivity.class));
             }
         }
-
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -84,6 +87,7 @@ public class BaseFragmentInvestidor extends AppCompatActivity {
         imageViewChat = findViewById(R.id.imageview_chat_investidor_id);
         imageViewBack = findViewById(R.id.imageview_back_investidor_id);
         toolbar = findViewById(R.id.toolbar);
+        progressDialog = new ProgressDialog(this);
 
         setSupportActionBar(toolbar);
         TabsAdapter tabsAdapter = new TabsAdapter(getSupportFragmentManager());

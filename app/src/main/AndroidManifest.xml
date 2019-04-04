@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activity.investidor.EditarPerfilInvestidorActivity"></activity>
         <activity android:name=".activity.startup.CadastroStartupActivity" />
         <activity android:name=".activity.investidor.CadastroInvestidorActivity" />
         <activity android:name=".activity.others.SplashScrean" />

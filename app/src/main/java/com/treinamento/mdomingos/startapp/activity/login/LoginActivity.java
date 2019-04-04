@@ -163,7 +163,7 @@ public class LoginActivity extends AppCompatActivity {
                                 } else {
                                     Log.i("userLogado", "Falha ao Logar!!!");
                                     new AlertDialog.Builder(LoginActivity.this).setTitle("Falha ao Logar").
-                                            setMessage("Usuário ou senha incorretos.").setPositiveButton("Entendi", new DialogInterface.OnClickListener() {
+                                            setMessage("Usuário ou senha incorretos. Se não verifique sua conexão. ").setPositiveButton("Entendi", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int i) {
                                             progressDialog.dismiss();
