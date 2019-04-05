@@ -153,7 +153,7 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {}
         });
 
-        botaoConcluir.setOnClickListener(new View.OnClickListener() {
+        botaoConcluir .setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (FirebaseConection()) {

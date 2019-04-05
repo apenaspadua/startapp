@@ -46,6 +46,7 @@ dependencies {
     implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
     implementation 'com.ms-square:etsyblur:0.2.1'
     implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -119,7 +119,7 @@
                 <EditText
                     android:id="@+id/empresa_cadastro_investidor_id"
                     style="@style/EditTextRegister"
-                    android:hint="Empresa (caso seja autônomo informe) *"
+                    android:hint="Razão Social (caso não possua informe) *"
                     android:inputType="text" />
             </android.support.design.widget.TextInputLayout>
 
