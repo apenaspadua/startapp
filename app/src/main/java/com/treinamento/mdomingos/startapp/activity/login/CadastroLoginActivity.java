@@ -2,11 +2,8 @@ package com.treinamento.mdomingos.startapp.activity.login;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -28,6 +25,7 @@ import com.treinamento.mdomingos.startapp.R;
 import com.treinamento.mdomingos.startapp.activity.others.EnviandoEmailActivity;
 import com.treinamento.mdomingos.startapp.activity.others.TermosActivity;
 import com.treinamento.mdomingos.startapp.model.Usuarios;
+import com.treinamento.mdomingos.startapp.utils.FirebaseConfig;
 import com.treinamento.mdomingos.startapp.utils.Validator;
 
 public class CadastroLoginActivity extends AppCompatActivity {
@@ -40,7 +38,6 @@ public class CadastroLoginActivity extends AppCompatActivity {
     private TextView termosDeUso;
     private ProgressDialog progressDialog;
     private int Id = 0;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,13 +55,8 @@ public class CadastroLoginActivity extends AppCompatActivity {
         confirmaSenha = findViewById(R.id.comfirma_senha_cadastro_login_id);
         checkBox = findViewById(R.id.checkBox_termos_id);
         termosDeUso = findViewById(R.id.termos_text_id);
-
-
         progressDialog = new ProgressDialog(CadastroLoginActivity.this);
-
-
         firebaseAuth = FirebaseAuth.getInstance();
-
 
         botaoSouInvestidor.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +86,7 @@ public class CadastroLoginActivity extends AppCompatActivity {
                 final String senhaRecebida = senha.getText().toString();
                 final String confirmaSenhaRecebido = confirmaSenha.getText().toString();
 
-                if(FirebaseConection()){
+                if(FirebaseConfig.firebaseConection()){
 
                     //Criando Usuario
 
@@ -116,17 +108,20 @@ public class CadastroLoginActivity extends AppCompatActivity {
                     }else if(Id == 0){
 
                         new AlertDialog.Builder(CadastroLoginActivity.this).setTitle("Aviso").
-                                setMessage("Escolha uma opção de conta.").setPositiveButton("Entendi", new DialogInterface.OnClickListener() {
+                                setMessage("Leia e aceite os Termos de uso.").setPositiveButton("Entendi", new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {}}).show();
-
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                            }
+                        }).show();
 
                     } else if (checkBox.isChecked() == false) {
 
                         new AlertDialog.Builder(CadastroLoginActivity.this).setTitle("Aviso").
                                 setMessage("Leia e aceite os Termos de uso.").setPositiveButton("Entendi", new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {}}).show();
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                            }
+                        }).show();
 
                     } else if (confirmaSenhaRecebido.equals(senhaRecebida)) {
 
@@ -141,7 +136,6 @@ public class CadastroLoginActivity extends AppCompatActivity {
                                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                                     if(user != null){
                                         Log.i("createUser", "Cadastrado com sucesso!!!");
-
 
                                               FirebaseUser firebaseUser = task.getResult().getUser();
                                               Usuarios usuario = new Usuarios();
@@ -206,16 +200,5 @@ public class CadastroLoginActivity extends AppCompatActivity {
             }
         });
     }
-
-
-    public boolean FirebaseConection(){
-        ConnectivityManager connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
-        if (activeNetwork != null) // conectado a internet
-            return true;
-        return false; // nao conectado
-    }
-
-
 }
 

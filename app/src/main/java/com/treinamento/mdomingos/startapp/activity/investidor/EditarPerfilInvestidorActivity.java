@@ -1,21 +1,11 @@
 package com.treinamento.mdomingos.startapp.activity.investidor;
 
-import android.Manifest;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.net.Uri;
-import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -26,10 +16,6 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.github.rtoshiro.util.format.SimpleMaskFormatter;
-import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -39,13 +25,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.treinamento.mdomingos.startapp.R;
 import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentInvestidor;
 import com.treinamento.mdomingos.startapp.model.CEP;
 import com.treinamento.mdomingos.startapp.model.Investidor;
 import com.treinamento.mdomingos.startapp.model.InvestidorResponse;
+import com.treinamento.mdomingos.startapp.utils.FirebaseConfig;
 import com.treinamento.mdomingos.startapp.utils.HttpService;
+import com.treinamento.mdomingos.startapp.utils.MaskFormatter;
 import com.treinamento.mdomingos.startapp.utils.Validator;
 
 import java.util.concurrent.ExecutionException;
@@ -62,10 +49,7 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private ImageView foto, icone;
     private StorageReference mStorage;
-    public Uri pegarFoto;
-    static int PReqCode = 1;
-    static int REQUESDODE = 1;
-    private static final int PICK_IMAGE_REQUEST = 1;
+
 
     @Override
     protected void onResume() {
@@ -124,21 +108,10 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
         mStorage = FirebaseStorage.getInstance().getReference();
 
         //Mascaras
-        SimpleMaskFormatter simpleMaskFormatterTel = new SimpleMaskFormatter("(NN)NNNNN-NNNN"); //Mascara para telefone
-        MaskTextWatcher maskTextWatcherTel = new MaskTextWatcher(telefone, simpleMaskFormatterTel);
-        telefone.addTextChangedListener(maskTextWatcherTel);
-
-        SimpleMaskFormatter simpleMaskFormatter = new SimpleMaskFormatter("NN/NN/NNNN"); //Mascara para data
-        MaskTextWatcher maskTextWatcher = new MaskTextWatcher(dataNasc, simpleMaskFormatter);
-        dataNasc.addTextChangedListener(maskTextWatcher);
-
-        SimpleMaskFormatter simpleMaskFormatterCpf = new SimpleMaskFormatter("NNN.NNN.NNN-NN"); //Mascara para cpf
-        MaskTextWatcher maskTextWatcherCpf = new MaskTextWatcher(cpf, simpleMaskFormatterCpf);
-        cpf.addTextChangedListener(maskTextWatcherCpf);
-
-        SimpleMaskFormatter simpleMaskFormatterCnpj = new SimpleMaskFormatter("NN.NNN.NNN/NNNN-NN"); //Mascara para cnpj
-        MaskTextWatcher maskTextWatcherCnpj = new MaskTextWatcher(cnpj, simpleMaskFormatterCnpj);
-        cnpj.addTextChangedListener(maskTextWatcherCnpj);
+        MaskFormatter.simpleFormatterCell(telefone);
+        MaskFormatter.simpleFormatterData(dataNasc);
+        MaskFormatter.simpleFormatterCpf(cpf);
+        MaskFormatter.simpleFormatterCnpj(cnpj);
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -161,33 +134,7 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
             }
         });
 
-        //Alterar foto
-        icone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (Build.VERSION.SDK_INT >= 22) {
-                    checkAndRequestForPermission();
-                } else {
-                    openGallery();
-                }
-            }
-            private void openGallery() {
-                Intent intentGallery = new Intent();
-                intentGallery.setType("image/*");
-                startActivityForResult(intentGallery, REQUESDODE);
-            }
-            private void checkAndRequestForPermission() {
-                if (ContextCompat.checkSelfPermission(EditarPerfilInvestidorActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(EditarPerfilInvestidorActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                        Toast.makeText(EditarPerfilInvestidorActivity.this, "Aceitar permissão", Toast.LENGTH_LONG).show();
-                    } else {
-                        ActivityCompat.requestPermissions(EditarPerfilInvestidorActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PReqCode);
-                    }
-                } else {
-                    openGallery();
-                }
-            }
-        });
+
 
         cep.addTextChangedListener(new TextWatcher() {
             @Override
@@ -223,7 +170,7 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
         botaoConcluir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (FirebaseConection()) {
+                if (FirebaseConfig.firebaseConection()) {
 
                     final String nomeRecebido = nome.getText().toString();
                     final String emailRecebido = email.getText().toString();
@@ -319,31 +266,6 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == RESULT_OK && requestCode == REQUESDODE && data != null) {
-            pegarFoto = data.getData();
-            foto.setImageURI(pegarFoto);
-            final StorageReference profileImageRef = mStorage.child("Photos").child(firebaseAuth.getCurrentUser().getUid()).child(pegarFoto.getLastPathSegment());
-            final UploadTask uploadTask = profileImageRef.putFile(pegarFoto);
-
-//            Glide.with(this)
-//                    .load(R.drawable.investidor_icon2)
-//                    .apply(RequestOptions.circleCropTransform())
-//                    .into(foto);
-        }
-    }
-
-    public boolean FirebaseConection(){
-        ConnectivityManager connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
-        if (activeNetwork != null) // conectado a internet
-            return true;
-        return false; // nao conectado
     }
 }
 

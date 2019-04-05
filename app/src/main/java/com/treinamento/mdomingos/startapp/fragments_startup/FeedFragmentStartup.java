@@ -9,10 +9,6 @@ import android.view.ViewGroup;
 
 import com.treinamento.mdomingos.startapp.R;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class FeedFragmentStartup extends Fragment {
 
 

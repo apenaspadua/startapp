@@ -1,6 +1,5 @@
 package com.treinamento.mdomingos.startapp.activity.login;
 
-
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -36,12 +35,12 @@ import com.google.firebase.database.ValueEventListener;
 import com.treinamento.mdomingos.startapp.R;
 
 import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentInvestidor;
+import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentStartup;
 import com.treinamento.mdomingos.startapp.activity.investidor.CadastroInvestidorActivity;
 import com.treinamento.mdomingos.startapp.activity.startup.CadastroStartupActivity;
 import com.treinamento.mdomingos.startapp.model.Usuarios;
 import com.treinamento.mdomingos.startapp.utils.FirebaseConfig;
 import com.treinamento.mdomingos.startapp.utils.Validator;
-
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -59,7 +58,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
         //Instance
         usernane = findViewById(R.id.emailLogin_id);
         passowrd = findViewById(R.id.senhaLogin_id);
@@ -71,11 +69,7 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(LoginActivity.this);
         progressBar = findViewById(R.id.progressBarLogin);
 
-
         firebaseAuth = FirebaseAuth.getInstance();
-
-
-
 
         //Alterar buttons + functions
         botaoLogin.setOnClickListener(new View.OnClickListener() {
@@ -86,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
                 final String email = usernane.getText().toString();
                 final String senha = passowrd.getText().toString();
 
-                if(FirebaseConection()) {
+                if(FirebaseConfig.firebaseConection()) {
                     if (Validator.stringEmpty(email)) {
                         usernane.setError("Insira seu email");
                         onResume();
@@ -127,10 +121,17 @@ public class LoginActivity extends AppCompatActivity {
                                                         finish();
                                                     }
                                                 } else if (usuario.getPerfil() == 2){
-                                                    Intent intent = new Intent(LoginActivity.this, CadastroStartupActivity.class);
-                                                    startActivity(intent);
-                                                    progressDialog.dismiss();
-                                                    finish();
+                                                    if(usuario.getDetalhes_completo() == 0 ) {
+                                                        Intent intent = new Intent(LoginActivity.this, CadastroStartupActivity.class);
+                                                        startActivity(intent);
+                                                        progressDialog.dismiss();
+                                                        finish();
+                                                    } else {
+                                                        Intent intent = new Intent(LoginActivity.this, BaseFragmentStartup.class);
+                                                        startActivity(intent);
+                                                        progressDialog.dismiss();
+                                                        finish();
+                                                    }
                                                 }
                                                 else {
 
@@ -271,13 +272,5 @@ public class LoginActivity extends AppCompatActivity {
         botaoTextEsqueceuSenha.setTextColor(Color.parseColor("#A7A7A7"));
         botaoCadastrese.setTextColor(Color.parseColor("#A7A7A7"));
 
-    }
-
-    public boolean FirebaseConection(){
-        ConnectivityManager connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
-        if (activeNetwork != null) // conectado a internet
-            return true;
-        return false; // nao conectado
     }
 }

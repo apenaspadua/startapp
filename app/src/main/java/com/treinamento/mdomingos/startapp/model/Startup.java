@@ -40,6 +40,7 @@ public class Startup {
     public void salvarStartup(String id){
         DatabaseReference databaseReference = FirebaseConfig.getFirebase();
         databaseReference.child("Usuarios").child(id).child("detalhe_startup").setValue(this);
+        databaseReference.child("Usuarios").child(id).child("detalhes_completo").setValue(1);
 
     }
 

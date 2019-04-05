@@ -1,11 +1,16 @@
 package com.treinamento.mdomingos.startapp.fragments_investidor;
 
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -18,6 +23,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.treinamento.mdomingos.startapp.R;
+import com.treinamento.mdomingos.startapp.activity.investidor.EditarPerfilInvestidorActivity;
+import com.treinamento.mdomingos.startapp.activity.login.LoginActivity;
 import com.treinamento.mdomingos.startapp.model.InvestidorResponse;
 
 public class PerfilFragment_Investidor extends Fragment {
@@ -25,6 +32,36 @@ public class PerfilFragment_Investidor extends Fragment {
     private FirebaseUser firebaseUser;
     private FirebaseAuth firebaseAuth;
     private TextView nome, cidade, empresa, email, data, rua, bairro, estado, telefone;
+    private ProgressDialog progressDialog;
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        inflater.inflate(R.menu.dropdown_menu_home, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.logout_item_dropdown_menu_id){
+            progressDialog.setMessage("Saindo...");
+            progressDialog.show();
+            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+            mAuth.signOut();
+            startActivity(new Intent(getActivity(), LoginActivity.class));
+            getActivity().finish();
+        } else {
+            if (item.getItemId() == R.id.editar_perfil_item_dropdown_menu_id){
+                startActivity(new Intent(getActivity(), EditarPerfilInvestidorActivity.class));
+            }
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
+
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,6 +81,7 @@ public class PerfilFragment_Investidor extends Fragment {
         bairro = view.findViewById(R.id.bairro_perfil_investidor_id);
         estado = view.findViewById(R.id.estado_perfil_investidor_id);
         telefone = view.findViewById(R.id.telefone_perfil_investidor_id);
+        progressDialog = new ProgressDialog(getActivity());
 
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -71,6 +109,7 @@ public class PerfilFragment_Investidor extends Fragment {
 
         return view;
     }
+
 
 
 }

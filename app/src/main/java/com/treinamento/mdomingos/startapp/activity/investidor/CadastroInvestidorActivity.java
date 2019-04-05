@@ -29,7 +29,9 @@ import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentInvestidor;
 import com.treinamento.mdomingos.startapp.model.CEP;
 import com.treinamento.mdomingos.startapp.model.Investidor;
 import com.treinamento.mdomingos.startapp.model.Usuarios;
+import com.treinamento.mdomingos.startapp.utils.FirebaseConfig;
 import com.treinamento.mdomingos.startapp.utils.HttpService;
+import com.treinamento.mdomingos.startapp.utils.MaskFormatter;
 import com.treinamento.mdomingos.startapp.utils.Validator;
 
 import java.util.concurrent.ExecutionException;
@@ -45,7 +47,6 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,22 +76,10 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
         firebaseUser = firebaseAuth.getCurrentUser();
 
         //Mascaras
-        SimpleMaskFormatter simpleMaskFormatterTel = new SimpleMaskFormatter("(NN)NNNNN-NNNN"); //Mascara para telefone
-        MaskTextWatcher maskTextWatcherTel = new MaskTextWatcher(telefone, simpleMaskFormatterTel);
-        telefone.addTextChangedListener(maskTextWatcherTel);
-
-        SimpleMaskFormatter simpleMaskFormatter = new SimpleMaskFormatter("NN/NN/NNNN"); //Mascara para data
-        MaskTextWatcher maskTextWatcher = new MaskTextWatcher(dataNasc, simpleMaskFormatter);
-        dataNasc.addTextChangedListener(maskTextWatcher);
-
-        SimpleMaskFormatter simpleMaskFormatterCpf = new SimpleMaskFormatter("NNN.NNN.NNN-NN"); //Mascara para cpf
-        MaskTextWatcher maskTextWatcherCpf = new MaskTextWatcher(cpf, simpleMaskFormatterCpf);
-        cpf.addTextChangedListener(maskTextWatcherCpf);
-
-        SimpleMaskFormatter simpleMaskFormatterCnpj = new SimpleMaskFormatter("NN.NNN.NNN/NNNN-NN"); //Mascara para cnpj
-        MaskTextWatcher maskTextWatcherCnpj = new MaskTextWatcher(cnpj, simpleMaskFormatterCnpj);
-        cnpj.addTextChangedListener(maskTextWatcherCnpj);
-
+        MaskFormatter.simpleFormatterCell(telefone);
+        MaskFormatter.simpleFormatterData(dataNasc);
+        MaskFormatter.simpleFormatterCpf(cpf);
+        MaskFormatter.simpleFormatterCnpj(cnpj);
 
         irPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,7 +145,7 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
         botaoConcluir .setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (FirebaseConection()) {
+                if (FirebaseConfig.firebaseConection()) {
 
                     final String nomeRecebido = nome.getText().toString();
                     final String emailRecebido = email.getText().toString();
@@ -221,9 +210,9 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
                             } else {
 
                                 Investidor investidor = new Investidor(nomeRecebido, emailRecebido, telefoneRecebido, empresaRecebida, dataRecebida, cepRecebido, ruaRecebida, bairroRecebido, cidadeRecebido, estadoRecebido, null, cpfRecebido);
-
                                 investidor.salvarInvestidor(firebaseUser.getUid());
-
+                                progressDialog.setMessage("Salvando dados...");
+                                progressDialog.show();
                                 Toast.makeText(CadastroInvestidorActivity.this, "Salvo com sucesso", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(CadastroInvestidorActivity.this, BaseFragmentInvestidor.class));
                                 finish();
@@ -253,11 +242,11 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
 
     }
 
-    public boolean FirebaseConection(){
-        ConnectivityManager connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
-        if (activeNetwork != null) // conectado a internet
-            return true;
-        return false; // nao conectado
+    @Override
+    protected void onResume() {
+        irPerfil.setTextColor(Color.parseColor("#ffffff"));
+        super.onResume();
     }
+
+
 }

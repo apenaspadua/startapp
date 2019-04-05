@@ -23,9 +23,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.treinamento.mdomingos.startapp.R;
 import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentInvestidor;
+import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentStartup;
+import com.treinamento.mdomingos.startapp.activity.investidor.CadastroInvestidorActivity;
 import com.treinamento.mdomingos.startapp.model.CEP;
 import com.treinamento.mdomingos.startapp.model.Startup;
+import com.treinamento.mdomingos.startapp.utils.FirebaseConfig;
 import com.treinamento.mdomingos.startapp.utils.HttpService;
+import com.treinamento.mdomingos.startapp.utils.MaskFormatter;
 import com.treinamento.mdomingos.startapp.utils.Validator;
 
 import java.util.concurrent.ExecutionException;
@@ -61,11 +65,8 @@ public class CadastroStartupActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
 
-        //mascara para cnpj
-        SimpleMaskFormatter simpleMaskFormatter = new SimpleMaskFormatter("NN.NNN.NNN/NNNN-NN");
-        MaskTextWatcher maskTextWatcher = new MaskTextWatcher(cnpj, simpleMaskFormatter);
-        cnpj.addTextChangedListener(maskTextWatcher);
-
+        //Mascara para cnpj
+        MaskFormatter.simpleFormatterCnpj(cnpj);
 
         irPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,7 +115,7 @@ public class CadastroStartupActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
 
-        if(FirebaseConection()){
+        if(FirebaseConfig.firebaseConection()){
 
             final String razaoSocialRecebido = razaoSocial.getText().toString();
             final String nomeFantasiaRecebido = nomeFantasia.getText().toString();
@@ -169,13 +170,15 @@ public class CadastroStartupActivity extends AppCompatActivity {
                 startup.salvarStartup(firebaseUser.getUid());
                 progressDialog.setMessage("Salvando dados...");
                 progressDialog.show();
+                Toast.makeText(CadastroStartupActivity.this, "Salvo com sucesso", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(CadastroStartupActivity.this, BaseFragmentStartup.class));
+                finish();
             }
 
         }else {
             Log.i("sem internet", "sem conexao");
             Toast.makeText(CadastroStartupActivity.this, "Sem conexão com a internet", Toast.LENGTH_SHORT).show();
         }
-
         }
     });
 
@@ -187,11 +190,4 @@ public class CadastroStartupActivity extends AppCompatActivity {
         super.onResume();
     }
 
-    public boolean FirebaseConection(){
-        ConnectivityManager connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
-        if (activeNetwork != null) // conectado a internet
-            return true;
-        return false; // nao conectado
-    }
 }

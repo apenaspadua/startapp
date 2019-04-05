@@ -20,12 +20,15 @@ import com.treinamento.mdomingos.startapp.adapter.TabsAdapter;
 import com.treinamento.mdomingos.startapp.fragments_investidor.FeedFragment_Investidor;
 import com.treinamento.mdomingos.startapp.fragments_investidor.NotifyFragment_Investidor;
 import com.treinamento.mdomingos.startapp.fragments_investidor.PerfilFragment_Investidor;
+import com.treinamento.mdomingos.startapp.fragments_startup.FeedFragmentStartup;
+import com.treinamento.mdomingos.startapp.fragments_startup.NotifyFragment_Startup;
+import com.treinamento.mdomingos.startapp.fragments_startup.PerfilFragment_Startup;
 
-public class BaseFragmentInvestidor extends AppCompatActivity {
+public class BaseFragmentStartup extends AppCompatActivity {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private FeedFragment_Investidor feedFragmentInvestidor;
+    private FeedFragmentStartup feedFragmentStartup;
     private Toolbar toolbar;
     private ProgressDialog progressDialog;
     private TextView titulo;
@@ -38,7 +41,7 @@ public class BaseFragmentInvestidor extends AppCompatActivity {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) {
-            startActivity(new Intent(BaseFragmentInvestidor.this, LoginActivity.class));
+            startActivity(new Intent(BaseFragmentStartup.this, LoginActivity.class));
             finish();
             return;
         }
@@ -46,28 +49,27 @@ public class BaseFragmentInvestidor extends AppCompatActivity {
         initViewPager();
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base_fragment_investidor);
+        setContentView(R.layout.activity_base_fragment_startup);
 
-        titulo = findViewById(R.id.titulo_home_investidor_id);
-        viewPager = findViewById(R.id.vp_pagina_id);
-        tabLayout = findViewById(R.id.tabLayout);
-        imageViewProfile = findViewById(R.id.imageview_home_investidor_id);
-        imageViewChat = findViewById(R.id.imageview_chat_investidor_id);
-        imageViewBack = findViewById(R.id.imageview_back_investidor_id);
-        toolbar = findViewById(R.id.toolbar);
+        titulo = findViewById(R.id.titulo_home_startup_id);
+        viewPager = findViewById(R.id.vp_pagina_startup_id);
+        tabLayout = findViewById(R.id.tabLayout_startup);
+        imageViewProfile = findViewById(R.id.imageview_home_startup_id);
+        imageViewChat = findViewById(R.id.imageview_chat_startup_id);
+        imageViewBack = findViewById(R.id.imageview_back_startup_id);
+        toolbar = findViewById(R.id.toolbar_startup);
         progressDialog = new ProgressDialog(this);
 
         setSupportActionBar(toolbar);
         TabsAdapter tabsAdapter = new TabsAdapter(getSupportFragmentManager());
 
-        feedFragmentInvestidor = new FeedFragment_Investidor();
-        tabsAdapter.addFragment(feedFragmentInvestidor, "");
-        tabsAdapter.addFragment(new NotifyFragment_Investidor(), "");
-        tabsAdapter.addFragment(new PerfilFragment_Investidor(), "");
+        feedFragmentStartup = new FeedFragmentStartup();
+        tabsAdapter.addFragment(feedFragmentStartup, "");
+        tabsAdapter.addFragment(new NotifyFragment_Startup(), "");
+        tabsAdapter.addFragment(new PerfilFragment_Startup(), "");
 
         viewPager.setAdapter(tabsAdapter);
 //        viewPager.setPageTransformer(true, new AccordionTransformer());
@@ -134,23 +136,21 @@ public class BaseFragmentInvestidor extends AppCompatActivity {
     }
 
     ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-            }
+        }
 
-            @Override
-            public void onPageSelected(int position) {
+        @Override
+        public void onPageSelected(int position) {
 
 
 
-            }
+        }
 
-            @Override
-            public void onPageScrollStateChanged(int state) {
+        @Override
+        public void onPageScrollStateChanged(int state) {
 
-            }
-        };
+        }
+    };
 }
-
-
