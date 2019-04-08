@@ -1,11 +1,7 @@
 package com.treinamento.mdomingos.startapp.activity.investidor;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -16,19 +12,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.rtoshiro.util.format.SimpleMaskFormatter;
-import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
 import com.treinamento.mdomingos.startapp.R;
-import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentInvestidor;
 import com.treinamento.mdomingos.startapp.model.CEP;
 import com.treinamento.mdomingos.startapp.model.Investidor;
-import com.treinamento.mdomingos.startapp.model.Usuarios;
 import com.treinamento.mdomingos.startapp.utils.FirebaseConfig;
 import com.treinamento.mdomingos.startapp.utils.HttpService;
 import com.treinamento.mdomingos.startapp.utils.MaskFormatter;
@@ -41,8 +31,7 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
     private EditText nome, email, empresa, telefone, cep, cpf, cnpj, dataNasc, rua, cidade, bairro, estado;
     private RadioGroup radioGroup;
     private TextInputLayout inputPf, inputPj;
-    private RelativeLayout botaoConcluir;
-    private TextView irPerfil;
+    private RelativeLayout botaoAvancar;
     private ProgressDialog progressDialog;
 
     private FirebaseAuth firebaseAuth;
@@ -67,8 +56,7 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
         estado = findViewById(R.id.estado_cadastro_investidor_id);
         inputPf = findViewById(R.id.textInputPF);
         inputPj = findViewById(R.id.textInputPJ);
-        botaoConcluir = findViewById(R.id.botao_concluir_cadastro_investidor_id);
-        irPerfil = findViewById(R.id.ir_para_perfil_cadastro_investidor);
+        botaoAvancar = findViewById(R.id.botao_avancar_cadastro_investidor_id);
         radioGroup = findViewById(R.id.radioGroup);
         progressDialog = new ProgressDialog(CadastroInvestidorActivity.this);
 
@@ -80,15 +68,6 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
         MaskFormatter.simpleFormatterData(dataNasc);
         MaskFormatter.simpleFormatterCpf(cpf);
         MaskFormatter.simpleFormatterCnpj(cnpj);
-
-        irPerfil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                irPerfil.setTextColor(Color.parseColor("#0289BE"));
-                startActivity(new Intent(CadastroInvestidorActivity.this, BaseFragmentInvestidor.class));
-                finish();
-            }
-        });
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -142,7 +121,7 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {}
         });
 
-        botaoConcluir .setOnClickListener(new View.OnClickListener() {
+        botaoAvancar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (FirebaseConfig.firebaseConection()) {
@@ -211,10 +190,9 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
 
                                 Investidor investidor = new Investidor(nomeRecebido, emailRecebido, telefoneRecebido, empresaRecebida, dataRecebida, cepRecebido, ruaRecebida, bairroRecebido, cidadeRecebido, estadoRecebido, null, cpfRecebido);
                                 investidor.salvarInvestidor(firebaseUser.getUid());
-                                progressDialog.setMessage("Salvando dados...");
+                                progressDialog.setMessage("Guardando dados...");
                                 progressDialog.show();
-                                Toast.makeText(CadastroInvestidorActivity.this, "Salvo com sucesso", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(CadastroInvestidorActivity.this, BaseFragmentInvestidor.class));
+                                startActivity(new Intent(CadastroInvestidorActivity.this, BioInvestidorActivity.class));
                                 finish();
 
                             }
@@ -226,7 +204,7 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
                                 investidor.salvarInvestidor(firebaseUser.getUid());
                                 progressDialog.setMessage("Salvando dados...");
                                 progressDialog.show();
-                                startActivity(new Intent(CadastroInvestidorActivity.this, BaseFragmentInvestidor.class));
+                                startActivity(new Intent(CadastroInvestidorActivity.this, BioInvestidorActivity.class));
                                 finish();
                             }
                         }
@@ -241,12 +219,4 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
         });
 
     }
-
-    @Override
-    protected void onResume() {
-        irPerfil.setTextColor(Color.parseColor("#ffffff"));
-        super.onResume();
-    }
-
-
 }
