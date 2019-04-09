@@ -15,6 +15,7 @@ public class Usuarios {
     private String email;
     private int perfil;
     private int detalhes_completo;
+    private int bio_completa;
 
 
     public Usuarios() {
@@ -56,6 +57,14 @@ public class Usuarios {
 
     public void setDetalhes_completo(int detalhes_completo) {
         this.detalhes_completo = detalhes_completo;
+    }
+
+    public int getBio_completa() {
+        return bio_completa;
+    }
+
+    public void setBio_completa(int bio_completa) {
+        this.bio_completa = bio_completa;
     }
 }
 

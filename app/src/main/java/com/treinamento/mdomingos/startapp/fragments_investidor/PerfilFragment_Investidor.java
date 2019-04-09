@@ -31,9 +31,8 @@ public class PerfilFragment_Investidor extends Fragment {
 
     private FirebaseUser firebaseUser;
     private FirebaseAuth firebaseAuth;
-    private TextView nome, cidade, empresa, email, data, rua, bairro, estado, telefone;
+    private TextView nome, cidade, empresa, email, data, rua, bairro, estado, telefone, bio;
     private ProgressDialog progressDialog;
-
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -62,7 +61,6 @@ public class PerfilFragment_Investidor extends Fragment {
 
     }
 
-
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
@@ -75,17 +73,16 @@ public class PerfilFragment_Investidor extends Fragment {
         nome = view.findViewById(R.id.nome_perfil_investidor_id);
         cidade = view.findViewById(R.id.text_cidade_perfil_investidor);
         empresa = view.findViewById(R.id.text_empresa_perfil_investidor);
-        email = view.findViewById(R.id.text_email_perfil_investidor);
-        data = view.findViewById(R.id.data_perfil_investidor_id);
-        rua = view.findViewById(R.id.rua_perfil_investidor_id);
-        bairro = view.findViewById(R.id.bairro_perfil_investidor_id);
-        estado = view.findViewById(R.id.estado_perfil_investidor_id);
-        telefone = view.findViewById(R.id.telefone_perfil_investidor_id);
+//        email = view.findViewById(R.id.text_email_perfil_investidor);
+//        data = view.findViewById(R.id.data_perfil_investidor_id);
+//        rua = view.findViewById(R.id.rua_perfil_investidor_id);
+//        bairro = view.findViewById(R.id.bairro_perfil_investidor_id);
+//        estado = view.findViewById(R.id.estado_perfil_investidor_id);
+//        telefone = view.findViewById(R.id.telefone_perfil_investidor_id);
+        bio = view.findViewById(R.id.text_biografia_perfil_investidor);
         progressDialog = new ProgressDialog(getActivity());
 
-
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-
         databaseReference.child("Usuarios").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -93,12 +90,13 @@ public class PerfilFragment_Investidor extends Fragment {
                 nome.setText(investidor.getDetalhe_investidor().getNome());
                 cidade.setText(investidor.getDetalhe_investidor().getCidade());
                 empresa.setText(investidor.getDetalhe_investidor().getEmpresa());
-                email.setText(investidor.getDetalhe_investidor().getEmail());
-                data.setText(investidor.getDetalhe_investidor().getData());
-                rua.setText(investidor.getDetalhe_investidor().getRua());
-                bairro.setText(investidor.getDetalhe_investidor().getBairro());
-                estado.setText(investidor.getDetalhe_investidor().getEstado());
-                telefone.setText(investidor.getDetalhe_investidor().getTelefone());
+//                email.setText(investidor.getDetalhe_investidor().getEmail());
+//                data.setText(investidor.getDetalhe_investidor().getData());
+//                rua.setText(investidor.getDetalhe_investidor().getRua());
+//                bairro.setText(investidor.getDetalhe_investidor().getBairro());
+//                estado.setText(investidor.getDetalhe_investidor().getEstado());
+//                telefone.setText(investidor.getDetalhe_investidor().getTelefone());
+                bio.setText(investidor.getDetalhe_investidor().getBio());
             }
 
             @Override

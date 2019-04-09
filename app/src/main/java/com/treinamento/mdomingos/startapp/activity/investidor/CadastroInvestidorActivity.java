@@ -202,7 +202,7 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
                             } else {
                                 Investidor investidor = new Investidor(nomeRecebido, emailRecebido, telefoneRecebido, empresaRecebida, dataRecebida, cepRecebido, ruaRecebida, bairroRecebido, cidadeRecebido, estadoRecebido, cnpjRecebido, null);
                                 investidor.salvarInvestidor(firebaseUser.getUid());
-                                progressDialog.setMessage("Salvando dados...");
+                                progressDialog.setMessage("Guardando dados...");
                                 progressDialog.show();
                                 startActivity(new Intent(CadastroInvestidorActivity.this, BioInvestidorActivity.class));
                                 finish();

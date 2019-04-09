@@ -36,6 +36,7 @@ import com.treinamento.mdomingos.startapp.R;
 
 import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentInvestidor;
 import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentStartup;
+import com.treinamento.mdomingos.startapp.activity.investidor.BioInvestidorActivity;
 import com.treinamento.mdomingos.startapp.activity.investidor.CadastroInvestidorActivity;
 import com.treinamento.mdomingos.startapp.activity.startup.CadastroStartupActivity;
 import com.treinamento.mdomingos.startapp.model.Usuarios;
@@ -109,7 +110,7 @@ public class LoginActivity extends AppCompatActivity {
                                                 Usuarios usuario =  dataSnapshot.getValue(Usuarios.class);
 
                                                 if(usuario.getPerfil() == 1){
-                                                    if(usuario.getDetalhes_completo() == 0 ) {
+                                                    if((usuario.getDetalhes_completo() == 0) && usuario.getBio_completa() == 0 ) {
                                                         Intent intent = new Intent(LoginActivity.this, CadastroInvestidorActivity.class);
                                                         startActivity(intent);
                                                         progressDialog.dismiss();
@@ -121,7 +122,7 @@ public class LoginActivity extends AppCompatActivity {
                                                         finish();
                                                     }
                                                 } else if (usuario.getPerfil() == 2){
-                                                    if(usuario.getDetalhes_completo() == 0 ) {
+                                                    if((usuario.getDetalhes_completo() == 0) && (usuario.getBio_completa() == 0) ) {
                                                         Intent intent = new Intent(LoginActivity.this, CadastroStartupActivity.class);
                                                         startActivity(intent);
                                                         progressDialog.dismiss();

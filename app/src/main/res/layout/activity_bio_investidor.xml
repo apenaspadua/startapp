@@ -81,7 +81,7 @@
             </LinearLayout>
 
             <EditText
-                android:id="@+id/et"
+                android:id="@+id/biografia_cadastro_investidor_id"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:padding="10dp"
@@ -98,7 +98,7 @@
 
 
             <RelativeLayout
-                android:id="@+id/botao_cadastrar_login_id"
+                android:id="@+id/botao_bio_concluir_cadastro_login_id"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_margin="6dp"

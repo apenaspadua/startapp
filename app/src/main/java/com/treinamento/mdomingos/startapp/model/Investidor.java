@@ -18,7 +18,6 @@ import java.io.Serializable;
  */
 public class Investidor implements Serializable {
 
-
     private String nome;
     private String email;
     private String telefone;
@@ -33,7 +32,10 @@ public class Investidor implements Serializable {
     private String cpf;
     private String bio;
 
-    public Investidor() {
+    public Investidor(){}
+
+    public Investidor(String bio){
+        this.bio = bio;
     }
 
     public Investidor(String nome, String email, String telefone, String empresa, String data, String cep, String rua, String bairro, String cidade, String estado, String cnpj, String cpf) {
@@ -55,12 +57,12 @@ public class Investidor implements Serializable {
         DatabaseReference databaseReference = FirebaseConfig.getFirebase();
         databaseReference.child("Usuarios").child(id).child("detalhe_investidor").setValue(this);
         databaseReference.child("Usuarios").child(id).child("detalhes_completo").setValue(1);
-
     }
 
     public void salvarBioInvestidor(String id){
         DatabaseReference databaseReference = FirebaseConfig.getFirebase();
-        databaseReference.child("Usuarios").child(id).child("detalhe_investidor").setValue(bio);
+        databaseReference.child("Usuarios").child(id).child("detalhe_investidor").child("biografia").setValue(bio);
+        databaseReference.child("Usuarios").child(id).child("bio_completa").setValue(1);
     }
 
 

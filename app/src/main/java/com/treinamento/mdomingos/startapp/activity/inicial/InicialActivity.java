@@ -23,13 +23,13 @@ import com.google.firebase.database.ValueEventListener;
 import com.treinamento.mdomingos.startapp.R;
 import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentInvestidor;
 import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentStartup;
+import com.treinamento.mdomingos.startapp.activity.investidor.BioInvestidorActivity;
 import com.treinamento.mdomingos.startapp.activity.investidor.CadastroInvestidorActivity;
 import com.treinamento.mdomingos.startapp.activity.login.CadastroLoginActivity;
 import com.treinamento.mdomingos.startapp.activity.login.LoginActivity;
 import com.treinamento.mdomingos.startapp.activity.startup.CadastroStartupActivity;
 import com.treinamento.mdomingos.startapp.model.Usuarios;
 import com.treinamento.mdomingos.startapp.utils.FirebaseConfig;
-
 
 public class InicialActivity extends AppCompatActivity {
 
@@ -44,6 +44,9 @@ public class InicialActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicial);
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        mAuth.signOut();
 
         //Instance
         botaoCadastrar = findViewById(R.id.inicial_botao_cadastrar_id);
@@ -64,32 +67,26 @@ public class InicialActivity extends AppCompatActivity {
                     Usuarios usuario = dataSnapshot.getValue(Usuarios.class);
 
                     if (usuario.getPerfil() == 1) {
-                        if (usuario.getDetalhes_completo() == 0) {
+                        if ((usuario.getDetalhes_completo() == 0) && (usuario.getBio_completa() == 0)) {
                             Intent intent = new Intent(InicialActivity.this, CadastroInvestidorActivity.class);
                             startActivity(intent);
-
                             finish();
                         } else {
                             Intent intent = new Intent(InicialActivity.this, BaseFragmentInvestidor.class);
                             startActivity(intent);
-
                             finish();
                         }
                     } else if (usuario.getPerfil() == 2) {
-                        if (usuario.getDetalhes_completo() == 0) {
+                        if ((usuario.getDetalhes_completo() == 0) && (usuario.getBio_completa() == 0)) {
                             Intent intent = new Intent(InicialActivity.this, CadastroStartupActivity.class);
                             startActivity(intent);
-
                             finish();
                         } else {
                             Intent intent = new Intent(InicialActivity.this, BaseFragmentStartup.class);
                             startActivity(intent);
-
                             finish();
                         }
-
                     }
-
                 }
 
                 @Override
@@ -136,17 +133,14 @@ public class InicialActivity extends AppCompatActivity {
         super.onResume();
 
         Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.videologin);
-
         videoView.setVideoURI(uri);
         videoView.start();
-
         videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
                 mp.setLooping(true);
             }
         });
-
         jaPossuoConta.setTextColor(Color.parseColor("#ffffff"));
         progressBar.setVisibility(View.GONE);
     }

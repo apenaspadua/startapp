@@ -143,6 +143,7 @@ public class CadastroLoginActivity extends AppCompatActivity {
                                               usuario.setId(firebaseUser.getUid());
                                               usuario.setPerfil(Id);
                                               usuario.setDetalhes_completo(0);
+                                              usuario.setBio_completa(0);
                                               usuario.setEmail(emailRecebido);
                                               usuario.salvar();
 
