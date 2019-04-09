@@ -67,7 +67,7 @@ public class InicialActivity extends AppCompatActivity {
                     Usuarios usuario = dataSnapshot.getValue(Usuarios.class);
 
                     if (usuario.getPerfil() == 1) {
-                        if ((usuario.getDetalhes_completo() == 0) && (usuario.getBio_completa() == 0)) {
+                        if (usuario.getDetalhes_completo() == 0) {
                             Intent intent = new Intent(InicialActivity.this, CadastroInvestidorActivity.class);
                             startActivity(intent);
                             finish();
@@ -77,7 +77,7 @@ public class InicialActivity extends AppCompatActivity {
                             finish();
                         }
                     } else if (usuario.getPerfil() == 2) {
-                        if ((usuario.getDetalhes_completo() == 0) && (usuario.getBio_completa() == 0)) {
+                        if (usuario.getDetalhes_completo() == 0) {
                             Intent intent = new Intent(InicialActivity.this, CadastroStartupActivity.class);
                             startActivity(intent);
                             finish();

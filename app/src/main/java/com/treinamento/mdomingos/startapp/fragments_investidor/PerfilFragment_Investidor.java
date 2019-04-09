@@ -97,6 +97,7 @@ public class PerfilFragment_Investidor extends Fragment {
 //                estado.setText(investidor.getDetalhe_investidor().getEstado());
 //                telefone.setText(investidor.getDetalhe_investidor().getTelefone());
                 bio.setText(investidor.getDetalhe_investidor().getBio());
+
             }
 
             @Override
@@ -104,7 +105,6 @@ public class PerfilFragment_Investidor extends Fragment {
 
             }
         });
-
         return view;
     }
 
