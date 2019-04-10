@@ -46,6 +46,7 @@ public class SlidesPosCadastroActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SlidesPosCadastroActivity.this, BaseFragmentInvestidor.class);
                 startActivity(intent);
+                finish();
             }
         });
     }

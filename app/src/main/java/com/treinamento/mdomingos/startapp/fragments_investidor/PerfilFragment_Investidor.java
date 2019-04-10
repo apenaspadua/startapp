@@ -96,7 +96,7 @@ public class PerfilFragment_Investidor extends Fragment {
 //                bairro.setText(investidor.getDetalhe_investidor().getBairro());
 //                estado.setText(investidor.getDetalhe_investidor().getEstado());
 //                telefone.setText(investidor.getDetalhe_investidor().getTelefone());
-                bio.setText(investidor.getDetalhe_investidor().getBio());
+                bio.setText(investidor.getDetalhe_investidor().getBiografia());
 
             }
 

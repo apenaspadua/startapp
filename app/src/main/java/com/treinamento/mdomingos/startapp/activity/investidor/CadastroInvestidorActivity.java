@@ -126,6 +126,9 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (FirebaseConfig.firebaseConection()) {
 
+                    progressDialog.setMessage("Guardando dados...");
+                    progressDialog.show();
+
                     final String nomeRecebido = nome.getText().toString();
                     final String emailRecebido = email.getText().toString();
                     final String telefoneRecebido = telefone.getText().toString();
@@ -190,9 +193,8 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
 
                                 Investidor investidor = new Investidor(nomeRecebido, emailRecebido, telefoneRecebido, empresaRecebida, dataRecebida, cepRecebido, ruaRecebida, bairroRecebido, cidadeRecebido, estadoRecebido, null, cpfRecebido);
                                 investidor.salvarInvestidor(firebaseUser.getUid());
-                                progressDialog.setMessage("Guardando dados...");
-                                progressDialog.show();
-                                startActivity(new Intent(CadastroInvestidorActivity.this, BioInvestidorActivity.class));
+                                Intent intent = new Intent(CadastroInvestidorActivity.this, BioInvestidorActivity.class);
+                                startActivity(intent);
                                 finish();
 
                             }
@@ -204,11 +206,13 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
                                 investidor.salvarInvestidor(firebaseUser.getUid());
                                 progressDialog.setMessage("Guardando dados...");
                                 progressDialog.show();
-                                startActivity(new Intent(CadastroInvestidorActivity.this, BioInvestidorActivity.class));
+                                Intent intent = new Intent(CadastroInvestidorActivity.this, BioInvestidorActivity.class);
+                                startActivity(intent);
                                 finish();
                             }
                         }
                     }
+
 
                 } else {
                     Log.i("sem internet", "sem conexao");
@@ -219,4 +223,13 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
         });
 
     }
+
+//    @Override
+//    public void finish() {
+//        System.out.println("Cadastro Finalizado!");
+//        System.runFinalizersOnExit(true) ;
+//        super.finish();
+//        android.os.Process.killProcess(android.os.Process.myPid());
+//    }
+
 }

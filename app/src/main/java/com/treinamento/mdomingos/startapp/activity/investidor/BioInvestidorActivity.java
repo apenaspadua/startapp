@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.treinamento.mdomingos.startapp.R;
 import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentInvestidor;
+import com.treinamento.mdomingos.startapp.activity.others.SlidesPosCadastroActivity;
 import com.treinamento.mdomingos.startapp.model.Investidor;
 import com.treinamento.mdomingos.startapp.utils.FirebaseConfig;
 import com.treinamento.mdomingos.startapp.utils.Validator;
@@ -47,6 +48,8 @@ public class BioInvestidorActivity extends AppCompatActivity {
         botaoConcluir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog.setMessage("Guardando dados...");
+                progressDialog.show();
 
                 if(FirebaseConfig.firebaseConection()) {
                     String bioRecebida = bio.getText().toString();
@@ -56,9 +59,7 @@ public class BioInvestidorActivity extends AppCompatActivity {
                     } else {
                         Investidor investidor = new Investidor(bioRecebida);
                         investidor.salvarBioInvestidor(firebaseUser.getUid());
-                        progressDialog.setMessage("Guardando dados...");
-                        progressDialog.show();
-                        startActivity(new Intent(BioInvestidorActivity.this, BaseFragmentInvestidor.class));
+                        startActivity(new Intent(BioInvestidorActivity.this, SlidesPosCadastroActivity.class));
                         finish();
                     }
                 } else {
