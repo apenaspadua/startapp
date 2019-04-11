@@ -1,21 +1,32 @@
 package com.treinamento.mdomingos.startapp.activity.investidor;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -23,10 +34,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.treinamento.mdomingos.startapp.R;
 import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentInvestidor;
+import com.treinamento.mdomingos.startapp.activity.startup.EditarPerfilStartup;
 import com.treinamento.mdomingos.startapp.model.CEP;
 import com.treinamento.mdomingos.startapp.model.Investidor;
 import com.treinamento.mdomingos.startapp.model.InvestidorResponse;
@@ -35,7 +50,11 @@ import com.treinamento.mdomingos.startapp.utils.HttpService;
 import com.treinamento.mdomingos.startapp.utils.MaskFormatter;
 import com.treinamento.mdomingos.startapp.utils.Validator;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.concurrent.ExecutionException;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class EditarPerfilInvestidorActivity extends AppCompatActivity {
 
@@ -44,11 +63,18 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
     private RadioGroup radioGroup;
     private FirebaseAuth firebaseAuth;
     private TextInputLayout inputPf, inputPj;
-    FirebaseStorage storage = FirebaseStorage.getInstance();
+    private String imagem;
+
     private FirebaseUser firebaseUser;
     private ProgressDialog progressDialog;
-    private ImageView foto, icone;
-    private StorageReference mStorage;
+    private ProgressBar progressBar;
+
+    private CircleImageView foto;
+    private ImageView icone;
+    private StorageReference storageReference;
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
+    private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+    private FirebaseUser user;
 
 
     @Override
@@ -104,16 +130,56 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
         botaoConcluir = findViewById(R.id.botao_concluir_edicao_investidor_id);
         radioGroup = findViewById(R.id.radioGroup_editar);
         bio = findViewById(R.id.biografia_editar_investidor_id);
+        icone = findViewById(R.id.icone_editar_investidor_id);
+        progressBar = findViewById(R.id.progressBar_editar_investidor);
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
-        mStorage = FirebaseStorage.getInstance().getReference();
+        storageReference = storage.getInstance().getReference();
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
         //Mascaras
         MaskFormatter.simpleFormatterCell(telefone);
         MaskFormatter.simpleFormatterData(dataNasc);
         MaskFormatter.simpleFormatterCpf(cpf);
         MaskFormatter.simpleFormatterCnpj(cnpj);
+
+        //acessar base de dados imagem
+        firebaseFirestore.collection("users").document(user.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if(documentSnapshot.exists()){
+
+                    imagem = (String) documentSnapshot.getData().get("Imagem");
+                    Glide.with(getApplicationContext()).load(imagem).into(foto);
+                }
+            }
+        });
+
+        //Pegar imagem de perfil
+        foto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final AlertDialog.Builder alerta = new AlertDialog.Builder(new ContextThemeWrapper(v.getContext(), android.R.style.Theme_DeviceDefault_Light_Dialog));
+                alerta.setMessage("Deseja mudar a foto de perfil?");
+                alerta.setCancelable(true);
+                alerta.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(Intent.ACTION_PICK);
+                        intent.setType("image/*");
+                        startActivityForResult(intent, 2);
+                    }
+                });
+                alerta.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        AlertDialog alertDialog = alerta.create();
+                        alertDialog.show();
+                    }
+                });
+            }
+        });
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -276,6 +342,71 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 2 && requestCode == RESULT_OK){
+            progressBar.setVisibility(View.VISIBLE);
+            if(user != null){
+
+                Uri uri = data.getData();
+                StorageReference filepath = storageReference.child("foto_perfil").child(user.getUid()).child(uri.getLastPathSegment());
+
+                Bitmap bmp = null;
+                try{
+                    bmp = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                } catch (IOException e){
+                    e.printStackTrace();
+                }
+                if(bmp != null){
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bmp.compress(Bitmap.CompressFormat.JPEG, 25, baos);
+                    byte[] dataByte = baos.toByteArray();
+
+                    filepath.putBytes(dataByte).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    firebaseFirestore.collection("users").document(user.getUid()).update("Imagem", uri.toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            if(imagem != null){
+                                                if (imagem.contains("NEXCLUIR")) {
+                                                    StorageReference ref2 = FirebaseStorage.getInstance().getReferenceFromUrl(imagem);
+                                                    ref2.delete();
+                                                }
+                                            }
+
+                                        }
+                                    });
+                                    Glide.with(EditarPerfilInvestidorActivity.this).load(uri.toString()).into(foto);
+                                    imagem = uri.toString();
+                                    Toast.makeText(EditarPerfilInvestidorActivity.this, "Imagem alterada!", Toast.LENGTH_SHORT).show();
+                                    progressBar.setVisibility(View.INVISIBLE);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(EditarPerfilInvestidorActivity.this, "Erro ao alterar imagem!", Toast.LENGTH_SHORT).show();
+                                    progressBar.setVisibility(View.INVISIBLE);
+                                }
+                            });
+                        }
+                    });
+
+                } else {
+                    Toast.makeText(this, "erro", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.INVISIBLE);
+                }
+            } else {
+                progressBar.setVisibility(View.INVISIBLE);
+            }
+        }
     }
 }
 
