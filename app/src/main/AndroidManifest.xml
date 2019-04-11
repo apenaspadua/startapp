@@ -13,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.login.CadastroLoginActivity"></activity>
+        <activity android:name=".activity.startup.EditarPerfilStartup"></activity>
+        <activity android:name=".activity.startup.BioStartupActivity" />
+        <activity android:name=".activity.login.CadastroLoginActivity" />
         <activity android:name=".activity.home.BaseFragmentStartup" />
         <activity android:name=".activity.investidor.EditarPerfilInvestidorActivity" />
         <activity android:name=".activity.startup.CadastroStartupActivity" />

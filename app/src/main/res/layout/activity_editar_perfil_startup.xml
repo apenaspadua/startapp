@@ -42,13 +42,6 @@
                     android:orientation="vertical"
                     android:gravity="center">
 
-                    <TextView
-                        style="@style/TitleText"
-                        android:paddingTop="30dp"
-                        android:paddingBottom="10dp"
-                        android:text="Seja Bem-Vindo Startup"
-                        app:fontFamily="@font/lato_regular" />
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -57,11 +50,21 @@
                         android:padding="20dp">
 
                         <ImageView
-                            android:layout_width="100dp"
+                            android:id="@+id/foto_editar_startup_id"
+                            android:layout_width="98dp"
                             android:layout_height="100dp"
                             android:layout_centerVertical="true"
                             android:background="@drawable/startup_icon2"
                             android:scaleType="fitXY" />
+
+                        <ImageView
+                            android:id="@+id/icone_editar_startup_id"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_marginStart="50dp"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/ic_plus"
+                            android:layout_marginLeft="30dp" />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -73,14 +76,47 @@
                 style="@style/TitleRegister"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
-                android:text="Preencha os dados abaixo para o concluir seu cadastro"
+                android:text="Editar Perfil"
                 app:fontFamily="@font/lato_regular" />
+            <TextView
+                style="@style/TitleRegister"
+                android:paddingTop="10dp"
+                android:paddingBottom="15dp"
+                android:text="Escolha o campo de que deseja alterar"
+                android:textSize="18sp"
+                app:fontFamily="@font/lato_regular" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="0dp"
+                android:text="BIOGRAFIA" />
+
+            <EditText
+                android:id="@+id/biografia_editar_startup_id"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:padding="10dp"
+                android:gravity="start"
+                android:layout_marginBottom="10dp"
+                android:hint="Escreva aqui"
+                android:fontFamily="@font/lato_regular"
+                android:textSize="14dp"
+                android:background="@drawable/button_custom_twitter"
+                android:minLines="100"
+                android:maxLines="100"
+                android:scrollbars="vertical"
+                android:inputType="textMultiLine"/>
 
 
             <android.support.design.widget.TextInputLayout style="@style/TextInputRegister">
 
                 <EditText
-                    android:id="@+id/razao_social_cadastro_startup_id"
+                    android:id="@+id/razao_editar_startup_id"
                     style="@style/EditTextRegister"
                     android:hint="Razão Social *"
                     android:inputType="text" />
@@ -89,19 +125,17 @@
             <android.support.design.widget.TextInputLayout style="@style/TextInputRegister">
 
                 <EditText
-                    android:id="@+id/nome_cadastro_startup_id"
+                    android:id="@+id/nome_editar_startup_id"
                     style="@style/EditTextRegister"
                     android:hint="Nome Fantasia *"
                     android:inputType="text" />
             </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
-                style="@style/TextInputRegister">
+            <android.support.design.widget.TextInputLayout style="@style/TextInputRegister">
 
                 <EditText
-                    android:id="@+id/email_cadastro_startup_id"
+                    android:id="@+id/email_editar_startup_id"
                     style="@style/EditTextRegister"
-                    android:layout_marginBottom="10dp"
                     android:hint="Email para contato *"
                     android:inputType="textEmailAddress" />
             </android.support.design.widget.TextInputLayout>
@@ -109,28 +143,36 @@
             <android.support.design.widget.TextInputLayout style="@style/TextInputRegister">
 
                 <EditText
-                    android:id="@+id/telefone_cadastro_startup_id"
+                    android:id="@+id/telefone_editar_startup_id"
                     style="@style/EditTextRegister"
                     android:hint="Número para contato *"
                     android:inputType="number" />
             </android.support.design.widget.TextInputLayout>
 
+
             <android.support.design.widget.TextInputLayout
                 style="@style/TextInputRegister">
 
                 <EditText
-                    android:id="@+id/cep_cadastro_startup_id"
+                    android:id="@+id/cep_editar_startup_id"
                     style="@style/EditTextRegister"
                     android:layout_marginBottom="10dp"
                     android:hint="CEP *"
                     android:inputType="number" />
             </android.support.design.widget.TextInputLayout>
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+            </LinearLayout>
+
             <android.support.design.widget.TextInputLayout
                 style="@style/TextInputRegister">
 
                 <EditText
-                    android:id="@+id/rua_cadastro_startup_id"
+                    android:id="@+id/rua_editar_startup_id"
                     style="@style/EditTextRegister"
                     android:layout_marginBottom="10dp"
                     android:hint="Logradouro"
@@ -141,7 +183,7 @@
                 style="@style/TextInputRegister">
 
                 <EditText
-                    android:id="@+id/bairro_cadastro_startup_id"
+                    android:id="@+id/bairro_editar_startup_id"
                     style="@style/EditTextRegister"
                     android:layout_marginBottom="10dp"
                     android:hint="Bairro"
@@ -152,7 +194,7 @@
                 style="@style/TextInputRegister">
 
                 <EditText
-                    android:id="@+id/cidade_cadastro_startup_id"
+                    android:id="@+id/cidade_editar_startup_id"
                     style="@style/EditTextRegister"
                     android:layout_marginBottom="10dp"
                     android:hint="Cidade"
@@ -163,26 +205,28 @@
                 style="@style/TextInputRegister">
 
                 <EditText
-                    android:id="@+id/estado_cadastro_startup_id"
+                    android:id="@+id/estado_editar_startup_id"
                     style="@style/EditTextRegister"
                     android:layout_marginBottom="10dp"
                     android:hint="Estado"
                     android:inputType="text" />
             </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
-                style="@style/TextInputRegister">
 
+            <android.support.design.widget.TextInputLayout
+                    style="@style/TextInputRegister">
                 <EditText
-                    android:id="@+id/cnpj_cadastro_startup_id"
-                    style="@style/EditTextRegister"
-                    android:layout_marginBottom="10dp"
-                    android:hint="CNPJ *"
-                    android:inputType="number" />
-            </android.support.design.widget.TextInputLayout>
+                        android:id="@+id/cnpj_editar_startup_id"
+                        style="@style/EditTextRegister"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:hint="CNPJ *"
+                        android:inputType="number"/>
+                </android.support.design.widget.TextInputLayout>
+
 
             <RelativeLayout
-                android:id="@+id/botao_terminar_cadastro_startup_id"
+                android:id="@+id/botao_concluir_edicao_startup_id"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_margin="6dp"
@@ -193,18 +237,17 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="100dp"
-                    android:layout_marginLeft="100dp"
+                    android:layout_marginStart="120dp"
+                    android:layout_marginLeft="110dp"
                     android:gravity="center_vertical"
-                    android:text="CONCLUIR CADASTRO"
+                    android:text="CONCLUIR EDIÇÃO"
                     android:textAllCaps="false"
                     android:textColor="@color/colorWhite"
                     android:textSize="14sp"
                     android:textStyle="bold"
-                    app:fontFamily="@font/poppins_medium" />
+                    app:fontFamily="@font/lato_regular" />
 
             </RelativeLayout>
-
 
             <TextView
                 android:paddingTop="15dp"
@@ -212,11 +255,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
-                android:text="Aplicativo realizado pelos alunos de Sistemas / Projeto Aplicado - FHO 2019 / Aplicativo para estudo disponibizado em versão teste."
+                android:text="Não deixe de preencher nenhum campo. Toda informaçāo é necessária *"
                 android:textColor="@color/colorCinza"
                 android:textSize="12sp"
                 app:fontFamily="@font/lato_regular"
                 android:layout_marginLeft="20dp" />
+
 
         </LinearLayout>
 

@@ -48,20 +48,32 @@
 
                         <ImageView
                             android:id="@+id/imagem_perfil_investidor_id"
-                            android:layout_width="130dp"
-                            android:layout_height="130dp"
+                            android:layout_width="140dp"
+                            android:layout_height="140dp"
                             android:layout_centerVertical="true"
                             android:background="@drawable/investidor_icon2"
                             android:scaleType="fitXY" />
 
-                        <TextView
-                            android:id="@+id/nome_perfil_investidor_id"
-                            style="@style/TitleText"
-                            android:paddingTop="10dp"
-                            android:text="Nome do investidor"
-                            android:textColor="@color/colorCinza"
-                            android:textSize="24dp"
-                            app:fontFamily="@font/lato_regular" />
+                        <LinearLayout style="@style/TextInputRegister"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_centerVertical="true"
+                                android:background="@drawable/mala_ic"
+                                android:scaleType="fitXY" />
+
+                            <TextView
+                                android:id="@+id/nome_perfil_investidor_id"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Nome do investidor"
+                                android:textColor="@color/colorCinza"
+                                android:textSize="24dp"
+                                app:fontFamily="@font/lato_regular" />
+                        </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -154,8 +166,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="@color/colorTransparenteDark">
-
+                android:background="@drawable/button_custom_facebook">
 
             <TextView
                 android:id="@+id/text_biografia_perfil_investidor"
@@ -167,7 +178,7 @@
                 android:text="Biografia"
                 android:textSize="15dp"
                 android:fontFamily="@font/lato_regular"
-                android:textColor="@color/colorCinza"
+
                 android:layout_marginLeft="15dp" />
         </RelativeLayout>
 
@@ -196,7 +207,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@color/colorTransparenteDark">
+                android:background="@drawable/button_custom_facebook">
 
                 <TextView
                     android:id="@+id/text_email_perfil_investidor"
@@ -207,8 +218,7 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginLeft="10dp"
                     android:text="Email"
-                    android:fontFamily="@font/lato_regular"
-                    android:textColor="@color/colorCinza" />
+                    android:fontFamily="@font/lato_regular"/>
 
                 <TextView
                     android:id="@+id/telefone_perfil_investidor_id"
@@ -216,11 +226,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginTop="30dp"
                     android:text="Tel"
-                    android:fontFamily="@font/lato_regular"
-                    android:textColor="@color/colorCinza" />
+                    android:fontFamily="@font/lato_regular"/>
             </RelativeLayout>
             <LinearLayout
                 style="@style/TextInputRegister">
@@ -238,7 +247,7 @@
                     android:layout_marginTop="3dp"
                     android:layout_marginStart="15dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginBottom="10dp"
                     android:text="LOCAL" />
 
             </LinearLayout>
@@ -246,7 +255,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@color/colorTransparenteDark">
+                android:background="@drawable/button_custom_facebook">
 
                 <TextView
                     android:id="@+id/estado_perfil_investidor_id"

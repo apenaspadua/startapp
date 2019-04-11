@@ -36,9 +36,8 @@ import java.util.concurrent.ExecutionException;
 
 public class CadastroStartupActivity extends AppCompatActivity {
 
-    private EditText razaoSocial, nomeFantasia, email, cep, cnpj, rua, cidade, bairro, estado;
+    private EditText razaoSocial, nomeFantasia, email, telefone, cep, cnpj, rua, cidade, bairro, estado;
     private RelativeLayout botaoConcluir;
-    private TextView irPerfil;
     private ProgressDialog progressDialog;
 
     private FirebaseAuth firebaseAuth;
@@ -52,6 +51,7 @@ public class CadastroStartupActivity extends AppCompatActivity {
         razaoSocial = findViewById(R.id.razao_social_cadastro_startup_id);
         nomeFantasia = findViewById(R.id.nome_cadastro_startup_id);
         email = findViewById(R.id.email_cadastro_startup_id);
+        telefone = findViewById(R.id.telefone_cadastro_startup_id);
         cep = findViewById(R.id.cep_cadastro_startup_id);
         cnpj = findViewById(R.id.cnpj_cadastro_startup_id);
         rua = findViewById(R.id.rua_cadastro_startup_id);
@@ -59,7 +59,6 @@ public class CadastroStartupActivity extends AppCompatActivity {
         bairro = findViewById(R.id.bairro_cadastro_startup_id);
         estado = findViewById(R.id.estado_cadastro_startup_id);
         botaoConcluir = findViewById(R.id.botao_terminar_cadastro_startup_id);
-        irPerfil = findViewById(R.id.ir_para_perfil_cadastro_startup);
         progressDialog = new ProgressDialog(CadastroStartupActivity.this);
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -67,16 +66,7 @@ public class CadastroStartupActivity extends AppCompatActivity {
 
         //Mascara para cnpj
         MaskFormatter.simpleFormatterCnpj(cnpj);
-
-        irPerfil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                irPerfil.setTextColor(Color.parseColor("#0289BE"));
-                startActivity(new Intent(CadastroStartupActivity.this, BaseFragmentInvestidor.class));
-                finish();
-            }
-        });
-
+        MaskFormatter.simpleFormatterCell(telefone);
 
         cep.addTextChangedListener(new TextWatcher() {
             @Override
@@ -120,6 +110,7 @@ public class CadastroStartupActivity extends AppCompatActivity {
             final String razaoSocialRecebido = razaoSocial.getText().toString();
             final String nomeFantasiaRecebido = nomeFantasia.getText().toString();
             final String emailRecebido = email.getText().toString();
+            final String telefoneRecebido = telefone.getText().toString();
             final String cepRecebido = cep.getText().toString();
             final String ruaRecebida = rua.getText().toString();
             final String bairroRecebido = bairro.getText().toString();
@@ -142,6 +133,9 @@ public class CadastroStartupActivity extends AppCompatActivity {
 
             } else if (Validator.validateEmailFormat(emailRecebido) ==  false) {
                 email.setError("Insira um email válido");
+
+            } else if (Validator.stringEmpty(telefoneRecebido)) {
+                telefone.setError("Insira um número para contato");
 
             } else if (Validator.stringEmpty(cepRecebido)) {
                 cep.setError("Insira seu cep");
@@ -166,12 +160,12 @@ public class CadastroStartupActivity extends AppCompatActivity {
 
             } else {
 
-                Startup startup = new Startup(razaoSocialRecebido, nomeFantasiaRecebido, emailRecebido, cepRecebido, ruaRecebida, bairroRecebido,cidadeRecebido, estadoRecebido, cnpjRecebido);
+                Startup startup = new Startup(razaoSocialRecebido, nomeFantasiaRecebido, emailRecebido, telefoneRecebido, cepRecebido, ruaRecebida, bairroRecebido,cidadeRecebido, estadoRecebido, cnpjRecebido);
                 startup.salvarStartup(firebaseUser.getUid());
-                progressDialog.setMessage("Salvando dados...");
+                progressDialog.setMessage("Guardando dados...");
                 progressDialog.show();
                 Toast.makeText(CadastroStartupActivity.this, "Salvo com sucesso", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(CadastroStartupActivity.this, BaseFragmentStartup.class));
+                startActivity(new Intent(CadastroStartupActivity.this, BioStartupActivity.class));
                 finish();
             }
 
@@ -184,10 +178,12 @@ public class CadastroStartupActivity extends AppCompatActivity {
 
     }
 
+
     @Override
-    protected void onResume() {
-        irPerfil.setTextColor(Color.parseColor("#ffffff"));
-        super.onResume();
+    public void finish() {
+        System.runFinalizersOnExit(true) ;
+        super.finish();
+        android.os.Process.killProcess(android.os.Process.myPid());
     }
 
 }

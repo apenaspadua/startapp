@@ -1,6 +1,7 @@
 package com.treinamento.mdomingos.startapp.activity.others;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,9 +11,21 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.treinamento.mdomingos.startapp.R;
 import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentInvestidor;
+import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentStartup;
+import com.treinamento.mdomingos.startapp.activity.inicial.InicialActivity;
+import com.treinamento.mdomingos.startapp.activity.investidor.CadastroInvestidorActivity;
+import com.treinamento.mdomingos.startapp.activity.startup.CadastroStartupActivity;
 import com.treinamento.mdomingos.startapp.adapter.SliderAdapter;
+import com.treinamento.mdomingos.startapp.model.Usuarios;
+import com.treinamento.mdomingos.startapp.utils.FirebaseConfig;
 
 public class SlidesPosCadastroActivity extends AppCompatActivity {
 
@@ -21,7 +34,8 @@ public class SlidesPosCadastroActivity extends AppCompatActivity {
     private TextView[] mDots;
     private SliderAdapter sliderAdapter;
     private Button botaoProximo;
-
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
     private int mCurrentPage;
 
     @Override
@@ -29,12 +43,12 @@ public class SlidesPosCadastroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_slides_pos_cadastro);
 
-
         //Intance
         mSlideViewPager = findViewById(R.id.slideViewPager);
-        mDotLayout =  findViewById(R.id.dotsLayout);
+        mDotLayout = findViewById(R.id.dotsLayout);
         botaoProximo = findViewById(R.id.botao_slide_proximo_id);
-
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
         sliderAdapter = new SliderAdapter(this);
         mSlideViewPager.setAdapter(sliderAdapter);
         addDots(0);
@@ -44,9 +58,33 @@ public class SlidesPosCadastroActivity extends AppCompatActivity {
         botaoProximo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SlidesPosCadastroActivity.this, BaseFragmentInvestidor.class);
-                startActivity(intent);
-                finish();
+                DatabaseReference databaseReference = FirebaseConfig.getFirebase();
+                databaseReference.child("Usuarios").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        Usuarios usuario = dataSnapshot.getValue(Usuarios.class);
+
+                        if (usuario.getPerfil() == 1) {
+                            Intent intent = new Intent(SlidesPosCadastroActivity.this, BaseFragmentInvestidor.class);
+                            startActivity(intent);
+                            finish();
+
+                        } else if (usuario.getPerfil() == 2) {
+
+                            Intent intent = new Intent(SlidesPosCadastroActivity.this, BaseFragmentStartup.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+
+                });
             }
         });
     }

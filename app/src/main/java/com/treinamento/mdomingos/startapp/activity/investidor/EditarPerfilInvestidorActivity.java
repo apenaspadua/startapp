@@ -39,7 +39,7 @@ import java.util.concurrent.ExecutionException;
 
 public class EditarPerfilInvestidorActivity extends AppCompatActivity {
 
-    private EditText nome, email, empresa, telefone, cep, cpf, cnpj, dataNasc, rua, cidade, bairro, estado;
+    private EditText nome, email, empresa, telefone, cep, cpf, cnpj, dataNasc, rua, cidade, bairro, estado, bio;
     private RelativeLayout botaoConcluir;
     private RadioGroup radioGroup;
     private FirebaseAuth firebaseAuth;
@@ -69,6 +69,7 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
                 bairro.setText(investidor.getDetalhe_investidor().getBairro());
                 estado.setText(investidor.getDetalhe_investidor().getEstado());
                 telefone.setText(investidor.getDetalhe_investidor().getTelefone());
+                bio.setText(investidor.getDetalhe_investidor().getBiografia());
             }
 
             @Override
@@ -102,6 +103,7 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
         inputPj = findViewById(R.id.textInputPJ_editar);
         botaoConcluir = findViewById(R.id.botao_concluir_edicao_investidor_id);
         radioGroup = findViewById(R.id.radioGroup_editar);
+        bio = findViewById(R.id.biografia_editar_investidor_id);
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
@@ -184,6 +186,7 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
                     final String estadoRecebido = estado.getText().toString();
                     final String cpfRecebido = cpf.getText().toString();
                     final String cnpjRecebido = cnpj.getText().toString();
+                    final String bioRecebida = bio.getText().toString();
                     progressDialog = new ProgressDialog(EditarPerfilInvestidorActivity.this);
 
                     String cpfSemFormatacao = cpfRecebido.replace(".", "");
@@ -193,7 +196,10 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
                     cnpjSemFormatacao = cnpjSemFormatacao.replace("/", "");
                     cnpjSemFormatacao = cnpjSemFormatacao.replace("-", "");
 
-                    if (Validator.stringEmpty(nomeRecebido)) {
+                    if (Validator.stringEmpty(bioRecebida)) {
+                        bio.setError("Insira uma descrição");
+                    }
+                    else if (Validator.stringEmpty(nomeRecebido)) {
                         nome.setError("Insira seu nome");
 
                     } else if (Validator.stringEmpty(emailRecebido)) {
@@ -236,6 +242,8 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
 
                                 Investidor investidor = new Investidor(nomeRecebido, emailRecebido, telefoneRecebido, empresaRecebida, dataRecebida, cepRecebido, ruaRecebida, bairroRecebido, cidadeRecebido, estadoRecebido, null, cpfRecebido);
                                 investidor.salvarInvestidor(firebaseUser.getUid());
+                                Investidor investidor1 = new Investidor(bioRecebida);
+                                investidor1.salvarBioInvestidor(firebaseUser.getUid());
                                 progressDialog.setMessage("Salvando dados...");
                                 progressDialog.show();
                                 Toast.makeText(EditarPerfilInvestidorActivity.this, "Alterado com sucesso", Toast.LENGTH_SHORT).show();
@@ -249,6 +257,8 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
                             } else {
                                 Investidor investidor = new Investidor(nomeRecebido, emailRecebido, telefoneRecebido, empresaRecebida, dataRecebida, cepRecebido, ruaRecebida, bairroRecebido, cidadeRecebido, estadoRecebido, cnpjRecebido, null);
                                 investidor.salvarInvestidor(firebaseUser.getUid());
+                                Investidor investidor1 = new Investidor(bioRecebida);
+                                investidor1.salvarBioInvestidor(firebaseUser.getUid());
                                 progressDialog.setMessage("Salvando dados...");
                                 progressDialog.show();
                                 Toast.makeText(EditarPerfilInvestidorActivity.this, "Alterado com sucesso", Toast.LENGTH_SHORT).show();

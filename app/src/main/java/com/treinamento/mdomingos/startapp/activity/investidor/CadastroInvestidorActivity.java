@@ -129,9 +129,6 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (FirebaseConfig.firebaseConection()) {
 
-                    progressDialog.setMessage("Guardando dados...");
-                    progressDialog.show();
-
                     final String nomeRecebido = nome.getText().toString();
                     final String emailRecebido = email.getText().toString();
                     final String telefoneRecebido = telefone.getText().toString();
@@ -196,6 +193,8 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
 
                                 Investidor investidor = new Investidor(nomeRecebido, emailRecebido, telefoneRecebido, empresaRecebida, dataRecebida, cepRecebido, ruaRecebida, bairroRecebido, cidadeRecebido, estadoRecebido, null, cpfRecebido);
                                 investidor.salvarInvestidor(firebaseUser.getUid());
+                                progressDialog.setMessage("Guardando dados...");
+                                progressDialog.show();
                                 Intent intent = new Intent(CadastroInvestidorActivity.this, BioInvestidorActivity.class);
                                 startActivity(intent);
                                 finish();

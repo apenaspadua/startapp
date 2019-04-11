@@ -40,23 +40,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:gravity="center"
                     android:padding="20dp">
 
                     <TextView
                         style="@style/TitleText"
                         android:paddingTop="30dp"
                         android:paddingBottom="20dp"
-                        android:text="Nos conte um pouco sobre você"
+                        android:text="Nos conte um pouco sobre sua Startup"
                         app:fontFamily="@font/lato_regular" />
 
 
                     <ImageView
-                        android:layout_width="150dp"
+                        android:layout_width="360dp"
                         android:layout_height="150dp"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="22dp"
-                        android:layout_marginLeft="22dp"
-                        android:background="@drawable/investidor_bio"
+                        android:background="@drawable/bio_startup"
                         android:scaleType="fitXY" />
 
                 </LinearLayout>
@@ -70,18 +69,15 @@
                 <TextView
                     style="@style/SubTitleRegister"
                     android:gravity="center"
-                    android:text="Fale sobre seus investimentos, propostas, e metas "
+                    android:text="Fale sobre seus projetos, metas e objetivos "
                     android:textSize="18dp"
                     android:textColor="@color/colorLink"
                     app:fontFamily="@font/lato_regular" />
 
-
-
-
             </LinearLayout>
 
             <EditText
-                android:id="@+id/biografia_cadastro_investidor_id"
+                android:id="@+id/biografia_cadastro_startup_id"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:padding="10dp"
@@ -90,7 +86,7 @@
                 android:hint="Escreva aqui"
                 android:fontFamily="@font/lato_regular"
                 android:textSize="14dp"
-                android:background="@drawable/button_custom_twitter"
+                android:background="@drawable/button_custom_facebook"
                 android:minLines="100"
                 android:maxLines="100"
                 android:scrollbars="vertical"
@@ -98,7 +94,7 @@
 
 
             <RelativeLayout
-                android:id="@+id/botao_bio_concluir_cadastro_login_id"
+                android:id="@+id/botao_bio_concluir_startup_login_id"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_margin="6dp"

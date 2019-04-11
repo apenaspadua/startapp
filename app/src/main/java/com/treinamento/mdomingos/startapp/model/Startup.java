@@ -21,14 +21,22 @@ public class Startup {
     private String cidade;
     private String estado;
     private String cnpj;
+    private String telefone;
+    private String biografia;
 
-    public Startup() {
+    public Startup(){
+
     }
 
-    public Startup(String razaoSocial, String nomeFantasia, String email, String cep, String rua, String bairro, String cidade, String estado, String cnpj) {
+    public Startup(String biografia) {
+        this.biografia = biografia;
+    }
+
+    public Startup(String razaoSocial, String nomeFantasia, String email, String telefone, String cep, String rua, String bairro, String cidade, String estado, String cnpj) {
         this.razaoSocial = razaoSocial;
         this.nomeFantasia = nomeFantasia;
         this.email = email;
+        this.telefone = telefone;
         this.cep = cep;
         this.rua = rua;
         this.bairro = bairro;
@@ -41,7 +49,12 @@ public class Startup {
         DatabaseReference databaseReference = FirebaseConfig.getFirebase();
         databaseReference.child("Usuarios").child(id).child("detalhe_startup").setValue(this);
         databaseReference.child("Usuarios").child(id).child("detalhes_completo").setValue(1);
+    }
 
+    public void salvarBioStartup(String id){
+        DatabaseReference databaseReference = FirebaseConfig.getFirebase();
+        databaseReference.child("Usuarios").child(id).child("detalhe_startup").child("biografia").setValue(biografia);
+        databaseReference.child("Usuarios").child(id).child("bio_completa").setValue(1);
     }
 
     public String getRazaoSocial() {
@@ -66,6 +79,14 @@ public class Startup {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
     public String getCep() {
@@ -114,5 +135,13 @@ public class Startup {
 
     public void setCnpj(String cnpj) {
         this.cnpj = cnpj;
+    }
+
+    public String getBiografia() {
+        return biografia;
+    }
+
+    public void setBiografia(String biografia) {
+        this.biografia = biografia;
     }
 }

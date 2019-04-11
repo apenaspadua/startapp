@@ -3,12 +3,322 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments_startup.PerfilFragment_Startup">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
+        android:id="@+id/scrollView_id"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        tools:context=".activity.home.BaseFragmentStartup">
 
+
+        <LinearLayout
+            android:id="@+id/linearLayout_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorTranspatenteLight"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <ImageView
+                            android:id="@+id/imagem_perfil_startup_id"
+                            android:layout_width="140dp"
+                            android:layout_height="140dp"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/startup_icon2"
+                            android:scaleType="fitXY" />
+
+                        <LinearLayout style="@style/TextInputRegister"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_centerVertical="true"
+                                android:background="@drawable/star_ic2"
+                                android:scaleType="fitXY" />
+
+                            <TextView
+                                android:id="@+id/nome_perfil_startup_id"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingTop="0dp"
+                                android:text="Nome da Startup"
+                                android:textColor="@color/colorCinza"
+                                android:textSize="24dp"
+                                app:fontFamily="@font/lato_regular"></TextView>
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/text_cidade_perfil_startup"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:fontFamily="@font/lato_regular"
+                                android:text="Cidade"
+                                android:textColor="@color/colorCinza" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="1dp"
+                                android:text="|"
+                                android:textColor="@color/colorCinzaLight"
+                                android:textSize="24dp" />
+
+                            <TextView
+                                android:id="@+id/text_razao_perfil_startup"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:fontFamily="@font/lato_regular"
+                                android:text="Razao"
+                                android:textColor="@color/colorCinza" />
+                        </LinearLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/botao_iniciar_conversa_startup_id"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="70dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginRight="70dp"
+                            android:background="@drawable/button_rounded_precionado_red"
+                            android:gravity="clip_vertical|center_horizontal"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentTop="true"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginTop="14dp"
+                                android:layout_marginBottom="14dp"
+                                android:text="INICIAR CONVERSA "
+                                android:textColor="@color/colorWhite"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                app:fontFamily="@font/poppins_medium" />
+                        </RelativeLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/biografia_editar_startup_id"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:padding="10dp"
+                android:gravity="start"
+                android:layout_marginBottom="10dp"
+                android:text="PUBLICACAO"
+                android:fontFamily="@font/lato_regular"
+                android:textSize="14dp"
+                android:textColor="@color/colorWhite"
+                android:background="@color/colorPrimaryDark"
+                android:minLines="100"
+                android:maxLines="100"
+                android:scrollbars="vertical"
+                android:inputType="textMultiLine"/>
+            <LinearLayout style="@style/TextInputRegister">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/pc_ic"
+                    android:scaleType="fitXY" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="0dp"
+                    android:text="SOBRE A STARTUP" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_custom_facebook"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/text_biografia_perfil_startup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/lato_regular"
+                    android:text="Biografia"
+                    android:textSize="15dp" />
+            </RelativeLayout>
+
+            <LinearLayout style="@style/TextInputRegister">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/contacts_ic"
+                    android:scaleType="fitXY" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="CONTATOS" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_custom_facebook"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/text_email_perfil_startup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/lato_regular"
+                    android:text="Email" />
+
+                <TextView
+                    android:id="@+id/telefone_perfil_startup_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/lato_regular"
+                    android:text="Tel" />
+            </RelativeLayout>
+
+            <LinearLayout style="@style/TextInputRegister">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/localization_ic"
+                    android:scaleType="fitXY" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="LOCAL" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_custom_facebook"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/estado_perfil_startup_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/lato_regular"
+                    android:text="Estado" />
+
+                <TextView
+                    android:id="@+id/rua_perfil_startup_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="35dp"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/lato_regular"
+                    android:text="Rua" />
+
+                <TextView
+                    android:id="@+id/bairro_perfil_startup_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="60dp"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/lato_regular"
+                    android:text="Bairro" />
+            </RelativeLayout>
+
+            <TextView
+                style="@style/SubTitleCompany"
+                android:layout_marginTop="20sp"
+                android:gravity="center"
+                android:paddingBottom="10dp"
+                android:text="Aplicativo realizado pelos alunos de Sistemas
+                                                        Projeto Aplicado - FHO 2019"
+                android:textColor="@color/colorCinzaLight"
+                app:fontFamily="@font/lato_regular" />
+
+
+        </LinearLayout>
+    </ScrollView>
 </FrameLayout>
+
+
