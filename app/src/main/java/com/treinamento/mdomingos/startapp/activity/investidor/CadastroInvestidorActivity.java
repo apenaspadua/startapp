@@ -92,7 +92,8 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
 
         cep.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -117,8 +118,10 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
+
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         botaoAvancar.setOnClickListener(new View.OnClickListener() {
@@ -155,7 +158,7 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
                     } else if (Validator.stringEmpty(emailRecebido)) {
                         email.setError("Insira seu email");
 
-                    } else if (Validator.validateEmailFormat(emailRecebido) ==  false) {
+                    } else if (Validator.validateEmailFormat(emailRecebido) == false) {
                         email.setError("Insira um email válido");
 
                     } else if (Validator.stringEmpty(telefoneRecebido)) {
@@ -213,7 +216,6 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
                         }
                     }
 
-
                 } else {
                     Log.i("sem internet", "sem conexao");
                     Toast.makeText(CadastroInvestidorActivity.this, "Sem conexão com a internet", Toast.LENGTH_SHORT).show();
@@ -221,15 +223,16 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
-//    @Override
-//    public void finish() {
-//        System.out.println("Cadastro Finalizado!");
-//        System.runFinalizersOnExit(true) ;
-//        super.finish();
-//        android.os.Process.killProcess(android.os.Process.myPid());
-//    }
+    @Override
+    public void finish() {
+        System.runFinalizersOnExit(true) ;
+        super.finish();
+        android.os.Process.killProcess(android.os.Process.myPid());
+    }
+
+
+
 
 }

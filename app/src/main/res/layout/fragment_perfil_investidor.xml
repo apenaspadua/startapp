@@ -48,8 +48,8 @@
 
                         <ImageView
                             android:id="@+id/imagem_perfil_investidor_id"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
+                            android:layout_width="130dp"
+                            android:layout_height="130dp"
                             android:layout_centerVertical="true"
                             android:background="@drawable/investidor_icon2"
                             android:scaleType="fitXY" />
@@ -57,7 +57,7 @@
                         <TextView
                             android:id="@+id/nome_perfil_investidor_id"
                             style="@style/TitleText"
-                            android:paddingTop="5dp"
+                            android:paddingTop="10dp"
                             android:text="Nome do investidor"
                             android:textColor="@color/colorCinza"
                             android:textSize="24dp"
@@ -76,6 +76,7 @@
                                 android:layout_marginStart="10dp"
                                 android:layout_marginLeft="10dp"
                                 android:text="Cidade"
+                                android:fontFamily="@font/lato_regular"
                                 android:textColor="@color/colorCinza" />
 
                             <TextView
@@ -95,6 +96,7 @@
                                 android:layout_marginStart="10dp"
                                 android:layout_marginLeft="10dp"
                                 android:text="Empresa"
+                                android:fontFamily="@font/lato_regular"
                                 android:textColor="@color/colorCinza" />
                         </LinearLayout>
 
@@ -112,8 +114,9 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_alignParentTop="true"
                                 android:layout_alignParentBottom="true"
-                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="14dp"
                                 android:layout_marginBottom="14dp"
                                 android:text="INICIAR CONVERSA "
                                 android:textColor="@color/colorWhite"
@@ -122,89 +125,178 @@
                                 app:fontFamily="@font/poppins_medium" />
 
                         </RelativeLayout>
-
                     </LinearLayout>
                 </LinearLayout>
 
             </RelativeLayout>
 
-
-
         <LinearLayout
+            style="@style/TextInputRegister">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/bibliografy_ic"
+                android:scaleType="fitXY" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="0dp"
+                android:text="BIOGRAFIA" />
+
+        </LinearLayout>
+            <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="@color/colorTranspatenteLight">
+            android:background="@color/colorTransparenteDark">
 
 
             <TextView
                 android:id="@+id/text_biografia_perfil_investidor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginStart="15dp"
                 android:text="Biografia"
-                android:textColor="@color/colorCinza" />
+                android:textSize="15dp"
+                android:fontFamily="@font/lato_regular"
+                android:textColor="@color/colorCinza"
+                android:layout_marginLeft="15dp" />
+        </RelativeLayout>
+
+            <LinearLayout
+                style="@style/TextInputRegister">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/contacts_ic"
+                    android:scaleType="fitXY" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="CONTATOS" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/colorTransparenteDark">
+
+                <TextView
+                    android:id="@+id/text_email_perfil_investidor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:text="Email"
+                    android:fontFamily="@font/lato_regular"
+                    android:textColor="@color/colorCinza" />
+
+                <TextView
+                    android:id="@+id/telefone_perfil_investidor_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="30dp"
+                    android:text="Tel"
+                    android:fontFamily="@font/lato_regular"
+                    android:textColor="@color/colorCinza" />
+            </RelativeLayout>
+            <LinearLayout
+                style="@style/TextInputRegister">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/localization_ic"
+                    android:scaleType="fitXY" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="LOCAL" />
+
+            </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/colorTransparenteDark">
+
+                <TextView
+                    android:id="@+id/estado_perfil_investidor_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Estado"
+                    android:fontFamily="@font/lato_regular"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"/>
+
+                <TextView
+                    android:id="@+id/rua_perfil_investidor_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Rua"
+                    android:fontFamily="@font/lato_regular"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="35dp"
+                    android:layout_marginBottom="5dp"/>
+
+                <TextView
+                    android:id="@+id/bairro_perfil_investidor_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Bairro"
+                    android:fontFamily="@font/lato_regular"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="60dp"
+                    android:layout_marginBottom="10dp"/>
+            </RelativeLayout>
+
+            <TextView
+                android:layout_marginTop="20sp"
+                style="@style/SubTitleCompany"
+                android:gravity="center"
+                android:text="Aplicativo realizado pelos alunos de Sistemas
+                                                        Projeto Aplicado - FHO 2019"
+                app:fontFamily="@font/lato_regular"
+                android:paddingBottom="10dp"
+                android:textColor="@color/colorCinzaLight"/>
 
 
-        </LinearLayout>
+
 
         </LinearLayout>
     </ScrollView>
 </FrameLayout>
 
 
-<!--<TextView-->
-<!--android:id="@+id/data_perfil_investidor_id"-->
-<!--style="@style/TitleText"-->
-<!--android:padding="10dp"-->
-<!--android:text="data de nascimento"-->
-<!--android:textColor="@color/colorCinza"-->
-<!--android:textSize="18dp"-->
-<!--app:fontFamily="@font/lato_regular" />-->
-
-<!--<TextView-->
-<!--android:id="@+id/rua_perfil_investidor_id"-->
-<!--style="@style/TitleText"-->
-<!--android:padding="10dp"-->
-<!--android:text="rua"-->
-<!--android:textColor="@color/colorCinza"-->
-<!--android:textSize="18dp"-->
-<!--app:fontFamily="@font/lato_regular" />-->
-
-<!--<TextView-->
-<!--android:id="@+id/bairro_perfil_investidor_id"-->
-<!--style="@style/TitleText"-->
-<!--android:padding="10dp"-->
-<!--android:text="bairro"-->
-<!--android:textColor="@color/colorCinza"-->
-<!--android:textSize="18dp"-->
-<!--app:fontFamily="@font/lato_regular" />-->
-
-<!--<TextView-->
-<!--android:id="@+id/estado_perfil_investidor_id"-->
-<!--style="@style/TitleText"-->
-<!--android:padding="10dp"-->
-<!--android:text="estado"-->
-<!--android:textColor="@color/colorCinza"-->
-<!--android:textSize="18dp"-->
-<!--app:fontFamily="@font/lato_regular" />-->
-
-<!--<TextView-->
-<!--android:id="@+id/telefone_perfil_investidor_id"-->
-<!--style="@style/TitleText"-->
-<!--android:padding="10dp"-->
-<!--android:text="telefone"-->
-<!--android:textColor="@color/colorCinza"-->
-<!--android:textSize="18dp"-->
-<!--app:fontFamily="@font/lato_regular" />-->
-
-<!--<TextView-->
-<!--android:id="@+id/text_email_perfil_investidor"-->
-<!--android:layout_width="wrap_content"-->
-<!--android:layout_height="wrap_content"-->
-<!--android:layout_marginStart="10dp"-->
-<!--android:layout_marginLeft="10dp"-->
-<!--android:text="Email"-->
-<!--android:textColor="@color/colorCinza" />-->
