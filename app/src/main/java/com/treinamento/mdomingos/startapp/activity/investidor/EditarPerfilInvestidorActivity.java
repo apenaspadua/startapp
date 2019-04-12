@@ -41,7 +41,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.treinamento.mdomingos.startapp.R;
 import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentInvestidor;
-import com.treinamento.mdomingos.startapp.activity.startup.EditarPerfilStartup;
 import com.treinamento.mdomingos.startapp.model.CEP;
 import com.treinamento.mdomingos.startapp.model.Investidor;
 import com.treinamento.mdomingos.startapp.model.InvestidorResponse;
@@ -76,10 +75,20 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     private FirebaseUser user;
 
-
     @Override
     protected void onResume() {
         super.onResume();
+        //acessar base de dados imagem
+
+        firebaseFirestore.collection("users").document(user.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if(documentSnapshot.exists()){
+                    imagem = (String) documentSnapshot.getData().get("Imagem");
+                    Glide.with(getApplicationContext()).load(imagem).into(foto);
+                }
+            }
+        });
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.child("Usuarios").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
@@ -100,10 +109,8 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
-
     }
 
     @Override
@@ -144,20 +151,8 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
         MaskFormatter.simpleFormatterCpf(cpf);
         MaskFormatter.simpleFormatterCnpj(cnpj);
 
-        //acessar base de dados imagem
-        firebaseFirestore.collection("users").document(user.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if(documentSnapshot.exists()){
-
-                    imagem = (String) documentSnapshot.getData().get("Imagem");
-                    Glide.with(getApplicationContext()).load(imagem).into(foto);
-                }
-            }
-        });
-
         //Pegar imagem de perfil
-        foto.setOnClickListener(new View.OnClickListener() {
+        icone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final AlertDialog.Builder alerta = new AlertDialog.Builder(new ContextThemeWrapper(v.getContext(), android.R.style.Theme_DeviceDefault_Light_Dialog));
@@ -174,10 +169,11 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
                 alerta.setNegativeButton("Não", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        AlertDialog alertDialog = alerta.create();
-                        alertDialog.show();
+                      onResume();
                     }
                 });
+               AlertDialog alertDialog = alerta.create();
+                alertDialog.show();
             }
         });
 
@@ -185,7 +181,6 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.pessoaFisica_editar) {
-
                     cnpj.setVisibility(View.GONE);
                     inputPj.setVisibility(View.GONE);
                     inputPf.setVisibility(View.VISIBLE);
@@ -197,12 +192,9 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
                     inputPj.setVisibility(View.VISIBLE);
                     inputPf.setVisibility(View.GONE);
                     cpf.setVisibility(View.GONE);
-
                 }
             }
         });
-
-
 
         cep.addTextChangedListener(new TextWatcher() {
             @Override
@@ -224,7 +216,6 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
                             cep.setError("Cep inválido");
                         }
                     }
-
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
@@ -315,7 +306,6 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
                                 Toast.makeText(EditarPerfilInvestidorActivity.this, "Alterado com sucesso", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(EditarPerfilInvestidorActivity.this, BaseFragmentInvestidor.class));
                                 finish();
-
                             }
                         } else if (radioGroup.getCheckedRadioButtonId() == R.id.pessoaJuridica_editar) {
                             if (Validator.isCNPJ(cnpjSemFormatacao) == false) {
@@ -341,19 +331,17 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 2 && requestCode == RESULT_OK){
+        if(requestCode == 2 && resultCode == RESULT_OK){
             progressBar.setVisibility(View.VISIBLE);
             if(user != null){
-
                 Uri uri = data.getData();
+                foto.setImageURI(uri);
                 StorageReference filepath = storageReference.child("foto_perfil").child(user.getUid()).child(uri.getLastPathSegment());
-
                 Bitmap bmp = null;
                 try{
                     bmp = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
@@ -376,12 +364,11 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             if(imagem != null){
-                                                if (imagem.contains("NEXCLUIR")) {
+                                                if (!imagem.contains("NEXCLUIR")) {
                                                     StorageReference ref2 = FirebaseStorage.getInstance().getReferenceFromUrl(imagem);
                                                     ref2.delete();
                                                 }
                                             }
-
                                         }
                                     });
                                     Glide.with(EditarPerfilInvestidorActivity.this).load(uri.toString()).into(foto);

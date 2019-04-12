@@ -2,6 +2,7 @@ package com.treinamento.mdomingos.startapp.fragments_investidor;
 
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,8 +14,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -22,10 +26,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.treinamento.mdomingos.startapp.R;
 import com.treinamento.mdomingos.startapp.activity.investidor.EditarPerfilInvestidorActivity;
 import com.treinamento.mdomingos.startapp.activity.login.LoginActivity;
 import com.treinamento.mdomingos.startapp.model.InvestidorResponse;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PerfilFragment_Investidor extends Fragment {
 
@@ -34,13 +44,36 @@ public class PerfilFragment_Investidor extends Fragment {
     private TextView nome, cidade, empresa, email, rua, bairro, estado, telefone, bio;
     private ProgressDialog progressDialog;
 
+
+    private CircleImageView foto;
+    private StorageReference storageReference;
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
+    private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+    private FirebaseUser user;
+    private String imagem;
+
+//
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        //acessar base de dados imagem
+//        firebaseFirestore.collection("users").document(user.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+//            @Override
+//            public void onSuccess(DocumentSnapshot documentSnapshot) {
+//                if(documentSnapshot.exists()){
+//                    imagem = (String) documentSnapshot.getData().get("Imagem");
+//                    Glide.with(getActivity().getApplicationContext()).load(imagem).into(foto);
+//                }
+//            }
+//        });
+//    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
 
         inflater.inflate(R.menu.dropdown_menu_home, menu);
         super.onCreateOptionsMenu(menu, inflater);
-
     }
 
     @Override
@@ -69,7 +102,10 @@ public class PerfilFragment_Investidor extends Fragment {
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
+        storageReference = storage.getInstance().getReference();
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
+        foto = view.findViewById(R.id.foto_perfil_investidor_id);
         nome = view.findViewById(R.id.nome_perfil_investidor_id);
         cidade = view.findViewById(R.id.text_cidade_perfil_investidor);
         empresa = view.findViewById(R.id.text_empresa_perfil_investidor);
@@ -95,7 +131,6 @@ public class PerfilFragment_Investidor extends Fragment {
                 estado.setText(investidor.getDetalhe_investidor().getEstado());
                 telefone.setText(investidor.getDetalhe_investidor().getTelefone());
                 bio.setText(investidor.getDetalhe_investidor().getBiografia());
-
             }
 
             @Override
