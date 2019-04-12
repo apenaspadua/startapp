@@ -1,5 +1,6 @@
 package com.treinamento.mdomingos.startapp.activity.investidor;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -25,10 +26,14 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -62,7 +67,6 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
     private RadioGroup radioGroup;
     private FirebaseAuth firebaseAuth;
     private TextInputLayout inputPf, inputPj;
-    private String imagem;
 
     private FirebaseUser firebaseUser;
     private ProgressDialog progressDialog;
@@ -72,23 +76,15 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
     private ImageView icone;
     private StorageReference storageReference;
     private FirebaseStorage storage = FirebaseStorage.getInstance();
-    private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     private FirebaseUser user;
+    private static final int CHOOSE_IMAGE = 101;
+    private Uri uriProfile;
+    private Boolean changed = false;
+
 
     @Override
     protected void onResume() {
         super.onResume();
-        //acessar base de dados imagem
-
-        firebaseFirestore.collection("users").document(user.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if(documentSnapshot.exists()){
-                    imagem = (String) documentSnapshot.getData().get("Imagem");
-                    Glide.with(getApplicationContext()).load(imagem).into(foto);
-                }
-            }
-        });
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.child("Usuarios").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
@@ -169,10 +165,10 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
                 alerta.setNegativeButton("Não", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                      onResume();
+                        onResume();
                     }
                 });
-               AlertDialog alertDialog = alerta.create();
+                AlertDialog alertDialog = alerta.create();
                 alertDialog.show();
             }
         });
@@ -198,7 +194,8 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
 
         cep.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -222,8 +219,10 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
+
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         botaoConcluir.setOnClickListener(new View.OnClickListener() {
@@ -255,14 +254,13 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
 
                     if (Validator.stringEmpty(bioRecebida)) {
                         bio.setError("Insira uma descrição");
-                    }
-                    else if (Validator.stringEmpty(nomeRecebido)) {
+                    } else if (Validator.stringEmpty(nomeRecebido)) {
                         nome.setError("Insira seu nome");
 
                     } else if (Validator.stringEmpty(emailRecebido)) {
                         email.setError("Insira seu email");
 
-                    } else if (Validator.validateEmailFormat(emailRecebido) ==  false) {
+                    } else if (Validator.validateEmailFormat(emailRecebido) == false) {
                         email.setError("Insira um email válido");
 
                     } else if (Validator.stringEmpty(telefoneRecebido)) {
@@ -336,64 +334,157 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 2 && resultCode == RESULT_OK){
-            progressBar.setVisibility(View.VISIBLE);
-            if(user != null){
-                Uri uri = data.getData();
-                foto.setImageURI(uri);
-                StorageReference filepath = storageReference.child("foto_perfil").child(user.getUid()).child(uri.getLastPathSegment());
-                Bitmap bmp = null;
-                try{
-                    bmp = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                } catch (IOException e){
-                    e.printStackTrace();
+
+        if (resultCode != Activity.RESULT_CANCELED) {
+//            progressDialog.setMessage("Uploading Image...");
+//            progressDialog.show();
+
+            if (requestCode == CHOOSE_IMAGE) {
+                uriProfile = data.getData();
+                Glide.with(EditarPerfilInvestidorActivity.this).load(uriProfile).into(foto);
+                uploadImageToFirebaseStorage();
+                changed = true;
+
+            }
+        }
+    }
+
+    // Envia imagem para o Storage do Firebase
+    private void uploadImageToFirebaseStorage() {
+        final StorageReference profileImageRef = storageReference.child("Photos").child(firebaseAuth.getCurrentUser().getUid()).child(uriProfile.getLastPathSegment());
+        final UploadTask uploadTask = profileImageRef.putFile(uriProfile);
+
+        uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
                 }
-                if(bmp != null){
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    bmp.compress(Bitmap.CompressFormat.JPEG, 25, baos);
-                    byte[] dataByte = baos.toByteArray();
+                return profileImageRef.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    uriProfile = task.getResult();
+                    System.out.println(uriProfile);
 
-                    filepath.putBytes(dataByte).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    progressDialog.dismiss();
+                    Toast.makeText(EditarPerfilInvestidorActivity.this, "Uploading Finished", Toast.LENGTH_SHORT).show();
+                } else {
+                    progressDialog.dismiss();
+                    Toast.makeText(EditarPerfilInvestidorActivity.this, "Uploading failed", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+    }
+
+    //Carrega informações do usuario e confirma a verificacao de email
+    private void loadUserInformation() {
+        final FirebaseUser user = firebaseAuth.getCurrentUser();
+
+        if (user != null) {
+            if (user.getPhotoUrl() != null) {
+                Glide.with(this).load(user.getPhotoUrl().toString()).into(foto);
+            } else {
+                Toast.makeText(this, "Usuario sem foto!", Toast.LENGTH_SHORT).show();
+
+
+            }
+        }
+
+    }
+
+    // Atualiza o nome e foto de perfil do usuario
+    public void saveUserInformation(View v) {
+
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        UserProfileChangeRequest profile = null;
+        if (user != null) {
+            profile =  new UserProfileChangeRequest.Builder()
+                    .setPhotoUri(uriProfile) // Define a foto do usuario
+                    .build();
+
+            user.updateProfile(profile)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    firebaseFirestore.collection("users").document(user.getUid()).update("Imagem", uri.toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            if(imagem != null){
-                                                if (!imagem.contains("NEXCLUIR")) {
-                                                    StorageReference ref2 = FirebaseStorage.getInstance().getReferenceFromUrl(imagem);
-                                                    ref2.delete();
-                                                }
-                                            }
-                                        }
-                                    });
-                                    Glide.with(EditarPerfilInvestidorActivity.this).load(uri.toString()).into(foto);
-                                    imagem = uri.toString();
-                                    Toast.makeText(EditarPerfilInvestidorActivity.this, "Imagem alterada!", Toast.LENGTH_SHORT).show();
-                                    progressBar.setVisibility(View.INVISIBLE);
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(EditarPerfilInvestidorActivity.this, "Erro ao alterar imagem!", Toast.LENGTH_SHORT).show();
-                                    progressBar.setVisibility(View.INVISIBLE);
-                                }
-                            });
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(EditarPerfilInvestidorActivity.this, "Profile updated", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(EditarPerfilInvestidorActivity.this, "Error to update", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     });
-
-                } else {
-                    Toast.makeText(this, "erro", Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.INVISIBLE);
-                }
-            } else {
-                progressBar.setVisibility(View.INVISIBLE);
-            }
         }
     }
 }
 
+
+
+//@Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if(requestCode == 2 && resultCode == RESULT_OK){
+//            progressBar.setVisibility(View.VISIBLE);
+//            if(user != null){
+//                Uri uri = data.getData();
+//                foto.setImageURI(uri);
+//                StorageReference filepath = storageReference.child("foto_perfil").child(user.getUid()).child(uri.getLastPathSegment());
+//                Bitmap bmp = null;
+//                try{
+//                    bmp = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+//                } catch (IOException e){
+//                    e.printStackTrace();
+//                }
+//                if(bmp != null){
+//                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//                    bmp.compress(Bitmap.CompressFormat.JPEG, 25, baos);
+//                    byte[] dataByte = baos.toByteArray();
+//
+//                    filepath.putBytes(dataByte).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                        @Override
+//                        public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
+//                            taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//
+//                                @Override
+//                                public void onSuccess(Uri uri) {
+//                                    firebaseFirestore.collection("users").document(user.getUid()).update("Imagem", uri.toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                        @Override
+//                                        public void onSuccess(Void aVoid) {
+//                                            if(imagem != null){
+//                                                if (!imagem.contains("NEXCLUIR")) {
+//                                                    StorageReference ref2 = FirebaseStorage.getInstance().getReferenceFromUrl(imagem);
+//                                                    ref2.delete();
+//                                                    Task<Uri> downloadUri = ref2.getDownloadUrl();
+//                                                    Log.d("link", downloadUri.toString());
+//
+//                                                }
+//                                            }
+//                                        }
+//                                    });
+//                                    Glide.with(EditarPerfilInvestidorActivity.this).load(uri.toString()).into(foto);
+//                                    imagem = uri.toString();
+//                                    Toast.makeText(EditarPerfilInvestidorActivity.this, "Imagem alterada!", Toast.LENGTH_SHORT).show();
+//                                    progressBar.setVisibility(View.INVISIBLE);
+//                                }
+//                            }).addOnFailureListener(new OnFailureListener() {
+//                                @Override
+//                                public void onFailure(@NonNull Exception e) {
+//                                    Toast.makeText(EditarPerfilInvestidorActivity.this, "Erro ao alterar imagem!", Toast.LENGTH_SHORT).show();
+//                                    progressBar.setVisibility(View.INVISIBLE);
+//                                }
+//                            });
+//                        }
+//                    });
+//
+//                } else {
+//                    Toast.makeText(this, "erro", Toast.LENGTH_SHORT).show();
+//                    progressBar.setVisibility(View.INVISIBLE);
+//                }
+//            } else {
+//                progressBar.setVisibility(View.INVISIBLE);
+//            }
+//        }
+//    }

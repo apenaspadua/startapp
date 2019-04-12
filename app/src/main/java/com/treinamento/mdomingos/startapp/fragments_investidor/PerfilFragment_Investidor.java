@@ -4,6 +4,7 @@ package com.treinamento.mdomingos.startapp.fragments_investidor;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -18,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,6 +32,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.treinamento.mdomingos.startapp.R;
 import com.treinamento.mdomingos.startapp.activity.investidor.EditarPerfilInvestidorActivity;
 import com.treinamento.mdomingos.startapp.activity.login.LoginActivity;
@@ -44,7 +47,6 @@ public class PerfilFragment_Investidor extends Fragment {
     private TextView nome, cidade, empresa, email, rua, bairro, estado, telefone, bio;
     private ProgressDialog progressDialog;
 
-
     private CircleImageView foto;
     private StorageReference storageReference;
     private FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -52,21 +54,27 @@ public class PerfilFragment_Investidor extends Fragment {
     private FirebaseUser user;
     private String imagem;
 
-//
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        //acessar base de dados imagem
-//        firebaseFirestore.collection("users").document(user.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-//            @Override
-//            public void onSuccess(DocumentSnapshot documentSnapshot) {
-//                if(documentSnapshot.exists()){
-//                    imagem = (String) documentSnapshot.getData().get("Imagem");
-//                    Glide.with(getActivity().getApplicationContext()).load(imagem).into(foto);
-//                }
-//            }
-//        });
-//    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Uri uri = data.getData();
+        storageReference.child("foto_perfil/").child(user.getUid()).child(uri.getLastPathSegment()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(getActivity().getApplicationContext()).load(imagem).into(foto);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+
+            }
+        });
+
+    }
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -139,7 +147,9 @@ public class PerfilFragment_Investidor extends Fragment {
             }
         });
         return view;
+
     }
+
 
 
 
