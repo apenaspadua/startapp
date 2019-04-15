@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout_perfil"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments_investidor.PerfilFragment_Investidor">
+
+    <FrameLayout
+        android:id="@+id/frame_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <ScrollView
         android:id="@+id/scrollView_id"
@@ -48,8 +54,8 @@
 
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/foto_perfil_investidor_id"
-                            android:layout_width="140dp"
-                            android:layout_height="140dp"
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
                             android:src="@drawable/investidor_icon2"/>
 
                         <LinearLayout style="@style/TextInputRegister"
@@ -299,11 +305,9 @@
                 android:paddingBottom="10dp"
                 android:textColor="@color/colorCinzaLight"/>
 
-
-
-
         </LinearLayout>
     </ScrollView>
-</FrameLayout>
+    </FrameLayout>
+</android.support.v4.widget.DrawerLayout>
 
 

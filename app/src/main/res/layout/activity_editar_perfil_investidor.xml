@@ -62,8 +62,8 @@
 
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/foto_editar_investidor_id"
-                            android:layout_width="130dp"
-                            android:layout_height="130dp"
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
                             android:src="@drawable/investidor_icon2"/>
 
                         <ImageView

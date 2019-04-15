@@ -14,6 +14,7 @@
         app:layout_constraintTop_toTopOf="parent">
     </include>
 
+
     <ImageView
         android:id="@+id/imageview_home_investidor_id"
         android:layout_width="40dp"
@@ -69,6 +70,7 @@
         app:layout_constraintBottom_toTopOf="@+id/vp_pagina_id"
         app:layout_constraintEnd_toEndOf="@+id/toolbar"
         app:layout_constraintTop_toTopOf="@+id/toolbar" />
+
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_pagina_id"

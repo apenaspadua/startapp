@@ -49,13 +49,12 @@
                         android:gravity="center"
                         android:padding="20dp">
 
-                        <ImageView
-                            android:id="@+id/foto_editar_startup_id"
-                            android:layout_width="98dp"
-                            android:layout_height="100dp"
-                            android:layout_centerVertical="true"
-                            android:background="@drawable/startup_icon2"
-                            android:scaleType="fitXY" />
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/foto_editar_investidor_id"
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:src="@drawable/startup_icon2"/>
 
                         <ImageView
                             android:id="@+id/icone_editar_startup_id"
