@@ -28,6 +28,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -36,7 +37,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -73,9 +73,8 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
     private StorageReference storageReference;
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private FirebaseUser user;
-    private Uri uriProfileImage;
     private String imagem;
-    private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+
 
     @Override
     protected void onResume() {
@@ -83,19 +82,21 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         storageReference = storage.getReference();
-        StorageReference pathReference = storageReference.child("imagem_perfil").child(user.getUid());
-
-        final FirebaseUser user = firebaseAuth.getCurrentUser();
-
-        if (user != null) {
-            if (user.getPhotoUrl() != null) {
-                Glide.with(this)
-                        .load(user.getPhotoUrl().toString())
-                        .into(foto);
-            } else {
-                Toast.makeText(this, "Usuario sem foto!", Toast.LENGTH_SHORT).show();
+        storageReference.child("imagem_perfil").child(user.getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(EditarPerfilInvestidorActivity.this).load(uri.toString()).into(foto);
             }
-        }
+        });
+
+
+//        if (user != null) {
+//            if (user.getPhotoUrl() != null) {
+//                Glide.with(this).load(user.getPhotoUrl().toString()).into(foto);
+//            } else {
+//                Toast.makeText(this, "Usuario sem foto!", Toast.LENGTH_SHORT).show();
+//            }
+//        }
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.child("Usuarios").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
@@ -341,89 +342,73 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 2 && resultCode == RESULT_OK) {
-            progressBar.setVisibility(View.VISIBLE);
-            if (user != null) {
-                uriProfileImage = data.getData();
-                foto.setImageURI(uriProfileImage);
-                final StorageReference filepath = storageReference.child("foto_perfil").child(firebaseAuth.getCurrentUser().getUid()).child(uriProfileImage.getLastPathSegment());
-                Bitmap bmp = null;
-                try {
-                    bmp = MediaStore.Images.Media.getBitmap(getContentResolver(), uriProfileImage);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                if (bmp != null) {
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    bmp.compress(Bitmap.CompressFormat.JPEG, 25, baos);
-                    byte[] dataByte = baos.toByteArray();
+        @Override
+        protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+            super.onActivityResult(requestCode, resultCode, data);
 
-                    final UploadTask uploadTask = filepath.putFile(uriProfileImage);
+            if (requestCode == 2 && resultCode == RESULT_OK) {
+                progressBar.setVisibility(View.VISIBLE);
 
-                    uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                        @Override
-                        public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                            if (!task.isSuccessful()) {
-                                throw task.getException();
+                if(user != null) {
+                    final Uri uri = data.getData();
+                    StorageReference filepath = storageReference.child("foto_perfil").child(user.getUid()).child(uri.getLastPathSegment());
+
+                    Bitmap bmp = null;
+                    try {
+                        bmp = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    if (bmp != null) {
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        bmp.compress(Bitmap.CompressFormat.JPEG, 25, baos);
+                        byte[] dataByte = baos.toByteArray();
+
+                        filepath.putBytes(dataByte).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        if(imagem != null){
+                                            StorageReference ref = FirebaseStorage.getInstance().getReferenceFromUrl(imagem);
+                                            ref.getDownloadUrl();
+                                        }
+                                    }
+                                });
+
+                                Glide.with(EditarPerfilInvestidorActivity.this).load(uri.toString()).into(foto);
+                                imagem = uri.toString();
+                                Toast.makeText(EditarPerfilInvestidorActivity.this, "Foto alterada com sucesso!", Toast.LENGTH_SHORT).show();
+                                progressBar.setVisibility(View.INVISIBLE);
                             }
-
-                            return filepath.getDownloadUrl();
-                        }
-                    }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Uri> task) {
-                           if(task.isSuccessful()) {
-                               uriProfileImage = task.getResult();
-                               System.out.println(uriProfileImage);
-                               Glide.with(EditarPerfilInvestidorActivity.this).load(uriProfileImage).into(foto);
-                               imagem = uriProfileImage.toString();
-                               Toast.makeText(EditarPerfilInvestidorActivity.this, "Imagem alterada!", Toast.LENGTH_SHORT).show();
-                               progressBar.setVisibility(View.INVISIBLE);
-
-                           }
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(EditarPerfilInvestidorActivity.this, "Erro ao alterar imagem!", Toast.LENGTH_SHORT).show();
-                            progressBar.setVisibility(View.INVISIBLE);
-                        }
-                    });
-
-                   onResume();
-
-                } else {
-                    Toast.makeText(this, "erro", Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.INVISIBLE);
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(EditarPerfilInvestidorActivity.this, "Erro ao altar imagem!", Toast.LENGTH_SHORT).show();
+                                progressBar.setVisibility(View.INVISIBLE);
+                            }
+                        });
+                    }
                 }
-            } else {
                 progressBar.setVisibility(View.INVISIBLE);
             }
         }
-    }
+
 }
 
 
-//        filepath.putBytes(dataByte).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                        @Override
-//                        public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
-//                            taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//                                @Override
-//                                public void onSuccess(Uri uri) {
-//                                    firebaseFirestore.collection("users").document(user.getUid()).update("Imagem", uri.toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                        @Override
-//                                        public void onSuccess(Void aVoid) {
-//                                            if (imagem != null) {
-//                                                if (!imagem.contains("NEXCLUIR")) {
-//                                                    StorageReference reference = FirebaseStorage.getInstance().getReferenceFromUrl(imagem);
-//                                                    reference.delete();
-//                                                    Task<Uri> downloadUri = reference.getDownloadUrl();
-//                                                    Log.d("link", downloadUri.toString());
-//
-//                                                }
-//                                            }
-//                                        }
-//                                    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
