@@ -1,13 +1,11 @@
 package com.treinamento.mdomingos.startapp.activity.investidor;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
+import android.content.ContentResolver;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
@@ -15,8 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.ContextThemeWrapper;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -24,9 +22,6 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -38,8 +33,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 import com.treinamento.mdomingos.startapp.R;
 import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentInvestidor;
 import com.treinamento.mdomingos.startapp.model.CEP;
@@ -48,15 +46,16 @@ import com.treinamento.mdomingos.startapp.model.InvestidorResponse;
 import com.treinamento.mdomingos.startapp.utils.FirebaseConfig;
 import com.treinamento.mdomingos.startapp.utils.HttpService;
 import com.treinamento.mdomingos.startapp.utils.MaskFormatter;
+import com.treinamento.mdomingos.startapp.utils.UploadStorage;
 import com.treinamento.mdomingos.startapp.utils.Validator;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
 public class EditarPerfilInvestidorActivity extends AppCompatActivity {
+
+    private static final int PICK_IMAGE_REQUEST = 1;
+    private Uri imageUri;
 
     private EditText nome, email, empresa, telefone, cep, cpf, cnpj, dataNasc, rua, cidade, bairro, estado, bio;
     private RelativeLayout botaoConcluir;
@@ -66,37 +65,17 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
 
     private FirebaseUser firebaseUser;
     private ProgressDialog progressDialog;
-    private ProgressBar progressBar;
 
+    private ProgressBar progressBar;
     private CircleImageView foto;
     private ImageView icone;
     private StorageReference storageReference;
-    private FirebaseStorage storage = FirebaseStorage.getInstance();
-    private FirebaseUser user;
-    private String imagem;
-
+    private DatabaseReference databaseReference;
+    private StorageTask storageTask;
 
     @Override
     protected void onResume() {
         super.onResume();
-
-        user = FirebaseAuth.getInstance().getCurrentUser();
-        storageReference = storage.getReference();
-        storageReference.child("imagem_perfil").child(user.getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Glide.with(EditarPerfilInvestidorActivity.this).load(uri.toString()).into(foto);
-            }
-        });
-
-
-//        if (user != null) {
-//            if (user.getPhotoUrl() != null) {
-//                Glide.with(this).load(user.getPhotoUrl().toString()).into(foto);
-//            } else {
-//                Toast.makeText(this, "Usuario sem foto!", Toast.LENGTH_SHORT).show();
-//            }
-//        }
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.child("Usuarios").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
@@ -150,7 +129,8 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
-        storageReference = storage.getInstance().getReference();
+        storageReference = FirebaseStorage.getInstance().getReference("uploads");
+        databaseReference = FirebaseDatabase.getInstance().getReference("uploads");
 
         //Mascaras
         MaskFormatter.simpleFormatterCell(telefone);
@@ -162,25 +142,7 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
         icone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final AlertDialog.Builder alerta = new AlertDialog.Builder(new ContextThemeWrapper(v.getContext(), android.R.style.Theme_DeviceDefault_Light_Dialog));
-                alerta.setMessage("Deseja mudar a foto de perfil?");
-                alerta.setCancelable(true);
-                alerta.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(Intent.ACTION_PICK);
-                        intent.setType("image/*");
-                        startActivityForResult(intent, 2);
-                    }
-                });
-                alerta.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        onResume();
-                    }
-                });
-                AlertDialog alertDialog = alerta.create();
-                alertDialog.show();
+                openFileChooser();
             }
         });
 
@@ -240,7 +202,11 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (FirebaseConfig.firebaseConection()) {
-
+                    if(storageTask != null && storageTask.isInProgress()){
+                        Toast.makeText(EditarPerfilInvestidorActivity.this, "Em progresso", Toast.LENGTH_SHORT).show();
+                    } else {
+                        uploadFile();
+                    }
                     final String nomeRecebido = nome.getText().toString();
                     final String emailRecebido = email.getText().toString();
                     final String telefoneRecebido = telefone.getText().toString();
@@ -342,61 +308,70 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
         });
     }
 
-        @Override
-        protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-            super.onActivityResult(requestCode, resultCode, data);
+    private void openFileChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+    }
 
-            if (requestCode == 2 && resultCode == RESULT_OK) {
-                progressBar.setVisibility(View.VISIBLE);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-                if(user != null) {
-                    final Uri uri = data.getData();
-                    StorageReference filepath = storageReference.child("foto_perfil").child(user.getUid()).child(uri.getLastPathSegment());
+        if(requestCode ==  PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data!= null && data.getData() != null){
+            imageUri = data.getData();
+            Picasso.get().load(imageUri).into(foto);
+        }
+    }
 
-                    Bitmap bmp = null;
-                    try {
-                        bmp = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    if (bmp != null) {
-                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                        bmp.compress(Bitmap.CompressFormat.JPEG, 25, baos);
-                        byte[] dataByte = baos.toByteArray();
+    private String getFileExtension(Uri uri){
+        ContentResolver contentResolver = getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getMimeTypeFromExtension(contentResolver.getType(uri));
+    }
 
-                        filepath.putBytes(dataByte).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                    @Override
-                                    public void onSuccess(Uri uri) {
-                                        if(imagem != null){
-                                            StorageReference ref = FirebaseStorage.getInstance().getReferenceFromUrl(imagem);
-                                            ref.getDownloadUrl();
-                                        }
-                                    }
-                                });
+    private void uploadFile(){
+        if(imageUri != null){
+            StorageReference fileReference = storageReference.child("foto_perfil").child(firebaseUser.getUid()).child(imageUri.getLastPathSegment());
+            storageTask = fileReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            progressBar.setProgress(0);
+                        }
+                    }, 5000);
 
-                                Glide.with(EditarPerfilInvestidorActivity.this).load(uri.toString()).into(foto);
-                                imagem = uri.toString();
-                                Toast.makeText(EditarPerfilInvestidorActivity.this, "Foto alterada com sucesso!", Toast.LENGTH_SHORT).show();
-                                progressBar.setVisibility(View.INVISIBLE);
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(EditarPerfilInvestidorActivity.this, "Erro ao altar imagem!", Toast.LENGTH_SHORT).show();
-                                progressBar.setVisibility(View.INVISIBLE);
-                            }
-                        });
-                    }
+                    Toast.makeText(EditarPerfilInvestidorActivity.this,"Imagem alterada com sucesso", Toast.LENGTH_SHORT).show();
+                    Task<Uri> downUrl = taskSnapshot.getMetadata().getReference().getDownloadUrl();
+                    Log.i("url:",downUrl.getResult().toString());
+                    UploadStorage uploadStorage = new UploadStorage(downUrl.toString());
+                    String uploadId = databaseReference.push().getKey();
+                    databaseReference.child(uploadId).setValue(uploadStorage);
+
                 }
-                progressBar.setVisibility(View.INVISIBLE);
-            }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                Toast.makeText(EditarPerfilInvestidorActivity.this,"Erro ao alterar imagem!", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                    double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                    progressBar.setProgress((int)progress);
+                }
+            });
+
+        } else {
+            Toast.makeText(this, "Nenhuma imagem selecionada", Toast.LENGTH_SHORT).show();
         }
 
+    }
 }
-
 
 
 
