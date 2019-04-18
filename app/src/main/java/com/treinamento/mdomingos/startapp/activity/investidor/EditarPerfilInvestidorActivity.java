@@ -5,7 +5,6 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
@@ -69,6 +68,7 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private CircleImageView foto;
     private ImageView icone;
+    FirebaseStorage storage;
     private StorageReference storageReference;
     private DatabaseReference databaseReference;
     private StorageTask storageTask;
@@ -129,8 +129,9 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
-        storageReference = FirebaseStorage.getInstance().getReference("uploads");
-        databaseReference = FirebaseDatabase.getInstance().getReference("uploads");
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
 
         //Mascaras
         MaskFormatter.simpleFormatterCell(telefone);
@@ -333,24 +334,17 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
 
     private void uploadFile(){
         if(imageUri != null){
-            StorageReference fileReference = storageReference.child("foto_perfil").child(firebaseUser.getUid()).child(imageUri.getLastPathSegment());
+            StorageReference fileReference = storageReference.child("foto_perfil/"+ firebaseUser.getUid());
             storageTask = fileReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            progressBar.setProgress(0);
-                        }
-                    }, 5000);
 
-                    Toast.makeText(EditarPerfilInvestidorActivity.this,"Imagem alterada com sucesso", Toast.LENGTH_SHORT).show();
-                    Task<Uri> downUrl = taskSnapshot.getMetadata().getReference().getDownloadUrl();
-                    Log.i("url:",downUrl.getResult().toString());
-                    UploadStorage uploadStorage = new UploadStorage(downUrl.toString());
-                    String uploadId = databaseReference.push().getKey();
-                    databaseReference.child(uploadId).setValue(uploadStorage);
+                    Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
+                    while (!urlTask.isSuccessful());
+                    Uri downloadUrl = urlTask.getResult();
+                    final String downUrl = String.valueOf(downloadUrl);
+                    UploadStorage uploadStorage = new UploadStorage(downUrl);
+                    databaseReference.child("Usuarios").child(firebaseUser.getUid()).child("detalhe_investidor").child("foto_perfil").setValue(uploadStorage);
 
                 }
             }).addOnFailureListener(new OnFailureListener() {

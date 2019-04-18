@@ -2,7 +2,6 @@ package com.treinamento.mdomingos.startapp.fragments_investidor;
 
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,8 +14,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -28,11 +27,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.treinamento.mdomingos.startapp.R;
 import com.treinamento.mdomingos.startapp.activity.investidor.EditarPerfilInvestidorActivity;
 import com.treinamento.mdomingos.startapp.activity.login.LoginActivity;
@@ -50,30 +46,9 @@ public class PerfilFragment_Investidor extends Fragment {
     private CircleImageView foto;
     private StorageReference storageReference;
     private FirebaseStorage storage = FirebaseStorage.getInstance();
-    private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+    private FirebaseDatabase firebaseDatabase;
+    private  FirebaseStorage firebaseStorage;
     private FirebaseUser user;
-    private String imagem;
-
-
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        Uri uri = data.getData();
-        storageReference.child("foto_perfil/").child(user.getUid()).child(uri.getLastPathSegment()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Glide.with(getActivity().getApplicationContext()).load(imagem).into(foto);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-
-            }
-        });
-
-    }
 
 
     @Override
@@ -125,7 +100,8 @@ public class PerfilFragment_Investidor extends Fragment {
         bio = view.findViewById(R.id.text_biografia_perfil_investidor);
         progressDialog = new ProgressDialog(getActivity());
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.child("Usuarios").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -139,6 +115,7 @@ public class PerfilFragment_Investidor extends Fragment {
                 estado.setText(investidor.getDetalhe_investidor().getEstado());
                 telefone.setText(investidor.getDetalhe_investidor().getTelefone());
                 bio.setText(investidor.getDetalhe_investidor().getBiografia());
+                loadUserInformation();
             }
 
             @Override
@@ -150,7 +127,10 @@ public class PerfilFragment_Investidor extends Fragment {
 
     }
 
+    private void loadUserInformation() {
+        final StorageReference storageReference = storage.getReferenceFromUrl("gs://app-startaap.appspot.com/foto_perfil");
+//        StorageReference pathReference = storageReference.child("foto_perfil/");
 
 
-
+    }
 }

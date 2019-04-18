@@ -155,7 +155,7 @@ public class CadastroLoginActivity extends AppCompatActivity {
 
                                 } else {
                                     Log.i("createUser", "Falha ao cadastrar!!!");
-                                    Toast.makeText(CadastroLoginActivity.this, "Falha ao cadastrar", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(CadastroLoginActivity.this, "Usuário já cadastrado!", Toast.LENGTH_SHORT).show();
                                 }
 
                                 final Handler handler = new Handler();
