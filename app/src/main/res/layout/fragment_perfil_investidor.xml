@@ -26,62 +26,37 @@
             android:orientation="vertical"
             android:visibility="visible">
 
-
-            <RelativeLayout
-                android:id="@+id/relativeLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorTranspatenteLight"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
                 <ProgressBar
                     android:id="@+id/progressBar_perfil_investidor"
                     style="?android:attr/progressBarStyle"
                     android:layout_width="35dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
                     android:indeterminateTint="@color/colorPrimaryDark"
-                    android:visibility="gone"
-                    android:layout_marginLeft="20dp" />
+                    android:visibility="gone" />
 
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/linearLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    android:gravity="start"
+                    android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
+                        android:gravity="start"
                         android:orientation="vertical"
-                        android:padding="20dp">
-
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/foto_perfil_investidor_id"
-                            android:layout_width="180dp"
-                            android:layout_height="180dp"
-                            android:src="@drawable/investidor_icon2" />
-
+                        android:layout_marginTop="30dp">
 
                         <LinearLayout
                             style="@style/TextInputRegister"
-                            android:gravity="center"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-
-                            <ImageView
-                                android:layout_width="25dp"
-                                android:layout_height="25dp"
-                                android:layout_centerVertical="true"
-                                android:layout_marginRight="10dp"
-                                android:background="@drawable/mala_ic"
-                                android:scaleType="fitXY" />
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="start">
 
                             <TextView
                                 android:id="@+id/nome_perfil_investidor_id"
@@ -91,53 +66,71 @@
                                 android:textColor="@color/colorCinza"
                                 android:textSize="24dp"
                                 app:fontFamily="@font/lato_regular" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/text_cidade_perfil_investidor"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:fontFamily="@font/lato_regular"
+                                    android:text="Cidade"
+                                    android:textColor="@color/colorCinza" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginTop="1dp"
+                                    android:text="|"
+                                    android:textColor="@color/colorCinzaLight"
+                                    android:textSize="24dp" />
+
+                                <TextView
+                                    android:id="@+id/text_empresa_perfil_investidor"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:fontFamily="@font/lato_regular"
+                                    android:text="Empresa"
+                                    android:textColor="@color/colorCinza" />
+                            </LinearLayout>
                         </LinearLayout>
+                    </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:orientation="horizontal">
 
-                            <TextView
-                                android:id="@+id/text_cidade_perfil_investidor"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:layout_marginLeft="10dp"
-                                android:fontFamily="@font/lato_regular"
-                                android:text="Cidade"
-                                android:textColor="@color/colorCinza" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:orientation="vertical"
+                        android:paddingTop="0dp"
+                        android:paddingRight="10dp">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginTop="1dp"
-                                android:text="|"
-                                android:textColor="@color/colorCinzaLight"
-                                android:textSize="24dp" />
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/foto_perfil_investidor_id"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:src="@drawable/investidor_icon2" />
 
-                            <TextView
-                                android:id="@+id/text_empresa_perfil_investidor"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:layout_marginLeft="10dp"
-                                android:fontFamily="@font/lato_regular"
-                                android:text="Empresa"
-                                android:textColor="@color/colorCinza" />
-                        </LinearLayout>
 
                         <RelativeLayout
                             android:id="@+id/botao_iniciar_conversa_investidor_id"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:layout_marginLeft="70dp"
-                            android:layout_marginTop="20dp"
+                            android:layout_marginTop="30dp"
                             android:layout_marginRight="70dp"
-                            android:background="@drawable/button_rounded_precionado_red"
+                            android:layout_marginBottom="30dp"
+                            android:background="@drawable/button_ronded"
                             android:gravity="clip_vertical|center_horizontal"
                             android:orientation="horizontal">
 
@@ -156,9 +149,9 @@
 
                         </RelativeLayout>
                     </LinearLayout>
-                </LinearLayout>
+                </RelativeLayout>
 
-            </RelativeLayout>
+
 
         <LinearLayout
             style="@style/TextInputRegister">

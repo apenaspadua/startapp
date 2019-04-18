@@ -5,8 +5,8 @@
     android:id="@+id/toolbar_id"
     android:layout_width="match_parent"
     android:layout_height="55dp"
-    android:background="@color/colorPrimaryDark"
-    app:titleTextColor="@color/colorPrimaryDark"
+    android:background="@color/marine"
+    app:titleTextColor="@color/marine"
     app:layout_collapseMode="pin"
     app:layout_scrollFlags="scroll|enterAlways">
     <!--app:theme="@style/Toolbar">-->

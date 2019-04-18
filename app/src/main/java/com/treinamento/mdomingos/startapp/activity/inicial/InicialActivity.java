@@ -23,7 +23,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.treinamento.mdomingos.startapp.R;
 import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentInvestidor;
 import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentStartup;
-import com.treinamento.mdomingos.startapp.activity.investidor.BioInvestidorActivity;
 import com.treinamento.mdomingos.startapp.activity.investidor.CadastroInvestidorActivity;
 import com.treinamento.mdomingos.startapp.activity.login.CadastroLoginActivity;
 import com.treinamento.mdomingos.startapp.activity.login.LoginActivity;
@@ -132,7 +131,7 @@ public class InicialActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.videologin);
+        Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.videologin2);
         videoView.setVideoURI(uri);
         videoView.start();
         videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
