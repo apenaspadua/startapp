@@ -49,9 +49,18 @@
                         android:gravity="center"
                         android:padding="20dp">
 
+                        <ProgressBar
+                            android:id="@+id/progressBar_editar_startup"
+                            style="?android:attr/progressBarStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:indeterminateTint="@color/colorWhite"
+                            android:visibility="gone"/>
+
 
                         <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/foto_editar_investidor_id"
+                            android:id="@+id/foto_editar_startup_id"
                             android:layout_width="150dp"
                             android:layout_height="150dp"
                             android:src="@drawable/startup_icon2"/>

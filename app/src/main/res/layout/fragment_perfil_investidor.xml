@@ -37,6 +37,16 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
+                <ProgressBar
+                    android:id="@+id/progressBar_perfil_investidor"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="20dp"
+                    android:indeterminateTint="@color/colorPrimaryDark"
+                    android:visibility="gone"
+                    android:layout_marginLeft="20dp" />
 
                 <LinearLayout
                     android:id="@+id/linearLayout"
@@ -54,18 +64,22 @@
 
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/foto_perfil_investidor_id"
-                            android:layout_width="150dp"
-                            android:layout_height="150dp"
-                            android:src="@drawable/investidor_icon2"/>
+                            android:layout_width="180dp"
+                            android:layout_height="180dp"
+                            android:src="@drawable/investidor_icon2" />
 
-                        <LinearLayout style="@style/TextInputRegister"
-                            android:gravity="center">
+
+                        <LinearLayout
+                            style="@style/TextInputRegister"
+                            android:gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
 
                             <ImageView
                                 android:layout_width="25dp"
                                 android:layout_height="25dp"
-                                android:layout_marginRight="10dp"
                                 android:layout_centerVertical="true"
+                                android:layout_marginRight="10dp"
                                 android:background="@drawable/mala_ic"
                                 android:scaleType="fitXY" />
 
@@ -80,7 +94,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:orientation="horizontal">
@@ -91,8 +105,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
                                 android:layout_marginLeft="10dp"
-                                android:text="Cidade"
                                 android:fontFamily="@font/lato_regular"
+                                android:text="Cidade"
                                 android:textColor="@color/colorCinza" />
 
                             <TextView
@@ -111,8 +125,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
                                 android:layout_marginLeft="10dp"
-                                android:text="Empresa"
                                 android:fontFamily="@font/lato_regular"
+                                android:text="Empresa"
                                 android:textColor="@color/colorCinza" />
                         </LinearLayout>
 

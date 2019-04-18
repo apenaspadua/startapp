@@ -2,6 +2,7 @@ package com.treinamento.mdomingos.startapp.fragments_startup;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -12,8 +13,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -21,12 +27,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 import com.treinamento.mdomingos.startapp.R;
-import com.treinamento.mdomingos.startapp.activity.investidor.EditarPerfilInvestidorActivity;
 import com.treinamento.mdomingos.startapp.activity.login.LoginActivity;
-import com.treinamento.mdomingos.startapp.activity.startup.EditarPerfilStartup;
-import com.treinamento.mdomingos.startapp.model.InvestidorResponse;
+import com.treinamento.mdomingos.startapp.activity.startup.EditarPerfilStartupActivity;
 import com.treinamento.mdomingos.startapp.model.StartupResponse;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class PerfilFragment_Startup extends Fragment {
@@ -34,7 +41,20 @@ public class PerfilFragment_Startup extends Fragment {
     private ProgressDialog progressDialog;
     private FirebaseUser firebaseUser;
     private FirebaseAuth firebaseAuth;
+    private Task<Uri> storageReference;
+    private FirebaseUser user;
+    private String imageURL;
+    private ProgressBar progressBar;
     private TextView nome, cidade, razao, email, rua, bairro, estado, telefone, bio;
+    private CircleImageView foto;
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        loadUserInformation();
+        progressBar.setVisibility(View.VISIBLE);
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -55,7 +75,7 @@ public class PerfilFragment_Startup extends Fragment {
             getActivity().finish();
         } else {
             if (item.getItemId() == R.id.editar_perfil_item_dropdown_menu_id){
-                startActivity(new Intent(getActivity(), EditarPerfilStartup.class));
+                startActivity(new Intent(getActivity(), EditarPerfilStartupActivity.class));
             }
         }
         return super.onOptionsItemSelected(item);
@@ -69,6 +89,7 @@ public class PerfilFragment_Startup extends Fragment {
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
         nome = view.findViewById(R.id.nome_perfil_startup_id);
         cidade = view.findViewById(R.id.text_cidade_perfil_startup);
@@ -79,9 +100,12 @@ public class PerfilFragment_Startup extends Fragment {
         estado = view.findViewById(R.id.estado_perfil_startup_id);
         telefone = view.findViewById(R.id.telefone_perfil_startup_id);
         bio = view.findViewById(R.id.text_biografia_perfil_startup);
+        foto = view.findViewById(R.id.foto_perfil_startup_id);
+        progressBar = view.findViewById(R.id.progressBar_perfil_startup);
+
         progressDialog = new ProgressDialog(getActivity());
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.child("Usuarios").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -106,4 +130,21 @@ public class PerfilFragment_Startup extends Fragment {
         return view;
     }
 
+    private void loadUserInformation() {
+        storageReference = FirebaseStorage.getInstance().getReference().child("foto_perfil").
+                child(user.getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+
+            @Override
+            public void onSuccess(Uri uri) {
+                imageURL = uri.toString();
+                Glide.with(getActivity()).load(imageURL).into(foto);
+                progressBar.setVisibility(View.GONE);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                progressBar.setVisibility(View.GONE);
+            }
+        });
+    }
 }

@@ -3,6 +3,8 @@ package com.treinamento.mdomingos.startapp.activity.home;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -12,8 +14,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
 import com.treinamento.mdomingos.startapp.R;
 import com.treinamento.mdomingos.startapp.activity.login.LoginActivity;
 import com.treinamento.mdomingos.startapp.adapter.TabsAdapter;
@@ -24,6 +31,8 @@ import com.treinamento.mdomingos.startapp.fragments_startup.FeedFragmentStartup;
 import com.treinamento.mdomingos.startapp.fragments_startup.NotifyFragment_Startup;
 import com.treinamento.mdomingos.startapp.fragments_startup.PerfilFragment_Startup;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class BaseFragmentStartup extends AppCompatActivity {
 
     private TabLayout tabLayout;
@@ -32,21 +41,25 @@ public class BaseFragmentStartup extends AppCompatActivity {
     private Toolbar toolbar;
     private ProgressDialog progressDialog;
     private TextView titulo;
-    private ImageView imageViewProfile, imageViewChat, imageViewBack;
+    private FirebaseUser user;
+    private String imageURL;
+    private Task<Uri> storageReference;
+    private ImageView imageViewChat, imageViewBack;
+    private CircleImageView imageViewProfile;
 
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) {
             startActivity(new Intent(BaseFragmentStartup.this, LoginActivity.class));
             finish();
             return;
         }
 
-        initViewPager();
+        loadUserInformation();
     }
 
     @Override
@@ -130,27 +143,20 @@ public class BaseFragmentStartup extends AppCompatActivity {
 
         });
     }
+    private void loadUserInformation() {
+        storageReference = FirebaseStorage.getInstance().getReference().child("foto_perfil").
+                child(user.getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
 
-    private void initViewPager() {
-        viewPager.addOnPageChangeListener(onPageChangeListener);
+            @Override
+            public void onSuccess(Uri uri) {
+                imageURL = uri.toString();
+                Glide.with(getApplicationContext()).load(imageURL).into(imageViewProfile);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+            }
+        });
     }
 
-    ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-        }
-
-        @Override
-        public void onPageSelected(int position) {
-
-
-
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int state) {
-
-        }
-    };
 }

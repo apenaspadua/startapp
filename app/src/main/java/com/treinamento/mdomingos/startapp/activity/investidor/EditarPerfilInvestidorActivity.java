@@ -21,6 +21,7 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -68,10 +69,11 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private CircleImageView foto;
     private ImageView icone;
-    FirebaseStorage storage;
+    private FirebaseStorage storage;
+    private Task<Uri> storageReferenceUp;
     private StorageReference storageReference;
     private DatabaseReference databaseReference;
-    private StorageTask storageTask;
+    private String imageURL;
 
     @Override
     protected void onResume() {
@@ -92,6 +94,7 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
                 estado.setText(investidor.getDetalhe_investidor().getEstado());
                 telefone.setText(investidor.getDetalhe_investidor().getTelefone());
                 bio.setText(investidor.getDetalhe_investidor().getBiografia());
+
             }
 
             @Override
@@ -132,6 +135,8 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
         databaseReference = FirebaseDatabase.getInstance().getReference();
+        loadUserInformation();
+        progressBar.setVisibility(View.VISIBLE);
 
         //Mascaras
         MaskFormatter.simpleFormatterCell(telefone);
@@ -202,12 +207,8 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
         botaoConcluir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (FirebaseConfig.firebaseConection()) {
-                    if(storageTask != null && storageTask.isInProgress()){
-                        Toast.makeText(EditarPerfilInvestidorActivity.this, "Em progresso", Toast.LENGTH_SHORT).show();
-                    } else {
-                        uploadFile();
-                    }
                     final String nomeRecebido = nome.getText().toString();
                     final String emailRecebido = email.getText().toString();
                     final String telefoneRecebido = telefone.getText().toString();
@@ -323,6 +324,7 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
         if(requestCode ==  PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data!= null && data.getData() != null){
             imageUri = data.getData();
             Picasso.get().load(imageUri).into(foto);
+            uploadFile();
         }
     }
 
@@ -334,8 +336,9 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
 
     private void uploadFile(){
         if(imageUri != null){
+            progressBar.setVisibility(View.VISIBLE);
             StorageReference fileReference = storageReference.child("foto_perfil/"+ firebaseUser.getUid());
-            storageTask = fileReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            fileReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
@@ -345,6 +348,8 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
                     final String downUrl = String.valueOf(downloadUrl);
                     UploadStorage uploadStorage = new UploadStorage(downUrl);
                     databaseReference.child("Usuarios").child(firebaseUser.getUid()).child("detalhe_investidor").child("foto_perfil").setValue(uploadStorage);
+                    progressBar.setVisibility(View.INVISIBLE);
+                    Toast.makeText(EditarPerfilInvestidorActivity.this, "Imagem alterada com sucesso", Toast.LENGTH_SHORT).show();
 
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -364,6 +369,23 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
             Toast.makeText(this, "Nenhuma imagem selecionada", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    private void loadUserInformation() {
+        storageReferenceUp = FirebaseStorage.getInstance().getReference().child("foto_perfil").
+                child(firebaseUser.getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+
+            @Override
+            public void onSuccess(Uri uri) {
+                imageURL = uri.toString();
+                Glide.with(getApplicationContext()).load(imageURL).into(foto);
+                progressBar.setVisibility(View.GONE);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+            }
+        });
     }
 }
 

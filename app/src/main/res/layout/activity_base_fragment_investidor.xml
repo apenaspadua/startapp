@@ -15,7 +15,7 @@
     </include>
 
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageview_home_investidor_id"
         android:layout_width="40dp"
         android:layout_height="40dp"

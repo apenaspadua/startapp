@@ -5,15 +5,17 @@ public class UploadStorage {
 
     public UploadStorage(){}
 
-    public UploadStorage(String imageUrl){
+    public  UploadStorage(String imageUrl){
         this.imageUrl = imageUrl;
     }
 
-    public String getImageUrl(){
+    public String getImageUrl() {
         return imageUrl;
     }
 
-    public String setImageUrl(){
-       return imageUrl = imageUrl;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
+
+
 }
