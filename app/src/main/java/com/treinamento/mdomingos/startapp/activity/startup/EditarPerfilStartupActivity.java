@@ -55,7 +55,7 @@ public class EditarPerfilStartupActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri imageUri;
 
-    private EditText razaoSocial, nomeFantasia, email, telefone, cep, cnpj, rua, cidade, bairro, estado, bio;
+    private EditText razaoSocial, nomeFantasia, email, telefone, cep, cnpj, rua, cidade, bairro, estado, bio,  apresentacao, link;
     private RelativeLayout botaoConcluir;
     private FirebaseAuth firebaseAuth;
 
@@ -90,6 +90,8 @@ public class EditarPerfilStartupActivity extends AppCompatActivity {
                 estado.setText(startup.getDetalhe_startup().getEstado());
                 telefone.setText(startup.getDetalhe_startup().getTelefone());
                 bio.setText(startup.getDetalhe_startup().getBiografia());
+                apresentacao.setText(startup.getDetalhe_startup().getApresentacao());
+                link.setText(startup.getDetalhe_startup().getLink());
             }
 
             @Override
@@ -116,6 +118,8 @@ public class EditarPerfilStartupActivity extends AppCompatActivity {
         bairro = findViewById(R.id.bairro_editar_startup_id);
         estado = findViewById(R.id.estado_editar_startup_id);
         bio = findViewById(R.id.biografia_editar_startup_id);
+        apresentacao = findViewById(R.id.apresentacao_editar_startup_id);
+        link = findViewById(R.id.link_editar_startup_id);
         botaoConcluir = findViewById(R.id.botao_concluir_edicao_startup_id);
         progressDialog = new ProgressDialog(EditarPerfilStartupActivity.this);
         foto = findViewById(R.id.foto_editar_startup_id);
@@ -192,6 +196,8 @@ public class EditarPerfilStartupActivity extends AppCompatActivity {
                     final String estadoRecebido = estado.getText().toString();
                     final String cnpjRecebido = cnpj.getText().toString();
                     final String bioRecebida = bio.getText().toString();
+                    final String apresentacaoRecebido = apresentacao.getText().toString();
+                    final String linkRecebido = link.getText().toString();
 
                     String cnpjSemFormatacao = cnpjRecebido.replace(".", "");
                     cnpjSemFormatacao = cnpjSemFormatacao.replace("/", "");
@@ -240,7 +246,7 @@ public class EditarPerfilStartupActivity extends AppCompatActivity {
 
                         Startup startup = new Startup(razaoSocialRecebido, nomeFantasiaRecebido, emailRecebido, telefoneRecebido, cepRecebido, ruaRecebida, bairroRecebido,cidadeRecebido, estadoRecebido, cnpjRecebido);
                         startup.salvarStartup(firebaseUser.getUid());
-                        Startup startup1 = new Startup(bioRecebida);
+                        Startup startup1 = new Startup(bioRecebida, apresentacaoRecebido, linkRecebido);
                         startup1.salvarBioStartup(firebaseUser.getUid());
                         progressDialog.setMessage("Guardando dados...");
                         progressDialog.show();

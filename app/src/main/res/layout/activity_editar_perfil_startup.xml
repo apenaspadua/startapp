@@ -102,7 +102,57 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginBottom="0dp"
-                android:text="BIOGRAFIA" />
+                android:text="SAUDAÇÃO" />
+
+            <EditText
+                android:id="@+id/apresentacao_editar_startup_id"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:padding="10dp"
+                android:gravity="start"
+                android:layout_marginBottom="10dp"
+                android:hint="Escreva aqui"
+                android:fontFamily="@font/lato_regular"
+                android:textSize="14dp"
+                android:background="@drawable/button_custom_facebook"
+                android:minLines="100"
+                android:maxLines="100"
+                android:scrollbars="vertical"
+                android:inputType="textMultiLine"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="0dp"
+                android:text="LINK" />
+            <EditText
+                android:id="@+id/link_editar_startup_id"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:padding="10dp"
+                android:gravity="start"
+                android:layout_marginBottom="10dp"
+                android:hint="Adicione o link do site "
+                android:fontFamily="@font/lato_regular"
+                android:textSize="14dp"
+                android:background="@drawable/button_custom_facebook"
+                android:minLines="100"
+                android:maxLines="100"
+                android:scrollbars="vertical"
+                android:inputType="textMultiLine"/>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="0dp"
+                android:text="SOBRE A STARTUP" />
 
             <EditText
                 android:id="@+id/biografia_editar_startup_id"

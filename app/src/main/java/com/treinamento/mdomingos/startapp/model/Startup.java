@@ -23,13 +23,17 @@ public class Startup {
     private String cnpj;
     private String telefone;
     private String biografia;
+    private String apresentacao;
+    private String link;
 
     public Startup(){
 
     }
 
-    public Startup(String biografia) {
+    public Startup(String biografia, String apresentacao, String link) {
         this.biografia = biografia;
+        this.apresentacao = apresentacao;
+        this.link = link;
     }
 
     public Startup(String razaoSocial, String nomeFantasia, String email, String telefone, String cep, String rua, String bairro, String cidade, String estado, String cnpj) {
@@ -54,6 +58,8 @@ public class Startup {
     public void salvarBioStartup(String id){
         DatabaseReference databaseReference = FirebaseConfig.getFirebase();
         databaseReference.child("Usuarios").child(id).child("detalhe_startup").child("biografia").setValue(biografia);
+        databaseReference.child("Usuarios").child(id).child("detalhe_startup").child("apresentacao").setValue(apresentacao);
+        databaseReference.child("Usuarios").child(id).child("detalhe_startup").child("link").setValue(link);
         databaseReference.child("Usuarios").child(id).child("bio_completa").setValue(1);
     }
 
@@ -143,5 +149,21 @@ public class Startup {
 
     public void setBiografia(String biografia) {
         this.biografia = biografia;
+    }
+
+    public String getApresentacao() {
+        return apresentacao;
+    }
+
+    public void setApresentacao(String apresentacao) {
+        this.apresentacao = apresentacao;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 }

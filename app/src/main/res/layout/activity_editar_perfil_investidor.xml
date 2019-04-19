@@ -97,6 +97,31 @@
                 android:textSize="18sp"
                 app:fontFamily="@font/lato_regular" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="0dp"
+                android:text="SAUDAÇÃO" />
+
+            <EditText
+                android:id="@+id/apresentacao_editar_investidor_id"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:padding="10dp"
+                android:gravity="start"
+                android:layout_marginBottom="10dp"
+                android:hint="Escreva aqui"
+                android:fontFamily="@font/lato_regular"
+                android:textSize="14dp"
+                android:background="@drawable/button_custom_facebook"
+                android:minLines="100"
+                android:maxLines="100"
+                android:scrollbars="vertical"
+                android:inputType="textMultiLine"/>
+
 
             <TextView
                 android:layout_width="match_parent"

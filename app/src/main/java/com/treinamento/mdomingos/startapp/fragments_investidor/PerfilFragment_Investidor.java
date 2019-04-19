@@ -3,6 +3,7 @@ package com.treinamento.mdomingos.startapp.fragments_investidor;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -40,7 +41,7 @@ public class PerfilFragment_Investidor extends Fragment {
 
     private FirebaseUser firebaseUser;
     private FirebaseAuth firebaseAuth;
-    private TextView nome, cidade, empresa, email, rua, bairro, estado, telefone, bio;
+    private TextView nome, cidade, empresa, email, rua, bairro, estado, telefone, bio, editar, apresentacao;
     private ProgressDialog progressDialog;
     private CircleImageView foto;
     private Task<Uri> storageReference;
@@ -53,6 +54,7 @@ public class PerfilFragment_Investidor extends Fragment {
         super.onStart();
         loadUserInformation();
         progressBar.setVisibility(View.VISIBLE);
+        editar.setTextColor(Color.parseColor("#57BC90"));
     }
 
     @Override
@@ -91,6 +93,7 @@ public class PerfilFragment_Investidor extends Fragment {
         firebaseUser = firebaseAuth.getCurrentUser();
         user = FirebaseAuth.getInstance().getCurrentUser();
 
+        editar = view.findViewById(R.id.text_editar_investidor_startup);
         foto = view.findViewById(R.id.foto_perfil_investidor_id);
         nome = view.findViewById(R.id.nome_perfil_investidor_id);
         cidade = view.findViewById(R.id.text_cidade_perfil_investidor);
@@ -101,6 +104,7 @@ public class PerfilFragment_Investidor extends Fragment {
         estado = view.findViewById(R.id.estado_perfil_investidor_id);
         telefone = view.findViewById(R.id.telefone_perfil_investidor_id);
         bio = view.findViewById(R.id.text_biografia_perfil_investidor);
+        apresentacao = view.findViewById(R.id.text_apresentacao_perfil_investidor);
         progressDialog = new ProgressDialog(getActivity());
         progressBar = view.findViewById(R.id.progressBar_perfil_investidor);
 
@@ -119,6 +123,15 @@ public class PerfilFragment_Investidor extends Fragment {
                 estado.setText(investidor.getDetalhe_investidor().getEstado());
                 telefone.setText(investidor.getDetalhe_investidor().getTelefone());
                 bio.setText(investidor.getDetalhe_investidor().getBiografia());
+                apresentacao.setText(investidor.getDetalhe_investidor().getApresentacao());
+
+                editar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        editar.setTextColor(Color.parseColor("#0289BE"));
+                        startActivity(new Intent(getActivity(), EditarPerfilInvestidorActivity.class));
+                    }
+                });
             }
 
             @Override

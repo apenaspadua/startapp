@@ -57,7 +57,7 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri imageUri;
 
-    private EditText nome, email, empresa, telefone, cep, cpf, cnpj, dataNasc, rua, cidade, bairro, estado, bio;
+    private EditText nome, email, empresa, telefone, cep, cpf, cnpj, dataNasc, rua, cidade, bairro, estado, bio, apresentacao;
     private RelativeLayout botaoConcluir;
     private RadioGroup radioGroup;
     private FirebaseAuth firebaseAuth;
@@ -94,6 +94,7 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
                 estado.setText(investidor.getDetalhe_investidor().getEstado());
                 telefone.setText(investidor.getDetalhe_investidor().getTelefone());
                 bio.setText(investidor.getDetalhe_investidor().getBiografia());
+                apresentacao.setText(investidor.getDetalhe_investidor().getApresentacao());
 
             }
 
@@ -127,6 +128,7 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
         botaoConcluir = findViewById(R.id.botao_concluir_edicao_investidor_id);
         radioGroup = findViewById(R.id.radioGroup_editar);
         bio = findViewById(R.id.biografia_editar_investidor_id);
+        apresentacao = findViewById(R.id.apresentacao_editar_investidor_id);
         icone = findViewById(R.id.icone_editar_investidor_id);
         progressBar = findViewById(R.id.progressBar_editar_investidor);
 
@@ -222,6 +224,7 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
                     final String cpfRecebido = cpf.getText().toString();
                     final String cnpjRecebido = cnpj.getText().toString();
                     final String bioRecebida = bio.getText().toString();
+                    final String apresentacaoRecebida = apresentacao.getText().toString();
                     progressDialog = new ProgressDialog(EditarPerfilInvestidorActivity.this);
 
                     String cpfSemFormatacao = cpfRecebido.replace(".", "");
@@ -276,7 +279,7 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
 
                                 Investidor investidor = new Investidor(nomeRecebido, emailRecebido, telefoneRecebido, empresaRecebida, dataRecebida, cepRecebido, ruaRecebida, bairroRecebido, cidadeRecebido, estadoRecebido, null, cpfRecebido);
                                 investidor.salvarInvestidor(firebaseUser.getUid());
-                                Investidor investidor1 = new Investidor(bioRecebida);
+                                Investidor investidor1 = new Investidor(bioRecebida, apresentacaoRecebida);
                                 investidor1.salvarBioInvestidor(firebaseUser.getUid());
                                 progressDialog.setMessage("Salvando dados...");
                                 progressDialog.show();
@@ -290,7 +293,7 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
                             } else {
                                 Investidor investidor = new Investidor(nomeRecebido, emailRecebido, telefoneRecebido, empresaRecebida, dataRecebida, cepRecebido, ruaRecebida, bairroRecebido, cidadeRecebido, estadoRecebido, cnpjRecebido, null);
                                 investidor.salvarInvestidor(firebaseUser.getUid());
-                                Investidor investidor1 = new Investidor(bioRecebida);
+                                Investidor investidor1 = new Investidor(bioRecebida, apresentacaoRecebida);
                                 investidor1.salvarBioInvestidor(firebaseUser.getUid());
                                 progressDialog.setMessage("Salvando dados...");
                                 progressDialog.show();

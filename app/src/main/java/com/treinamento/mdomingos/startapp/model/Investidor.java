@@ -31,11 +31,13 @@ public class Investidor implements Serializable {
     private String cnpj;
     private String cpf;
     private String biografia;
+    private String apresentacao;
 
     public Investidor(){}
 
-    public Investidor(String biografia){
+    public Investidor(String biografia, String apresentacao){
         this.biografia = biografia;
+        this.apresentacao = apresentacao;
     }
 
     public Investidor(String nome, String email, String telefone, String empresa, String data, String cep, String rua, String bairro, String cidade, String estado, String cnpj, String cpf) {
@@ -62,6 +64,7 @@ public class Investidor implements Serializable {
     public void salvarBioInvestidor(String id){
         DatabaseReference databaseReference = FirebaseConfig.getFirebase();
         databaseReference.child("Usuarios").child(id).child("detalhe_investidor").child("biografia").setValue(biografia);
+        databaseReference.child("Usuarios").child(id).child("detalhe_investidor").child("apresentacao").setValue(apresentacao);
         databaseReference.child("Usuarios").child(id).child("bio_completa").setValue(1);
     }
 
@@ -168,6 +171,14 @@ public class Investidor implements Serializable {
 
     public void setBiografia(String biografia) {
         this.biografia = biografia;
+    }
+
+    public String getApresentacao() {
+        return apresentacao;
+    }
+
+    public void setApresentacao(String apresentacao) {
+        this.apresentacao = apresentacao;
     }
 
 

@@ -44,7 +44,7 @@ public class BaseFragmentStartup extends AppCompatActivity {
     private FirebaseUser user;
     private String imageURL;
     private Task<Uri> storageReference;
-    private ImageView imageViewChat, imageViewBack, background;
+    private ImageView imageViewChat, imageViewBack;
     private CircleImageView imageViewProfile;
 
 
@@ -73,7 +73,6 @@ public class BaseFragmentStartup extends AppCompatActivity {
         imageViewProfile = findViewById(R.id.imageview_home_startup_id);
         imageViewChat = findViewById(R.id.imageview_chat_startup_id);
         imageViewBack = findViewById(R.id.imageview_back_startup_id);
-        background = findViewById(R.id.background_image_startup);
         toolbar = findViewById(R.id.toolbar_startup);
         progressDialog = new ProgressDialog(this);
 
@@ -107,7 +106,6 @@ public class BaseFragmentStartup extends AppCompatActivity {
                     titulo.setVisibility(View.VISIBLE);
                     imageViewProfile.setVisibility(View.VISIBLE);
                     imageViewChat.setVisibility(View.VISIBLE);
-                    background.setVisibility(View.VISIBLE);
                     imageViewBack.setVisibility(View.GONE);
                     tabLayout.getTabAt(0).setIcon(R.drawable.ic_home_ouline);
 
@@ -117,7 +115,6 @@ public class BaseFragmentStartup extends AppCompatActivity {
                     titulo.setVisibility(View.VISIBLE);
                     imageViewProfile.setVisibility(View.GONE);
                     imageViewChat.setVisibility(View.VISIBLE);
-                    background.setVisibility(View.GONE);
                     imageViewBack.setVisibility(View.GONE);
                     tabLayout.getTabAt(1).setIcon(R.drawable.ic_notification_online);
 
@@ -126,7 +123,6 @@ public class BaseFragmentStartup extends AppCompatActivity {
                     titulo.setVisibility(View.GONE);
                     imageViewChat.setVisibility(View.GONE);
                     imageViewProfile.setVisibility(View.GONE);
-                    background.setVisibility(View.GONE);
                     imageViewBack.setVisibility(View.VISIBLE);
                     tabLayout.getTabAt(2).setIcon(R.drawable.ic_profile_online);
                 }

@@ -2,6 +2,8 @@ package com.treinamento.mdomingos.startapp.fragments_startup;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,8 +15,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.MediaController;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -35,8 +40,11 @@ import com.treinamento.mdomingos.startapp.model.StartupResponse;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static android.app.Activity.RESULT_OK;
 
 public class PerfilFragment_Startup extends Fragment {
+
+    private static final int PICK_VIDEO_REQUEST = 3;
 
     private ProgressDialog progressDialog;
     private FirebaseUser firebaseUser;
@@ -45,8 +53,13 @@ public class PerfilFragment_Startup extends Fragment {
     private FirebaseUser user;
     private String imageURL;
     private ProgressBar progressBar;
-    private TextView nome, cidade, razao, email, rua, bairro, estado, telefone, bio;
+    private TextView nome, cidade, razao, email, rua, bairro, estado, telefone, bio, editar, apresentacao, link ;
     private CircleImageView foto;
+    private RelativeLayout upVideo;
+
+    private VideoView videoView;
+    private Uri videoUri;
+    private MediaController mediaController;
 
 
     @Override
@@ -54,6 +67,8 @@ public class PerfilFragment_Startup extends Fragment {
         super.onStart();
         loadUserInformation();
         progressBar.setVisibility(View.VISIBLE);
+        editar.setTextColor(Color.parseColor("#57BC90"));
+
     }
 
     @Override
@@ -91,6 +106,7 @@ public class PerfilFragment_Startup extends Fragment {
         firebaseUser = firebaseAuth.getCurrentUser();
         user = FirebaseAuth.getInstance().getCurrentUser();
 
+        editar = view.findViewById(R.id.text_editar_perfil_startup);
         nome = view.findViewById(R.id.nome_perfil_startup_id);
         cidade = view.findViewById(R.id.text_cidade_perfil_startup);
         razao = view.findViewById(R.id.text_razao_perfil_startup);
@@ -100,10 +116,44 @@ public class PerfilFragment_Startup extends Fragment {
         estado = view.findViewById(R.id.estado_perfil_startup_id);
         telefone = view.findViewById(R.id.telefone_perfil_startup_id);
         bio = view.findViewById(R.id.text_biografia_perfil_startup);
+        apresentacao = view.findViewById(R.id.text_apresentacao_perfil_startup);
+        link = view.findViewById(R.id.text_link_perfil_startup);
         foto = view.findViewById(R.id.foto_perfil_startup_id);
+        videoView = view.findViewById(R.id.upload_video_id);
+        upVideo = view.findViewById(R.id.botao_publicar_startup_id);
         progressBar = view.findViewById(R.id.progressBar_perfil_startup);
-
         progressDialog = new ProgressDialog(getActivity());
+
+
+        editar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editar.setTextColor(Color.parseColor("#0289BE"));
+                startActivity(new Intent(getActivity(), EditarPerfilStartupActivity.class));
+            }
+        });
+
+        upVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                uploadVideo(v);
+            }
+        });
+
+        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mp.setOnVideoSizeChangedListener(new MediaPlayer.OnVideoSizeChangedListener() {
+                    @Override
+                    public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
+                        mediaController = new MediaController(getContext());
+                        videoView.setMediaController(mediaController);
+                        mediaController.setAnchorView(videoView);
+                    }
+                });
+            }
+        });
+        videoView.start();
 
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.child("Usuarios").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
@@ -119,6 +169,8 @@ public class PerfilFragment_Startup extends Fragment {
                 estado.setText(startup.getDetalhe_startup().getEstado());
                 telefone.setText(startup.getDetalhe_startup().getTelefone());
                 bio.setText(startup.getDetalhe_startup().getBiografia());
+                apresentacao.setText(startup.getDetalhe_startup().getApresentacao());
+                link.setText(startup.getDetalhe_startup().getLink());
 
             }
 
@@ -128,6 +180,23 @@ public class PerfilFragment_Startup extends Fragment {
             }
         });
         return view;
+    }
+
+    public void uploadVideo(View view) {
+        Intent intent = new Intent();
+        intent.setType("video/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Seleciona um video"), PICK_VIDEO_REQUEST);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == PICK_VIDEO_REQUEST && resultCode == RESULT_OK && data != null){
+            videoUri = data.getData();
+            videoView.setVideoURI(videoUri);
+        }
     }
 
     private void loadUserInformation() {

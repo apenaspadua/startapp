@@ -23,7 +23,7 @@ import com.treinamento.mdomingos.startapp.utils.Validator;
 
 public class BioInvestidorActivity extends AppCompatActivity {
 
-    private EditText bio;
+    private EditText bio, apresentacao;
     private RelativeLayout botaoConcluir;
     private ProgressDialog progressDialog;
     private FirebaseAuth firebaseAuth;
@@ -36,6 +36,7 @@ public class BioInvestidorActivity extends AppCompatActivity {
 
         botaoConcluir = findViewById(R.id.botao_bio_concluir_cadastro_login_id);
         progressDialog = new ProgressDialog(BioInvestidorActivity.this);
+        apresentacao = findViewById(R.id.apresentacao_cadastro_investidor_id);
         bio = findViewById(R.id.biografia_cadastro_investidor_id);
         bio.setScroller(new Scroller(getApplicationContext()));
         bio.setVerticalScrollBarEnabled(true);
@@ -53,11 +54,12 @@ public class BioInvestidorActivity extends AppCompatActivity {
 
                 if(FirebaseConfig.firebaseConection()) {
                     String bioRecebida = bio.getText().toString();
+                    String apresentacaoRecebida = apresentacao.getText().toString();
 
                     if (Validator.stringEmpty(bioRecebida)) {
                         bio.setError("Insira uma breve descrição");
                     } else {
-                        Investidor investidor = new Investidor(bioRecebida);
+                        Investidor investidor = new Investidor(bioRecebida, apresentacaoRecebida);
                         investidor.salvarBioInvestidor(firebaseUser.getUid());
                         startActivity(new Intent(BioInvestidorActivity.this, SlidesPosCadastroActivity.class));
                         finish();

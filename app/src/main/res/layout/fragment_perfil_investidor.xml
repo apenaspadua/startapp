@@ -35,7 +35,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="5dp"
                     android:indeterminateTint="@color/colorPrimaryDark"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
 
                 <RelativeLayout
                     android:id="@+id/linearLayout"
@@ -48,8 +48,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="start"
-                        android:orientation="vertical"
-                        android:layout_marginTop="30dp">
+                        android:orientation="vertical">
 
                         <LinearLayout
                             style="@style/TextInputRegister"
@@ -103,9 +102,25 @@
                                     android:text="Empresa"
                                     android:textColor="@color/colorCinza" />
                             </LinearLayout>
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="60dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/text_apresentacao_perfil_investidor"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:layout_marginBottom="5dp"
+                                    android:fontFamily="@font/lato_regular"
+                                    android:text="Apresentacao"
+                                    android:textSize="15dp" />
+                            </RelativeLayout>
                         </LinearLayout>
                     </LinearLayout>
-
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -121,13 +136,23 @@
                             android:layout_height="100dp"
                             android:src="@drawable/investidor_icon2" />
 
+                        <TextView
+                            android:id="@+id/text_editar_investidor_startup"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginRight="15dp"
+                            android:fontFamily="@font/lato_regular"
+                            android:text="Editar perfil"
+                            android:textColor="@color/colorCinza" />
+
 
                         <RelativeLayout
                             android:id="@+id/botao_iniciar_conversa_investidor_id"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:layout_marginLeft="70dp"
-                            android:layout_marginTop="30dp"
+                            android:layout_marginTop="130dp"
                             android:layout_marginRight="70dp"
                             android:layout_marginBottom="30dp"
                             android:background="@drawable/button_ronded"
