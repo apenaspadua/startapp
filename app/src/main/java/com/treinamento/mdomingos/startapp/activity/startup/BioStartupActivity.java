@@ -63,7 +63,7 @@ public class BioStartupActivity extends AppCompatActivity {
                     } else {
                         Startup startup = new Startup(bioRecebida, apresentacaoRecebida, linkRecebido);
                         startup.salvarBioStartup(firebaseUser.getUid());
-                        startActivity(new Intent(BioStartupActivity.this, SlidesPosCadastroActivity.class));
+                        startActivity(new Intent(BioStartupActivity.this, EnviaArquivosActivity.class));
                         finish();
                     }
                 } else {

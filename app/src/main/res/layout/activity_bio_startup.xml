@@ -68,7 +68,7 @@
                 <TextView
                     style="@style/SubTitleRegister"
                     android:gravity="center"
-                    android:text="Diga uma saudação para aparecer em seu perfil (opcioanl) "
+                    android:text="Diga uma saudação para aparecer em seu perfil (opcioanal) "
                     android:textSize="16dp"
                     app:fontFamily="@font/lato_regular" />
 
@@ -115,7 +115,7 @@
                 <TextView
                     style="@style/SubTitleRegister"
                     android:gravity="center"
-                    android:text="Fale sobre seus projetos, metas e objetivos "
+                    android:text="Fale sobre seu projeto "
                     android:textSize="16dp"
                     app:fontFamily="@font/lato_regular" />
 
@@ -137,7 +137,6 @@
                 android:scrollbars="vertical"
                 android:inputType="textMultiLine"/>
 
-
             <RelativeLayout
                 android:id="@+id/botao_bio_concluir_startup_login_id"
                 android:layout_width="match_parent"
@@ -145,15 +144,14 @@
                 android:layout_margin="6dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/button_ronded"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:gravity="center">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="110dp"
-                    android:layout_marginLeft="110dp"
-                    android:gravity="center_vertical"
-                    android:text="CONCLUIR CADASTRO"
+                    android:gravity="center"
+                    android:text="AVANÇAR"
                     android:textAllCaps="false"
                     android:textColor="@color/colorWhite"
                     android:textSize="14sp"

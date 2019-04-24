@@ -178,6 +178,32 @@
                             app:fontFamily="@font/poppins_medium" />
 
                     </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/upar"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="70dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="70dp"
+                        android:background="@drawable/button_ronded"
+                        android:gravity="clip_vertical|center_horizontal"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginTop="14dp"
+                            android:layout_marginBottom="14dp"
+                            android:text="UPAR PROJETO "
+                            android:textColor="@color/colorWhite"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:fontFamily="@font/poppins_medium" />
+
+                    </RelativeLayout>
                 </LinearLayout>
             </RelativeLayout>
 
