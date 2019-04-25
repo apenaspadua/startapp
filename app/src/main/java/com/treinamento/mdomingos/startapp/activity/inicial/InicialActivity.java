@@ -26,6 +26,7 @@ import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentStartup;
 import com.treinamento.mdomingos.startapp.activity.investidor.CadastroInvestidorActivity;
 import com.treinamento.mdomingos.startapp.activity.login.CadastroLoginActivity;
 import com.treinamento.mdomingos.startapp.activity.login.LoginActivity;
+import com.treinamento.mdomingos.startapp.activity.others.SlidesPosCadastroActivity;
 import com.treinamento.mdomingos.startapp.activity.startup.CadastroStartupActivity;
 import com.treinamento.mdomingos.startapp.model.Usuarios;
 import com.treinamento.mdomingos.startapp.utils.FirebaseConfig;
@@ -43,7 +44,7 @@ public class InicialActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicial);
-
+//
 //        FirebaseAuth mAuth = FirebaseAuth.getInstance();
 //        mAuth.signOut();
 
@@ -54,8 +55,8 @@ public class InicialActivity extends AppCompatActivity {
         videoView = findViewById(R.id.videoView2);
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
-        //functions
 
+        //functions
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             DatabaseReference databaseReference = FirebaseConfig.getFirebase();
@@ -67,7 +68,7 @@ public class InicialActivity extends AppCompatActivity {
 
                     if (usuario.getPerfil() == 1) {
                         if (usuario.getDetalhes_completo() == 0) {
-                            Intent intent = new Intent(InicialActivity.this, CadastroInvestidorActivity.class);
+                            Intent intent = new Intent(InicialActivity.this, SlidesPosCadastroActivity.class);
                             startActivity(intent);
                             finish();
                         } else {
@@ -77,7 +78,7 @@ public class InicialActivity extends AppCompatActivity {
                         }
                     } else if (usuario.getPerfil() == 2) {
                         if (usuario.getDetalhes_completo() == 0) {
-                            Intent intent = new Intent(InicialActivity.this, CadastroStartupActivity.class);
+                            Intent intent = new Intent(InicialActivity.this, SlidesPosCadastroActivity.class);
                             startActivity(intent);
                             finish();
                         } else {

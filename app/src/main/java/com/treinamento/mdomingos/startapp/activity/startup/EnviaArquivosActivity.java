@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -33,6 +34,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.treinamento.mdomingos.startapp.R;
+import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentInvestidor;
+import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentStartup;
 import com.treinamento.mdomingos.startapp.utils.UploadStorage;
 
 public class EnviaArquivosActivity extends AppCompatActivity {
@@ -41,7 +44,6 @@ public class EnviaArquivosActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri imageUri;
     private Uri videoUri;
-
 
     private RelativeLayout botaoSalvar, pegaFoto, pegaVideo;
     private FirebaseAuth firebaseAuth;
@@ -58,6 +60,14 @@ public class EnviaArquivosActivity extends AppCompatActivity {
     private StorageReference storageReferenceVideo;
     private String imageURL;
     private String videoName;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        loadUserInformation();
+        progressBar.setVisibility(View.VISIBLE);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,11 +96,19 @@ public class EnviaArquivosActivity extends AppCompatActivity {
             }
         });
 
-
         pegaVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 uploadVideo(v);
+            }
+        });
+
+        botaoSalvar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressDialog.setMessage("Salvando alterações...");
+                startActivity(new Intent(EnviaArquivosActivity.this, BaseFragmentStartup.class));
+                finish();
             }
         });
     }
@@ -111,6 +129,7 @@ public class EnviaArquivosActivity extends AppCompatActivity {
 
     public void uploadToServer(View view){
         progressDialog.setTitle("Aguarde enquanto carregamos seu vídeo...");
+        progressDialog.setMessage("A conexao por wifi pode ajudar nesse processo");
         progressDialog.show();
 
         StorageReference fileReference = storageReferenceVideo.child("video_publicacao/" + firebaseUser.getUid());
@@ -246,5 +265,20 @@ public class EnviaArquivosActivity extends AppCompatActivity {
             }
         }
         return  result;
+    }
+
+    private void loadUserInformation() {
+        storageReferenceUp = FirebaseStorage.getInstance().getReference().child("foto_publicacao").
+                child(firebaseUser.getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                imageURL = uri.toString();
+                Glide.with(EnviaArquivosActivity.this).load(imageURL).into(foto);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+            }
+        });
     }
 }

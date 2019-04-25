@@ -38,6 +38,7 @@ import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentInvestidor;
 import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentStartup;
 import com.treinamento.mdomingos.startapp.activity.investidor.BioInvestidorActivity;
 import com.treinamento.mdomingos.startapp.activity.investidor.CadastroInvestidorActivity;
+import com.treinamento.mdomingos.startapp.activity.others.SlidesPosCadastroActivity;
 import com.treinamento.mdomingos.startapp.activity.startup.CadastroStartupActivity;
 import com.treinamento.mdomingos.startapp.model.Usuarios;
 import com.treinamento.mdomingos.startapp.utils.FirebaseConfig;
@@ -52,7 +53,6 @@ public class LoginActivity extends AppCompatActivity {
     private TextView botaoTextEsqueceuSenha, botaoCadastrese;
     private ProgressDialog progressDialog;
     private ProgressBar progressBar;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,7 +111,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                                 if(usuario.getPerfil() == 1){
                                                     if((usuario.getDetalhes_completo() == 0) && usuario.getBio_completa() == 0 ) {
-                                                        Intent intent = new Intent(LoginActivity.this, CadastroInvestidorActivity.class);
+                                                        Intent intent = new Intent(LoginActivity.this, SlidesPosCadastroActivity.class);
                                                         startActivity(intent);
                                                         progressDialog.dismiss();
                                                         finish();
@@ -123,7 +123,7 @@ public class LoginActivity extends AppCompatActivity {
                                                     }
                                                 } else if (usuario.getPerfil() == 2){
                                                     if((usuario.getDetalhes_completo() == 0) && (usuario.getBio_completa() == 0) ) {
-                                                        Intent intent = new Intent(LoginActivity.this, CadastroStartupActivity.class);
+                                                        Intent intent = new Intent(LoginActivity.this, SlidesPosCadastroActivity.class);
                                                         startActivity(intent);
                                                         progressDialog.dismiss();
                                                         finish();

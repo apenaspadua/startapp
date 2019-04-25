@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardView"
+    android:layout_width="match_parent"
+    android:layout_height="400dp"
+    android:layout_marginTop="2dp"
+    android:layout_marginBottom="2dp">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imageview_feed_startup_id"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/startup_icon2"
+            app:layout_constraintBottom_toTopOf="@+id/vp_pagina_startup_id"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" >
+        </de.hdodenhof.circleimageview.CircleImageView>
+
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/imageview_feed_startup_id"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/nome_startup_feed_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_marginRight="272dp"
+                app:layout_constraintRight_toRightOf="parent"
+                tools:layout_editor_absoluteY="25dp"
+                tools:text="Nome da Startup"
+                android:textSize="20sp"
+                android:fontFamily="@font/lato_regular"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="-10dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/text_cidade_feed_startup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="@font/lato_regular"
+                    android:textSize="12sp"
+                    android:text="Cidade"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="1dp"
+                    android:text="/"
+                    android:textColor="@color/colorCinzaLight"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/text_estado_feed_startup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/lato_regular"
+                    android:text="Estado" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="90dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:gravity="start">
+
+        <TextView
+            android:id="@+id/texto_descricao_feed_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Descricao" />
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/botao_editar_projeto_startup_id"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginTop="160dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imagem_publicacao_feed"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/no_image" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/botao_sabermais_feed"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="350dp"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Saber mais"
+            android:textColor="@color/marine"
+            android:textSize="18sp"
+            android:fontFamily="@font/lato_regular"/>
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

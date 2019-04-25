@@ -26,21 +26,24 @@
         android:background="@drawable/startup_icon2"
         app:layout_constraintBottom_toTopOf="@+id/vp_pagina_startup_id"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" >
+    </de.hdodenhof.circleimageview.CircleImageView>
 
-    <ImageView
-        android:id="@+id/imageview_back_startup_id"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/ic_arrow_back_black_24dp"
-        app:layout_constraintBottom_toTopOf="@+id/vp_pagina_startup_id"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone"/>
+    <ProgressBar
+        android:id="@+id/progressBar_base_startup"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:indeterminateTint="@color/colorWhite"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/imageview_home_startup_id"
+        app:layout_constraintEnd_toEndOf="@+id/imageview_home_startup_id"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/imageview_home_startup_id"
+        app:layout_constraintTop_toTopOf="@+id/imageview_home_startup_id" />
+
 
     <TextView
         android:id="@+id/titulo_home_startup_id"

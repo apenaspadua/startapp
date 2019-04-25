@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -44,8 +45,9 @@ public class BaseFragmentStartup extends AppCompatActivity {
     private FirebaseUser user;
     private String imageURL;
     private Task<Uri> storageReference;
-    private ImageView imageViewChat, imageViewBack;
+    private ImageView imageViewChat;
     private CircleImageView imageViewProfile;
+    private ProgressBar progressBar;
 
 
     @Override
@@ -60,6 +62,7 @@ public class BaseFragmentStartup extends AppCompatActivity {
         }
 
         loadUserInformation();
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -72,8 +75,8 @@ public class BaseFragmentStartup extends AppCompatActivity {
         tabLayout = findViewById(R.id.tabLayout_startup);
         imageViewProfile = findViewById(R.id.imageview_home_startup_id);
         imageViewChat = findViewById(R.id.imageview_chat_startup_id);
-        imageViewBack = findViewById(R.id.imageview_back_startup_id);
         toolbar = findViewById(R.id.toolbar_startup);
+        progressBar = findViewById(R.id.progressBar_base_startup);
         progressDialog = new ProgressDialog(this);
 
         setSupportActionBar(toolbar);
@@ -106,7 +109,6 @@ public class BaseFragmentStartup extends AppCompatActivity {
                     titulo.setVisibility(View.VISIBLE);
                     imageViewProfile.setVisibility(View.VISIBLE);
                     imageViewChat.setVisibility(View.VISIBLE);
-                    imageViewBack.setVisibility(View.GONE);
                     tabLayout.getTabAt(0).setIcon(R.drawable.ic_home_ouline);
 
                 } else if (tab.getPosition() == 1) {
@@ -115,7 +117,6 @@ public class BaseFragmentStartup extends AppCompatActivity {
                     titulo.setVisibility(View.VISIBLE);
                     imageViewProfile.setVisibility(View.GONE);
                     imageViewChat.setVisibility(View.VISIBLE);
-                    imageViewBack.setVisibility(View.GONE);
                     tabLayout.getTabAt(1).setIcon(R.drawable.ic_notification_online);
 
                 } else if (tab.getPosition() == 2) {
@@ -123,7 +124,6 @@ public class BaseFragmentStartup extends AppCompatActivity {
                     titulo.setVisibility(View.GONE);
                     imageViewChat.setVisibility(View.GONE);
                     imageViewProfile.setVisibility(View.GONE);
-                    imageViewBack.setVisibility(View.VISIBLE);
                     tabLayout.getTabAt(2).setIcon(R.drawable.ic_profile_online);
                 }
             }
@@ -150,11 +150,14 @@ public class BaseFragmentStartup extends AppCompatActivity {
             @Override
             public void onSuccess(Uri uri) {
                 imageURL = uri.toString();
+                progressBar.setVisibility(View.GONE);
                 Glide.with(getApplicationContext()).load(imageURL).into(imageViewProfile);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
+                progressBar.setVisibility(View.GONE);
+
             }
         });
     }

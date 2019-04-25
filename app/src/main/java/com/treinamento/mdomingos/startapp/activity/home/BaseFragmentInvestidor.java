@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -38,11 +39,13 @@ public class BaseFragmentInvestidor extends AppCompatActivity {
     private Toolbar toolbar;
     private ProgressDialog progressDialog;
     private TextView titulo;
-    private ImageView imageViewChat, imageViewBack;
+    private ImageView imageViewChat;
     private CircleImageView imageViewProfile;
     private String imageURL;
     private Task<Uri> storageReference;
     private FirebaseUser user;
+    private ProgressBar progressBar;
+
 
     @Override
     protected void onResume() {
@@ -56,7 +59,9 @@ public class BaseFragmentInvestidor extends AppCompatActivity {
         }
 
         loadUserInformation();
+        progressBar.setVisibility(View.VISIBLE);
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,9 +73,9 @@ public class BaseFragmentInvestidor extends AppCompatActivity {
         tabLayout = findViewById(R.id.tabLayout);
         imageViewProfile = findViewById(R.id.imageview_home_investidor_id);
         imageViewChat = findViewById(R.id.imageview_chat_investidor_id);
-        imageViewBack = findViewById(R.id.imageview_back_investidor_id);
         toolbar = findViewById(R.id.toolbar);
         progressDialog = new ProgressDialog(this);
+        progressBar = findViewById(R.id.progressBar_base_investidor);
 
         setSupportActionBar(toolbar);
         TabsAdapter tabsAdapter = new TabsAdapter(getSupportFragmentManager());
@@ -102,7 +107,6 @@ public class BaseFragmentInvestidor extends AppCompatActivity {
                     titulo.setVisibility(View.VISIBLE);
                     imageViewProfile.setVisibility(View.VISIBLE);
                     imageViewChat.setVisibility(View.VISIBLE);
-                    imageViewBack.setVisibility(View.GONE);
                     tabLayout.getTabAt(0).setIcon(R.drawable.ic_home_ouline);
 
                 } else if (tab.getPosition() == 1) {
@@ -111,7 +115,6 @@ public class BaseFragmentInvestidor extends AppCompatActivity {
                     titulo.setVisibility(View.VISIBLE);
                     imageViewProfile.setVisibility(View.GONE);
                     imageViewChat.setVisibility(View.VISIBLE);
-                    imageViewBack.setVisibility(View.GONE);
                     tabLayout.getTabAt(1).setIcon(R.drawable.ic_notification_online);
 
                 } else if (tab.getPosition() == 2) {
@@ -119,7 +122,6 @@ public class BaseFragmentInvestidor extends AppCompatActivity {
                     titulo.setVisibility(View.GONE);
                     imageViewChat.setVisibility(View.GONE);
                     imageViewProfile.setVisibility(View.GONE);
-                    imageViewBack.setVisibility(View.VISIBLE);
                     tabLayout.getTabAt(2).setIcon(R.drawable.ic_profile_online);
                 }
             }
@@ -146,11 +148,14 @@ public class BaseFragmentInvestidor extends AppCompatActivity {
             @Override
             public void onSuccess(Uri uri) {
                 imageURL = uri.toString();
+                progressBar.setVisibility(View.VISIBLE);
                 Glide.with(getApplicationContext()).load(imageURL).into(imageViewProfile);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
+                progressBar.setVisibility(View.VISIBLE);
+
             }
         });
     }

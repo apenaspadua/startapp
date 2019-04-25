@@ -102,7 +102,7 @@
                 android:orientation="horizontal"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:layout_marginStart="15dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginLeft="15dp">
 
                 <TextView
@@ -116,7 +116,7 @@
                     android:id="@+id/nome_video_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nenhum selecionado"
+                    android:text="Nenhuma nova mídia selecionada"
                     android:textSize="14sp"/>
             </LinearLayout>
 
@@ -143,6 +143,28 @@
                     app:fontFamily="@font/poppins_regular" />
 
             </RelativeLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="25dp"
+                android:background="@color/colorPrimary">
+
+                <TextView
+                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:textSize="14dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:padding="15dp"
+                    android:gravity="center"
+                    android:textColor="@color/colorWhite"
+                    android:text="* Esses arquivos já serão publicados automaticamente em nosso feed."
+                    app:fontFamily="@font/lato_regular" />
+            </LinearLayout>
+
 
             <RelativeLayout
                 android:id="@+id/botao_salvar_arquivos_id"

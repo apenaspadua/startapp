@@ -52,8 +52,8 @@
 
 
                     <ImageView
-                        android:layout_width="360dp"
-                        android:layout_height="150dp"
+                        android:layout_width="370dp"
+                        android:layout_height="170dp"
                         android:layout_centerVertical="true"
                         android:background="@drawable/bio_startup"
                         android:scaleType="fitXY" />
@@ -68,44 +68,28 @@
                 <TextView
                     style="@style/SubTitleRegister"
                     android:gravity="center"
-                    android:text="Diga uma saudação para aparecer em seu perfil (opcioanal) "
+                    android:text="Diga uma saudação para aparecer em seu perfil (opcional) "
                     android:textSize="16dp"
                     app:fontFamily="@font/lato_regular" />
 
             </LinearLayout>
 
-            <EditText
-                android:id="@+id/apresentacao_cadastro_startup_id"
-                android:layout_width="match_parent"
-                android:layout_height="90dp"
-                android:padding="10dp"
-                android:gravity="start"
-                android:layout_marginBottom="10dp"
-                android:hint="Informe outras redes sociais também"
-                android:fontFamily="@font/lato_regular"
-                android:textSize="14dp"
-                android:background="@drawable/button_custom_facebook"
-                android:minLines="100"
-                android:maxLines="100"
-                android:scrollbars="vertical"
-                android:inputType="textMultiLine"/>
 
-            <EditText
-                android:id="@+id/link_cadastro_startup_id"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:padding="10dp"
-                android:gravity="start"
-                android:layout_marginBottom="10dp"
-                android:hint="Link do site (opcional)"
-                android:fontFamily="@font/lato_regular"
-                android:textSize="14dp"
-                android:background="@drawable/button_custom_facebook"
-                android:minLines="100"
-                android:maxLines="100"
-                android:scrollbars="vertical"
-                android:inputType="textMultiLine"/>
+            <android.support.design.widget.TextInputLayout style="@style/TextInputRegister">
+                <EditText
+                    android:id="@+id/apresentacao_cadastro_startup_id"
+                    style="@style/EditTextRegister"
+                    android:hint="Apresente-se"
+                    android:inputType="text" />
+            </android.support.design.widget.TextInputLayout>
 
+            <android.support.design.widget.TextInputLayout style="@style/TextInputRegister">
+                <EditText
+                    android:id="@+id/link_cadastro_startup_id"
+                    style="@style/EditTextRegister"
+                    android:hint="Link do site"
+                    android:inputType="text" />
+            </android.support.design.widget.TextInputLayout>
 
 
             <LinearLayout
@@ -136,6 +120,19 @@
                 android:maxLines="100"
                 android:scrollbars="vertical"
                 android:inputType="textMultiLine"/>
+
+            <LinearLayout
+                style="@style/TextInputRegister"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    style="@style/SubTitleRegister"
+                    android:gravity="center"
+                    android:text="Muito bem, vamos avançar! ;)  "
+                    android:textSize="16dp"
+                    app:fontFamily="@font/lato_regular" />
+
+            </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/botao_bio_concluir_startup_login_id"

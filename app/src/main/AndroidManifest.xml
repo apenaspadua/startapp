@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.inicial.InicialActivity"></activity>
+        <activity android:name=".activity.startup.EnviaArquivosActivity"></activity>
         <activity android:name=".activity.startup.EditarPerfilStartupActivity" />
         <activity android:name=".activity.startup.BioStartupActivity" />
         <activity android:name=".activity.login.CadastroLoginActivity" />
@@ -28,7 +28,7 @@
         <activity android:name=".activity.login.LoginActivity" />
         <activity android:name=".activity.others.TermosActivity" />
         <activity android:name=".activity.investidor.BioInvestidorActivity" />
-        <activity android:name=".activity.startup.EnviaArquivosActivity">
+        <activity android:name=".activity.inicial.InicialActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -43,6 +43,7 @@ import com.google.firebase.storage.UploadTask;
 import com.treinamento.mdomingos.startapp.R;
 import com.treinamento.mdomingos.startapp.activity.login.LoginActivity;
 import com.treinamento.mdomingos.startapp.activity.startup.EditarPerfilStartupActivity;
+import com.treinamento.mdomingos.startapp.activity.startup.EnviaArquivosActivity;
 import com.treinamento.mdomingos.startapp.model.StartupResponse;
 import com.treinamento.mdomingos.startapp.utils.UploadStorage;
 
@@ -51,8 +52,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import static android.app.Activity.RESULT_OK;
 
 public class PerfilFragment_Startup extends Fragment {
-
-    private static final int PICK_VIDEO_REQUEST = 3;
 
     private ProgressDialog progressDialog;
     private FirebaseUser firebaseUser;
@@ -63,16 +62,12 @@ public class PerfilFragment_Startup extends Fragment {
     private ProgressBar progressBar;
     private TextView nome, cidade, razao, email, rua, bairro, estado, telefone, bio, editar, apresentacao, link ;
     private CircleImageView foto;
-    private RelativeLayout upVideo, upar;
-    private StorageReference storageReferenceVideo;
+    private RelativeLayout editarVideo;
     private FirebaseStorage storage;
-    private String videoName;
-    private DatabaseReference databaseReference;
 
     private VideoView videoView;
     private Uri videoUri;
     private MediaController mediaController;
-
 
     @Override
     public void onStart() {
@@ -80,7 +75,7 @@ public class PerfilFragment_Startup extends Fragment {
         loadUserInformation();
         progressBar.setVisibility(View.VISIBLE);
         editar.setTextColor(Color.parseColor("#57BC90"));
-
+        loadVideo();
     }
 
     @Override
@@ -118,8 +113,6 @@ public class PerfilFragment_Startup extends Fragment {
         firebaseUser = firebaseAuth.getCurrentUser();
         user = FirebaseAuth.getInstance().getCurrentUser();
         storage = FirebaseStorage.getInstance();
-        storageReferenceVideo = storage.getReference();
-        databaseReference = FirebaseDatabase.getInstance().getReference();
 
         editar = view.findViewById(R.id.text_editar_perfil_startup);
         nome = view.findViewById(R.id.nome_perfil_startup_id);
@@ -135,8 +128,7 @@ public class PerfilFragment_Startup extends Fragment {
         link = view.findViewById(R.id.text_link_perfil_startup);
         foto = view.findViewById(R.id.foto_perfil_startup_id);
         videoView = view.findViewById(R.id.upload_video_id);
-        upVideo = view.findViewById(R.id.botao_publicar_startup_id);
-        upar = view.findViewById(R.id.upar);
+        editarVideo = view.findViewById(R.id.botao_editar_projeto_startup_id);
         progressBar = view.findViewById(R.id.progressBar_perfil_startup);
         progressDialog = new ProgressDialog(getActivity());
 
@@ -149,17 +141,10 @@ public class PerfilFragment_Startup extends Fragment {
             }
         });
 
-        upVideo.setOnClickListener(new View.OnClickListener() {
+        editarVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uploadVideo(v);
-            }
-        });
-
-        upar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                uploadToServer(v);
+                startActivity(new Intent(getActivity(), EnviaArquivosActivity.class));
             }
         });
 
@@ -206,65 +191,6 @@ public class PerfilFragment_Startup extends Fragment {
         return view;
     }
 
-    public void uploadVideo(View view) {
-        Intent intent = new Intent();
-        intent.setType("video/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Seleciona um video"), PICK_VIDEO_REQUEST);
-    }
-
-    public void uploadToServer(View view){
-
-        StorageReference fileReference = storageReferenceVideo.child("video_publicacao/" + firebaseUser.getUid());
-        fileReference.putFile(videoUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-                Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
-                if (urlTask.isSuccessful()) {
-
-                    final Uri downloadUrl = urlTask.getResult();
-                    final String downUrl = String.valueOf(downloadUrl);
-                    UploadStorage uploadStorage = new UploadStorage(downUrl);
-                    databaseReference.child("Usuarios").child(firebaseUser.getUid()).child("detalhe_startup").child("video_publicado").setValue(uploadStorage);
-                    Toast.makeText(getActivity(), "Video publicado", Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.GONE);
-                }
-            }
-
-        }).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                if (task.isSuccessful()) {
-                    UploadTask.TaskSnapshot downloadUri = task.getResult();
-                    if (downloadUri == null)
-                        return ;
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getActivity(), "Falha ao upar video!", Toast.LENGTH_SHORT).show();
-            }
-        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-               progressBar.setVisibility(View.VISIBLE);
-            }
-        });
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(requestCode == PICK_VIDEO_REQUEST && resultCode == RESULT_OK && data != null){
-            videoUri = data.getData();
-            videoView.setVideoURI(videoUri);
-            videoName = getFileName(videoUri);
-        }
-    }
-
     private void loadUserInformation() {
         storageReference = FirebaseStorage.getInstance().getReference().child("foto_perfil").
                 child(user.getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -283,27 +209,23 @@ public class PerfilFragment_Startup extends Fragment {
         });
     }
 
-    public String getFileName(Uri uri){
-        String result = null;
+    private void loadVideo(){
+        storageReference = FirebaseStorage.getInstance().getReference().child("video_publicacao").
+                child(user.getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
 
-        if(uri.getScheme().equals("content")){
-            Cursor cursor = getContext().getContentResolver().query(uri, null, null, null, null);
-            try{
-                if(cursor != null && cursor.moveToFirst()){
-                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                }
-            } finally {
-                cursor.close();
+            @Override
+            public void onSuccess(Uri uri) {
+
+                videoUri = Uri.parse(uri.toString());
+                videoView.setVideoURI(videoUri);
+                videoView.requestFocus();
+
             }
-        }
-        if(result == null){
-
-            result = uri.getPath();
-            int cut = result.lastIndexOf('/');
-                if(cut != -1){
-                    result = result.substring(cut + 1);
-                }
-        }
-            return  result;
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+            }
+        });
     }
+
 }

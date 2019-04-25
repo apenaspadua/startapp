@@ -67,23 +67,20 @@ public class SlidesPosCadastroActivity extends AppCompatActivity {
                         Usuarios usuario = dataSnapshot.getValue(Usuarios.class);
 
                         if (usuario.getPerfil() == 1) {
-                            Intent intent = new Intent(SlidesPosCadastroActivity.this, BaseFragmentInvestidor.class);
+                            Intent intent = new Intent(SlidesPosCadastroActivity.this, CadastroInvestidorActivity.class);
                             startActivity(intent);
                             finish();
 
                         } else if (usuario.getPerfil() == 2) {
 
-                            Intent intent = new Intent(SlidesPosCadastroActivity.this, BaseFragmentStartup.class);
+                            Intent intent = new Intent(SlidesPosCadastroActivity.this, CadastroStartupActivity.class);
                             startActivity(intent);
                             finish();
                         }
                     }
 
                     @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-
+                    public void onCancelled(@NonNull DatabaseError databaseError) {}
                 });
             }
         });
