@@ -25,6 +25,8 @@ public class Startup {
     private String biografia;
     private String apresentacao;
     private String link;
+    private String imagemPerfil;
+
 
     public Startup(){
 
@@ -61,6 +63,11 @@ public class Startup {
         databaseReference.child("Usuarios").child(id).child("detalhe_startup").child("apresentacao").setValue(apresentacao);
         databaseReference.child("Usuarios").child(id).child("detalhe_startup").child("link").setValue(link);
         databaseReference.child("Usuarios").child(id).child("bio_completa").setValue(1);
+    }
+
+    public void salvarFotoPerfil(String id){
+        DatabaseReference databaseReference = FirebaseConfig.getFirebase();
+        databaseReference.child("Usuarios").child(id).child("detalhe_startup").child("foto_perfil").setValue(imagemPerfil);
     }
 
     public String getRazaoSocial() {
@@ -165,5 +172,13 @@ public class Startup {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public String getImagemPerfil() {
+        return imagemPerfil;
+    }
+
+    public void setImagemPerfil(String imagemPerfil) {
+        this.imagemPerfil = imagemPerfil;
     }
 }

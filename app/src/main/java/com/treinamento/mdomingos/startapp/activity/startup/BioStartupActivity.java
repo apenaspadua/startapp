@@ -2,8 +2,8 @@ package com.treinamento.mdomingos.startapp.activity.startup;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -14,9 +14,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.treinamento.mdomingos.startapp.R;
-import com.treinamento.mdomingos.startapp.activity.investidor.BioInvestidorActivity;
-import com.treinamento.mdomingos.startapp.activity.others.SlidesPosCadastroActivity;
-import com.treinamento.mdomingos.startapp.model.Investidor;
+import com.treinamento.mdomingos.startapp.model.Publicacao;
 import com.treinamento.mdomingos.startapp.model.Startup;
 import com.treinamento.mdomingos.startapp.utils.FirebaseConfig;
 import com.treinamento.mdomingos.startapp.utils.Validator;
@@ -63,6 +61,11 @@ public class BioStartupActivity extends AppCompatActivity {
                     } else {
                         Startup startup = new Startup(bioRecebida, apresentacaoRecebida, linkRecebido);
                         startup.salvarBioStartup(firebaseUser.getUid());
+
+                        Publicacao publicacao = new Publicacao();
+                        publicacao.setDescricao(bioRecebida);
+                        publicacao.salvarDescricao(firebaseUser.getUid());
+
                         startActivity(new Intent(BioStartupActivity.this, EnviaArquivosActivity.class));
                         finish();
                     }

@@ -34,8 +34,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.treinamento.mdomingos.startapp.R;
-import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentInvestidor;
 import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentStartup;
+import com.treinamento.mdomingos.startapp.model.Publicacao;
 import com.treinamento.mdomingos.startapp.utils.UploadStorage;
 
 public class EnviaArquivosActivity extends AppCompatActivity {
@@ -143,7 +143,7 @@ public class EnviaArquivosActivity extends AppCompatActivity {
                     Uri downloadUrl = urlTask.getResult();
                     final String downUrl = String.valueOf(downloadUrl);
                     UploadStorage uploadStorage = new UploadStorage(downUrl);
-                    databaseReference.child("Usuarios").child(firebaseUser.getUid()).child("detalhe_startup").child("video_publicado").setValue(uploadStorage);
+                  //  databaseReference.child("Usuarios").child(firebaseUser.getUid()).child("detalhe_startup").child("video_publicado").setValue(uploadStorage);
 
                 }
             }
@@ -218,8 +218,11 @@ public class EnviaArquivosActivity extends AppCompatActivity {
                     while (!urlTask.isSuccessful());
                     Uri downloadUrl = urlTask.getResult();
                     final String downUrl = String.valueOf(downloadUrl);
-                    UploadStorage uploadStorage = new UploadStorage(downUrl);
-                    databaseReference.child("Usuarios").child(firebaseUser.getUid()).child("detalhe_startup").child("foto_publicacao").setValue(uploadStorage);
+
+                    Publicacao publicacao = new Publicacao();
+                    publicacao.setImagemPublicacao(downUrl);
+                    publicacao.salvarFotoPublicacao(firebaseUser.getUid());
+
                     progressBar.setVisibility(View.GONE);
                     Toast.makeText(EnviaArquivosActivity.this, "Imagem Adicionada", Toast.LENGTH_SHORT).show();
 
@@ -274,6 +277,7 @@ public class EnviaArquivosActivity extends AppCompatActivity {
             public void onSuccess(Uri uri) {
                 imageURL = uri.toString();
                 Glide.with(EnviaArquivosActivity.this).load(imageURL).into(foto);
+                progressBar.setVisibility(View.GONE);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

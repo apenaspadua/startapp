@@ -38,6 +38,7 @@ import com.squareup.picasso.Picasso;
 import com.treinamento.mdomingos.startapp.R;
 import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentStartup;
 import com.treinamento.mdomingos.startapp.model.CEP;
+import com.treinamento.mdomingos.startapp.model.Publicacao;
 import com.treinamento.mdomingos.startapp.model.Startup;
 import com.treinamento.mdomingos.startapp.model.StartupResponse;
 import com.treinamento.mdomingos.startapp.utils.FirebaseConfig;
@@ -248,6 +249,12 @@ public class EditarPerfilStartupActivity extends AppCompatActivity {
                         startup.salvarStartup(firebaseUser.getUid());
                         Startup startup1 = new Startup(bioRecebida, apresentacaoRecebido, linkRecebido);
                         startup1.salvarBioStartup(firebaseUser.getUid());
+
+                        Publicacao publicacao = new Publicacao(nomeFantasiaRecebido,cidadeRecebido, estadoRecebido);
+                        publicacao.salvarDados(firebaseUser.getUid());
+                        publicacao.setDescricao(bioRecebida);
+                        publicacao.salvarDescricao(firebaseUser.getUid());
+
                         progressDialog.setMessage("Guardando dados...");
                         progressDialog.show();
                         Toast.makeText(EditarPerfilStartupActivity.this, "Salvo com sucesso", Toast.LENGTH_SHORT).show();
@@ -300,8 +307,15 @@ public class EditarPerfilStartupActivity extends AppCompatActivity {
                     while (!urlTask.isSuccessful());
                     Uri downloadUrl = urlTask.getResult();
                     final String downUrl = String.valueOf(downloadUrl);
-                    UploadStorage uploadStorage = new UploadStorage(downUrl);
-                    databaseReference.child("Usuarios").child(firebaseUser.getUid()).child("detalhe_startup").child("foto_perfil").setValue(uploadStorage);
+
+                    Startup startup = new Startup();
+                    startup.setImagemPerfil(downUrl);
+                    startup.salvarFotoPerfil(firebaseUser.getUid());
+
+                    Publicacao publicacao = new Publicacao();
+                    publicacao.setImagemPerfil(downUrl);
+                    publicacao.salvarFotoPerfil(firebaseUser.getUid());
+
                     progressBar.setVisibility(View.INVISIBLE);
                     Toast.makeText(EditarPerfilStartupActivity.this, "Imagem alterada com sucesso", Toast.LENGTH_SHORT).show();
 

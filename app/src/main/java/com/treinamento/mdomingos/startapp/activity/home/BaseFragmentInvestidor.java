@@ -148,13 +148,13 @@ public class BaseFragmentInvestidor extends AppCompatActivity {
             @Override
             public void onSuccess(Uri uri) {
                 imageURL = uri.toString();
-                progressBar.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
                 Glide.with(getApplicationContext()).load(imageURL).into(imageViewProfile);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                progressBar.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
 
             }
         });

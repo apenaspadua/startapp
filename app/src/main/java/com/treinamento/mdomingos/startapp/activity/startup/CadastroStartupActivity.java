@@ -26,6 +26,7 @@ import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentInvestidor;
 import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentStartup;
 import com.treinamento.mdomingos.startapp.activity.investidor.CadastroInvestidorActivity;
 import com.treinamento.mdomingos.startapp.model.CEP;
+import com.treinamento.mdomingos.startapp.model.Publicacao;
 import com.treinamento.mdomingos.startapp.model.Startup;
 import com.treinamento.mdomingos.startapp.utils.FirebaseConfig;
 import com.treinamento.mdomingos.startapp.utils.HttpService;
@@ -162,6 +163,10 @@ public class CadastroStartupActivity extends AppCompatActivity {
 
                 Startup startup = new Startup(razaoSocialRecebido, nomeFantasiaRecebido, emailRecebido, telefoneRecebido, cepRecebido, ruaRecebida, bairroRecebido,cidadeRecebido, estadoRecebido, cnpjRecebido);
                 startup.salvarStartup(firebaseUser.getUid());
+
+                Publicacao publicacao = new Publicacao(nomeFantasiaRecebido, cidadeRecebido, estadoRecebido);
+                publicacao.salvarDados(firebaseUser.getUid());
+
                 progressDialog.setMessage("Guardando dados...");
                 progressDialog.show();
                 Toast.makeText(CadastroStartupActivity.this, "Salvo com sucesso", Toast.LENGTH_SHORT).show();

@@ -35,7 +35,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.treinamento.mdomingos.startapp.R;
@@ -46,7 +45,6 @@ import com.treinamento.mdomingos.startapp.model.InvestidorResponse;
 import com.treinamento.mdomingos.startapp.utils.FirebaseConfig;
 import com.treinamento.mdomingos.startapp.utils.HttpService;
 import com.treinamento.mdomingos.startapp.utils.MaskFormatter;
-import com.treinamento.mdomingos.startapp.utils.UploadStorage;
 import com.treinamento.mdomingos.startapp.utils.Validator;
 
 import java.util.concurrent.ExecutionException;
@@ -349,8 +347,11 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
                     while (!urlTask.isSuccessful());
                     Uri downloadUrl = urlTask.getResult();
                     final String downUrl = String.valueOf(downloadUrl);
-                    UploadStorage uploadStorage = new UploadStorage(downUrl);
-                    databaseReference.child("Usuarios").child(firebaseUser.getUid()).child("detalhe_investidor").child("foto_perfil").setValue(uploadStorage);
+
+                    Investidor investidor = new Investidor();
+                    investidor.setImagemPerfil(downUrl);
+                    investidor.salvarFotoPerfil(firebaseUser.getUid());
+
                     progressBar.setVisibility(View.INVISIBLE);
                     Toast.makeText(EditarPerfilInvestidorActivity.this, "Imagem alterada com sucesso", Toast.LENGTH_SHORT).show();
 

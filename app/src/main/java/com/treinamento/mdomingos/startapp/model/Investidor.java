@@ -1,10 +1,5 @@
 package com.treinamento.mdomingos.startapp.model;
 
-
-import android.support.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.treinamento.mdomingos.startapp.utils.FirebaseConfig;
 
@@ -32,6 +27,8 @@ public class Investidor implements Serializable {
     private String cpf;
     private String biografia;
     private String apresentacao;
+    private String imagemPerfil;
+
 
     public Investidor(){}
 
@@ -68,6 +65,10 @@ public class Investidor implements Serializable {
         databaseReference.child("Usuarios").child(id).child("bio_completa").setValue(1);
     }
 
+    public void salvarFotoPerfil(String id){
+        DatabaseReference databaseReference = FirebaseConfig.getFirebase();
+        databaseReference.child("Usuarios").child(id).child("detalhe_investidor").child("foto_perfil").setValue(imagemPerfil);
+    }
 
     public String getNome() {
         return nome;
@@ -181,7 +182,13 @@ public class Investidor implements Serializable {
         this.apresentacao = apresentacao;
     }
 
+    public String getImagemPerfil() {
+        return imagemPerfil;
+    }
 
+    public void setImagemPerfil(String imagemPerfil) {
+        this.imagemPerfil = imagemPerfil;
+    }
 }
 
 
