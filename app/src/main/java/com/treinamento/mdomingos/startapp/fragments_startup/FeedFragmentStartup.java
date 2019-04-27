@@ -1,6 +1,5 @@
 package com.treinamento.mdomingos.startapp.fragments_startup;
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,21 +8,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.treinamento.mdomingos.startapp.R;
-import com.treinamento.mdomingos.startapp.adapter.FeedAdapter;
-import com.treinamento.mdomingos.startapp.utils.UploadStorage;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.treinamento.mdomingos.startapp.adapter.ViewHolder;
+import com.treinamento.mdomingos.startapp.model.Publicacao;
 
 public class FeedFragmentStartup extends Fragment {
-    private RecyclerView recyclerView;
-    private FeedAdapter feedAdapter;
 
-    private DatabaseReference databaseReference;
-    private List<UploadStorage> list;
+     RecyclerView recyclerView;
+     FirebaseDatabase firebaseDatabase;
+     DatabaseReference mRef;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,13 +29,29 @@ public class FeedFragmentStartup extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        list = new ArrayList<>();
-         databaseReference = FirebaseDatabase.getInstance().getReference();
-
-
-
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        mRef = firebaseDatabase.getReference("Publicacoes");
 
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseRecyclerAdapter<Publicacao, ViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Publicacao, ViewHolder>(
+                Publicacao.class,
+                R.layout.publicacao_item,
+                ViewHolder.class,
+                mRef
+        ) {
+            @Override
+            protected void populateViewHolder(ViewHolder viewHolder, Publicacao model, int position) {
+
+                viewHolder.setDetails(getContext(), model.getNomeUsuario(), model.getCidade(), model.getEstado(),
+                        model.getDescricao(), model.getImagemPerfil(), model.getImagemPublicacao());
+            }
+        };
+
+        recyclerView.setAdapter(firebaseRecyclerAdapter);
+    }
 }
