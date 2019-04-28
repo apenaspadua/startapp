@@ -45,8 +45,8 @@ public class InicialActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicial);
 
-//        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-//        mAuth.signOut();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        mAuth.signOut();
 
         //Instance
         botaoCadastrar = findViewById(R.id.inicial_botao_cadastrar_id);

@@ -313,7 +313,7 @@ public class EditarPerfilStartupActivity extends AppCompatActivity {
                     startup.salvarFotoPerfil(firebaseUser.getUid());
 
                     Publicacao publicacao = new Publicacao();
-                    publicacao.setImagemPerfil(downUrl);
+                    publicacao.setFotoPerfil(downUrl);
                     publicacao.salvarFotoPerfil(firebaseUser.getUid());
 
                     progressBar.setVisibility(View.INVISIBLE);

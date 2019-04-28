@@ -12,14 +12,14 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.treinamento.mdomingos.startapp.R;
-import com.treinamento.mdomingos.startapp.adapter.ViewHolder;
+import com.treinamento.mdomingos.startapp.adapter.ImageAdapter;
 import com.treinamento.mdomingos.startapp.model.Publicacao;
 
 public class FeedFragmentStartup extends Fragment {
 
-     RecyclerView recyclerView;
-     FirebaseDatabase firebaseDatabase;
-     DatabaseReference mRef;
+    RecyclerView recyclerView;
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference mRef;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,17 +38,21 @@ public class FeedFragmentStartup extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        FirebaseRecyclerAdapter<Publicacao, ViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Publicacao, ViewHolder>(
+        FirebaseRecyclerAdapter<Publicacao, ImageAdapter> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Publicacao, ImageAdapter>(
                 Publicacao.class,
                 R.layout.publicacao_item,
-                ViewHolder.class,
+                ImageAdapter.class,
                 mRef
         ) {
             @Override
-            protected void populateViewHolder(ViewHolder viewHolder, Publicacao model, int position) {
-
-                viewHolder.setDetails(getContext(), model.getNomeUsuario(), model.getCidade(), model.getEstado(),
-                        model.getDescricao(), model.getImagemPerfil(), model.getImagemPublicacao());
+            protected void populateViewHolder(ImageAdapter viewHolder, Publicacao model, int position) {
+                viewHolder.setDetails(getContext(),
+                        model.getNomeFantasia(),
+                        model.getCidade(),
+                        model.getEstado(),
+                        model.getDescricao(),
+                        model.getFotoPerfil(),
+                        model.getFotoPublicacao());
             }
         };
 

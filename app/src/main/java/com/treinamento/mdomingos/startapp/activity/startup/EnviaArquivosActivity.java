@@ -66,7 +66,6 @@ public class EnviaArquivosActivity extends AppCompatActivity {
         super.onResume();
 
         loadUserInformation();
-        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -218,9 +217,11 @@ public class EnviaArquivosActivity extends AppCompatActivity {
                     while (!urlTask.isSuccessful());
                     Uri downloadUrl = urlTask.getResult();
                     final String downUrl = String.valueOf(downloadUrl);
+//                    UploadStorage uploadStorage = new UploadStorage(downUrl);
+//                    databaseReference.child("Publicacoes").child(firebaseUser.getUid()).child("foto_publicacao").setValue(uploadStorage);
 
                     Publicacao publicacao = new Publicacao();
-                    publicacao.setImagemPublicacao(downUrl);
+                    publicacao.setFotoPublicacao(downUrl);
                     publicacao.salvarFotoPublicacao(firebaseUser.getUid());
 
                     progressBar.setVisibility(View.GONE);
@@ -271,12 +272,14 @@ public class EnviaArquivosActivity extends AppCompatActivity {
     }
 
     private void loadUserInformation() {
+        progressBar.setVisibility(View.VISIBLE);
         storageReferenceUp = FirebaseStorage.getInstance().getReference().child("foto_publicacao").
                 child(firebaseUser.getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 imageURL = uri.toString();
-                Glide.with(EnviaArquivosActivity.this).load(imageURL).into(foto);
+//                Glide.with(EnviaArquivosActivity.this).load(imageURL).into(foto);
+                Picasso.get().load(imageURL).fit().centerCrop().into(foto);
                 progressBar.setVisibility(View.GONE);
             }
         }).addOnFailureListener(new OnFailureListener() {

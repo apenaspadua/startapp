@@ -7,37 +7,37 @@ import com.treinamento.mdomingos.startapp.utils.UploadStorage;
 public class Publicacao {
 
     private String id;
-    private String nomeUsuario;
+    private String nomeFantasia;
     private String descricao;
     private String cidade;
     private String estado;
-    private String imagemPublicacao;
-    private String imagemPerfil;
+    private String fotoPublicacao;
+    private String fotoPerfil;
 
     public Publicacao(){
     }
 
-    public Publicacao(String nomeUsuario, String cidade, String estado){
-        this.nomeUsuario = nomeUsuario;
+    public Publicacao(String nomeFantasia, String cidade, String estado){
+        this.nomeFantasia = nomeFantasia;
         this.cidade = cidade;
         this.estado = estado;
     }
 
     public void salvarDados(String id) {
         DatabaseReference databaseReference = FirebaseConfig.getFirebase();
-        databaseReference.child("Publicacoes").child(id).child("nomeFantasia").setValue(nomeUsuario);
+        databaseReference.child("Publicacoes").child(id).child("nomeFantasia").setValue(nomeFantasia);
         databaseReference.child("Publicacoes").child(id).child("cidade").setValue(cidade);
         databaseReference.child("Publicacoes").child(id).child("estado").setValue(estado);
     }
 
     public void salvarFotoPublicacao(String id){
         DatabaseReference databaseReference = FirebaseConfig.getFirebase();
-        databaseReference.child("Publicacoes").child(id).child("fotoPublicacao").setValue(imagemPublicacao);
+        databaseReference.child("Publicacoes").child(id).child("fotoPublicacao").setValue(fotoPublicacao);
     }
 
     public void salvarFotoPerfil(String id){
         DatabaseReference databaseReference = FirebaseConfig.getFirebase();
-        databaseReference.child("Publicacoes").child(id).child("fotoPerfil").setValue(imagemPerfil);
+        databaseReference.child("Publicacoes").child(id).child("fotoPerfil").setValue(fotoPerfil);
     }
 
     public void salvarDescricao(String id){
@@ -53,12 +53,12 @@ public class Publicacao {
         this.id = id;
     }
 
-    public String getNomeUsuario() {
-        return nomeUsuario;
+    public String getNomeFantasia() {
+        return nomeFantasia;
     }
 
-    public void setNomeUsuario(String nomeUsuario) {
-        this.nomeUsuario = nomeUsuario;
+    public void setNomeFantasia(String nomeFantasia) {
+        this.nomeFantasia = nomeFantasia;
     }
 
     public String getDescricao() {
@@ -85,19 +85,19 @@ public class Publicacao {
         this.estado = estado;
     }
 
-    public String getImagemPublicacao() {
-        return imagemPublicacao;
+    public String getFotoPublicacao() {
+        return fotoPublicacao;
     }
 
-    public void setImagemPublicacao(String imagemPublicacao) {
-        this.imagemPublicacao = imagemPublicacao;
+    public void setFotoPublicacao(String fotoPublicacao) {
+        this.fotoPublicacao = fotoPublicacao;
     }
 
-    public String getImagemPerfil() {
-        return imagemPerfil;
+    public String getFotoPerfil() {
+        return fotoPerfil;
     }
 
-    public void setImagemPerfil(String imagemPerfil) {
-        this.imagemPerfil = imagemPerfil;
+    public void setFotoPerfil(String fotoPerfil) {
+        this.fotoPerfil = fotoPerfil;
     }
 }

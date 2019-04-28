@@ -12,19 +12,19 @@ import com.treinamento.mdomingos.startapp.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ViewHolder extends RecyclerView.ViewHolder {
+public class ImageAdapter extends RecyclerView.ViewHolder {
 
     View mView;
 
 
-    public ViewHolder(@NonNull View itemView) {
+    public ImageAdapter(@NonNull View itemView) {
         super(itemView);
 
         mView = itemView;
     }
 
-    public void setDetails(Context context, String nome, String cidade, String estado, String descricao,
-                           String imagemPerfil, String imagemPublicacao){
+    public void setDetails(Context context, String nomeFantasia, String cidade, String estado, String descricao,
+                           String fotoPerfil, String fotoPublicacao){
 
         TextView name = mView.findViewById(R.id.nome_startup_feed_id);
         TextView city = mView.findViewById(R.id.text_cidade_feed_startup);
@@ -34,12 +34,11 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imagePublication = mView.findViewById(R.id.imagem_publicacao_feed);
 
         //set data
-
-        name.setText(nome);
+        name.setText(nomeFantasia);
         city.setText(cidade);
         state.setText(estado);
         descri.setText(descricao);
-        Picasso.get().load(imagemPerfil).into(imageProfile);
-        Picasso.get().load(imagemPublicacao).into(imagePublication);
+        Picasso.get().load(fotoPerfil).into(imageProfile);
+        Picasso.get().load(fotoPublicacao).fit().centerCrop().into(imagePublication);
     }
 }

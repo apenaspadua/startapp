@@ -1,27 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments_investidor.FeedFragment_Investidor">
+    android:background="@color/colorTransparenteDark">
 
-    <ScrollView
-        android:id="@+id/scrollView_feed_investidor_id"
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_feed_investidor"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:context=".activity.home.BaseFragmentActivity">
-
-        <LinearLayout
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-        </LinearLayout>
-
-    </ScrollView>
-
+        android:layout_height="match_parent" />
 
 </FrameLayout>
