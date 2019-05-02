@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">StartApp</string>
+    <string name="label_email_login">Endereço de e-mail</string>
+    <string name="label_senha_login">Senha</string>
+    <string name="label_botao_logar_login">LOG IN</string>
+    <string name="alertSim">Sim</string>
+    <string name="alertNao">Não</string>
+    <string name="Open">Open</string>
+    <string name="Close">Close</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

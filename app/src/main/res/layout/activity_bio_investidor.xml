@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
+
+    <ScrollView
+        android:id="@+id/scrollView_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".activity.login.CadastroLoginActivity">
+
+
+        <LinearLayout
+            android:id="@+id/linearLayout_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryDark"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        style="@style/TitleText"
+                        android:paddingTop="30dp"
+                        android:paddingBottom="20dp"
+                        android:text="Nos conte um pouco sobre você"
+                        app:fontFamily="@font/lato_regular" />
+
+
+                    <ImageView
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="22dp"
+                        android:layout_marginLeft="22dp"
+                        android:background="@drawable/investidor_bio"
+                        android:scaleType="fitXY" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                style="@style/TextInputRegister"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    style="@style/SubTitleRegister"
+                    android:gravity="center"
+                    android:text="Diga uma saudação para aparecer em seu perfil (opcional) "
+                    android:textSize="16dp"
+                    app:fontFamily="@font/lato_regular" />
+
+            </LinearLayout>
+
+
+            <android.support.design.widget.TextInputLayout style="@style/TextInputRegister">
+                <EditText
+                    android:id="@+id/apresentacao_cadastro_investidor_id"
+                    style="@style/EditTextRegister"
+                    android:hint="Apresente-se"
+                    android:inputType="text" />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <LinearLayout
+                style="@style/TextInputRegister"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    style="@style/SubTitleRegister"
+                    android:gravity="center"
+                    android:text="Fale sobre seus investimentos, propostas, e metas "
+                    android:textSize="18dp"
+                    android:textColor="@color/colorLink"
+                    app:fontFamily="@font/lato_regular" />
+
+
+
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/biografia_cadastro_investidor_id"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:padding="10dp"
+                android:gravity="start"
+                android:layout_marginBottom="10dp"
+                android:hint="Escreva aqui"
+                android:fontFamily="@font/lato_regular"
+                android:textSize="14dp"
+                android:background="@drawable/button_custom_twitter"
+                android:minLines="100"
+                android:maxLines="100"
+                android:scrollbars="vertical"
+                android:inputType="textMultiLine"/>
+
+
+            <RelativeLayout
+                android:id="@+id/botao_bio_concluir_cadastro_login_id"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="6dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/button_ronded"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="110dp"
+                    android:layout_marginLeft="110dp"
+                    android:gravity="center_vertical"
+                    android:text="CONCLUIR CADASTRO"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:fontFamily="@font/poppins_medium" />
+
+            </RelativeLayout>
+
+
+            <TextView
+                android:paddingTop="15dp"
+                android:paddingBottom="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:text="Aplicativo realizado pelos alunos de Sistemas / Projeto Aplicado - FHO 2019 / Aplicativo para estudo disponibizado em versão teste."
+                android:textColor="@color/colorCinza"
+                android:textSize="12sp"
+                app:fontFamily="@font/lato_regular"
+                android:layout_marginLeft="20dp" />
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</android.support.v4.widget.DrawerLayout>

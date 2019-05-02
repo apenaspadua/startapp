@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#22252C</color>
+    <color name="colorPrimaryDark">#22252C</color>
+    <color name="colorRoxo">#3F3250</color>
+    <color name="colorRoxoLight">#946BDB</color>
+    <color name="colorVermelho">#CF6766</color>
+    <color name="colorCinza">#525252</color>
+    <color name="colorCinzaLight">#A7A7A7</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBage">#C0B3A0</color>
+    <color name="Facebook">#3B5998</color>
+    <color name="Cadastrese">#0289BE</color>
+    <color name="Twitter">#00ACED</color>
+    <color name="Google">#DD4B39</color>
+    <color name="colorTransparenteDark">#3ECCCCCC</color>
+    <color name="colorTranspatenteLight">#00CCCCCC</color>
+    <color name="colorLink">#0289BE</color>
+    <color name="marine">#57BC90</color>
+    <color name="indigo">#031424</color>
+
+
 </resources>

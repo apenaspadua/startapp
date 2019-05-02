@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "432737778633",
+    "firebase_url": "https://app-startaap.firebaseio.com",
+    "project_id": "app-startaap",
+    "storage_bucket": "app-startaap.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:432737778633:android:a7228928385e2545",
+        "android_client_info": {
+          "package_name": "com.treinamento.mdomingos.startapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "432737778633-1eqirgvrstiv28n5upuch4bj47im18u8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.treinamento.mdomingos.startapp",
+            "certificate_hash": "bab7dfa30a6017c16657b7414431d7ee461c135f"
+          }
+        },
+        {
+          "client_id": "432737778633-dh6kmarm5oorshreiud3m75c4ha5dunp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyNHzFGtI6AXgAamQyGjeVdAxNPMfO6fo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "432737778633-dh6kmarm5oorshreiud3m75c4ha5dunp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
