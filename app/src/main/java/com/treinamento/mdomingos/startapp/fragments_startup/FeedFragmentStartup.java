@@ -52,7 +52,9 @@ public class FeedFragmentStartup extends Fragment {
                         model.getEstado(),
                         model.getDescricao(),
                         model.getFotoPerfil(),
-                        model.getFotoPublicacao());
+                        model.getFotoPublicacao(),
+                        model.getId());
+
             }
         };
 

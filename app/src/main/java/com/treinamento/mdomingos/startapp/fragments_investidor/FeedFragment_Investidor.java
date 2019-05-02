@@ -62,7 +62,8 @@ public class FeedFragment_Investidor extends Fragment {
                         model.getEstado(),
                         model.getDescricao(),
                         model.getFotoPerfil(),
-                        model.getFotoPublicacao());
+                        model.getFotoPublicacao(),
+                        model.getId());
             }
         };
 
