@@ -51,6 +51,7 @@ public class ImageAdapter extends RecyclerView.ViewHolder {
             public void onClick(View v) {
                 Intent intent = new Intent(context, PerfilVisitadoStartupActivity.class);
                 intent.putExtra("publicacoes",  id);
+                context.startActivity(intent);
 
             }
         });
