@@ -175,6 +175,15 @@
 
             </RelativeLayout>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_marginTop="30dp"
+                android:background="@color/colorTransparenteDark"
+                android:gravity="clip_vertical|center_horizontal"
+                android:orientation="horizontal">
+            </RelativeLayout>
+
             <LinearLayout style="@style/TextInputRegister"
                 android:layout_marginTop="25dp">
 

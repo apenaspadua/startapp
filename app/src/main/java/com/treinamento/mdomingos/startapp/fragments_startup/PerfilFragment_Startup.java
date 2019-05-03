@@ -2,12 +2,10 @@ package com.treinamento.mdomingos.startapp.fragments_startup;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -21,16 +19,14 @@ import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
-import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -42,25 +38,23 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.treinamento.mdomingos.startapp.R;
 import com.treinamento.mdomingos.startapp.activity.login.LoginActivity;
 import com.treinamento.mdomingos.startapp.activity.startup.EditarPerfilStartupActivity;
 import com.treinamento.mdomingos.startapp.activity.startup.EnviaArquivosActivity;
 import com.treinamento.mdomingos.startapp.model.StartupResponse;
-import com.treinamento.mdomingos.startapp.utils.UploadStorage;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static android.app.Activity.RESULT_OK;
-
 public class PerfilFragment_Startup extends Fragment {
 
-    private BarChart barChart;
+    private PieChart chart;
+    double values [] = {50.0, 60.0};
+    String graphName [] = {"Objetivo em R$", "Investido"};
+
     private ProgressDialog progressDialog;
     private FirebaseUser firebaseUser;
     private FirebaseAuth firebaseAuth;
@@ -122,7 +116,6 @@ public class PerfilFragment_Startup extends Fragment {
         user = FirebaseAuth.getInstance().getCurrentUser();
         storage = FirebaseStorage.getInstance();
 
-        barChart = view.findViewById(R.id.grafico_perfil_startup);
         editar = view.findViewById(R.id.text_editar_perfil_startup);
         nome = view.findViewById(R.id.nome_perfil_startup_id);
         cidade = view.findViewById(R.id.text_cidade_perfil_startup);
@@ -140,11 +133,10 @@ public class PerfilFragment_Startup extends Fragment {
         editarVideo = view.findViewById(R.id.botao_editar_projeto_startup_id);
         progressBar = view.findViewById(R.id.progressBar_perfil_startup);
         progressDialog = new ProgressDialog(getActivity());
+        chart = view.findViewById(R.id.grafico_perfil_startup);
 
-        //grafico
-        barChart.getDescription().setEnabled(false);
-        setData(2);
-        barChart.setFitBars(true);
+        //chamada do grafico
+        setupPieChart();
 
         editar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,7 +168,6 @@ public class PerfilFragment_Startup extends Fragment {
         });
         videoView.start();
 
-
             final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
             databaseReference.child("Usuarios").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
                 @Override
@@ -193,40 +184,26 @@ public class PerfilFragment_Startup extends Fragment {
                     bio.setText(startup.getDetalhe_startup().getBiografia());
                     apresentacao.setText(startup.getDetalhe_startup().getApresentacao());
                     link.setText(startup.getDetalhe_startup().getLink());
-
                 }
-
                 @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
+                public void onCancelled(@NonNull DatabaseError databaseError) {}
             });
             return view;
     }
+    private void setupPieChart(){
 
-    private void setData(int count){
-        ArrayList<BarEntry> barEntries = new ArrayList<>();
-
-        for(int i = 0; i < count; i++)
-        {
-            if(i == 1) {
-                double value = 100;
-                barEntries.add(new BarEntry(i, (int) value));
-            } else{
-                double value2 = 101;
-                barEntries.add(new BarEntry(i, (int) value2));
-            }
+        List<PieEntry> pieEntries = new ArrayList<>();
+        for(int i = 0; i < values.length; i++){
+            pieEntries.add(new PieEntry((float) values[i], graphName[i]));
         }
+        PieDataSet   dataSet = new PieDataSet( pieEntries, "");
+        dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        PieData data = new PieData(dataSet);
 
-        BarDataSet set = new BarDataSet(barEntries, "Meta em R$ / Investido");
-        set.setColors(ColorTemplate.MATERIAL_COLORS);
-        set.setDrawValues(true);
+        chart.setData(data);
+        chart.animateY(1000);
+        chart.invalidate();
 
-        BarData data = new BarData(set);
-
-        barChart.setData(data);
-        barChart.invalidate();
-        barChart.animateY(500);
     }
 
     private void loadUserInformation() {
@@ -265,5 +242,4 @@ public class PerfilFragment_Startup extends Fragment {
             }
         });
     }
-
 }

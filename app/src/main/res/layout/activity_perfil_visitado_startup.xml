@@ -23,7 +23,7 @@
                 style="@style/SubTitleCompany"
                 android:layout_marginTop="20sp"
                 android:gravity="center"
-                android:paddingBottom="10dp"
+                android:paddingBottom="20dp"
                 android:text="Conheça o projeto e mostre interesse para investir"
                 android:textColor="@color/colorCinzaLight"
                 app:fontFamily="@font/lato_regular" />
@@ -208,6 +208,15 @@
 
             </RelativeLayout>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_marginTop="30dp"
+                android:background="@color/colorTransparenteDark"
+                android:gravity="clip_vertical|center_horizontal"
+                android:orientation="horizontal">
+            </RelativeLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -231,6 +240,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="250dp"
                 android:layout_marginTop="20dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_marginTop="30dp"
+                android:background="@color/colorTransparenteDark"
+                android:gravity="clip_vertical|center_horizontal"
+                android:orientation="horizontal">
+            </RelativeLayout>
 
             <LinearLayout style="@style/TextInputRegister">
 
@@ -308,6 +326,15 @@
 
             </RelativeLayout>
 
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_marginTop="30dp"
+                android:background="@color/colorTransparenteDark"
+                android:gravity="clip_vertical|center_horizontal"
+                android:orientation="horizontal">
+            </RelativeLayout>
 
             <TextView
                 android:layout_width="wrap_content"
