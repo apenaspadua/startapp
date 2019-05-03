@@ -16,12 +16,12 @@ import com.treinamento.mdomingos.startapp.model.Publicacao;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ImageAdapter extends RecyclerView.ViewHolder {
+public class FeedAdapter extends RecyclerView.ViewHolder {
 
     View mView;
 
 
-    public ImageAdapter(@NonNull View itemView) {
+    public FeedAdapter(@NonNull View itemView) {
         super(itemView);
 
         mView = itemView;
@@ -39,6 +39,7 @@ public class ImageAdapter extends RecyclerView.ViewHolder {
         RelativeLayout botaoSaberMais = mView.findViewById(R.id.botao_sabermais_feed);
 
         //set data
+
         name.setText(nomeFantasia);
         city.setText(cidade);
         state.setText(estado);

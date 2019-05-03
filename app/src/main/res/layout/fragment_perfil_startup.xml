@@ -187,12 +187,50 @@
 
             </RelativeLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginBottom="15dp"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:text="Aconpanhe seu progresso: "
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/lato_hairline"/>
+
+                
+                <com.github.mikephil.charting.charts.BarChart
+                    android:layout_width="match_parent"
+                    android:layout_height="450dp"
+                    android:id="@+id/grafico_perfil_startup">
+
+                </com.github.mikephil.charting.charts.BarChart>
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginStart="15dp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginTop="20sp"
+                android:text="Seu vídeo: "
+                android:textColor="@color/colorCinzaLight"
+                app:fontFamily="@font/lato_regular"
+                android:textSize="16dp"
+                android:layout_marginLeft="15dp" />
 
             <VideoView
                 android:id="@+id/upload_video_id"
                 android:layout_width="wrap_content"
                 android:layout_height="250dp"
-                android:layout_marginTop="30dp" />
+                android:layout_marginTop="15dp" />
 
             <LinearLayout style="@style/TextInputRegister">
 

@@ -25,6 +25,11 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -47,12 +52,15 @@ import com.treinamento.mdomingos.startapp.activity.startup.EnviaArquivosActivity
 import com.treinamento.mdomingos.startapp.model.StartupResponse;
 import com.treinamento.mdomingos.startapp.utils.UploadStorage;
 
+import java.util.ArrayList;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.app.Activity.RESULT_OK;
 
 public class PerfilFragment_Startup extends Fragment {
 
+    private BarChart barChart;
     private ProgressDialog progressDialog;
     private FirebaseUser firebaseUser;
     private FirebaseAuth firebaseAuth;
@@ -114,6 +122,7 @@ public class PerfilFragment_Startup extends Fragment {
         user = FirebaseAuth.getInstance().getCurrentUser();
         storage = FirebaseStorage.getInstance();
 
+        barChart = view.findViewById(R.id.grafico_perfil_startup);
         editar = view.findViewById(R.id.text_editar_perfil_startup);
         nome = view.findViewById(R.id.nome_perfil_startup_id);
         cidade = view.findViewById(R.id.text_cidade_perfil_startup);
@@ -132,6 +141,10 @@ public class PerfilFragment_Startup extends Fragment {
         progressBar = view.findViewById(R.id.progressBar_perfil_startup);
         progressDialog = new ProgressDialog(getActivity());
 
+        //grafico
+        barChart.getDescription().setEnabled(false);
+        setData(2);
+        barChart.setFitBars(true);
 
         editar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,31 +177,56 @@ public class PerfilFragment_Startup extends Fragment {
         videoView.start();
 
 
-        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("Usuarios").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                StartupResponse startup = dataSnapshot.getValue(StartupResponse.class);
-                nome.setText(startup.getDetalhe_startup().getNomeFantasia());
-                cidade.setText(startup.getDetalhe_startup().getCidade());
-                razao.setText(startup.getDetalhe_startup().getRazaoSocial());
-                email.setText(startup.getDetalhe_startup().getEmail());
-                rua.setText(startup.getDetalhe_startup().getRua());
-                bairro.setText(startup.getDetalhe_startup().getBairro());
-                estado.setText(startup.getDetalhe_startup().getEstado());
-                telefone.setText(startup.getDetalhe_startup().getTelefone());
-                bio.setText(startup.getDetalhe_startup().getBiografia());
-                apresentacao.setText(startup.getDetalhe_startup().getApresentacao());
-                link.setText(startup.getDetalhe_startup().getLink());
+            final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+            databaseReference.child("Usuarios").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    StartupResponse startup = dataSnapshot.getValue(StartupResponse.class);
+                    nome.setText(startup.getDetalhe_startup().getNomeFantasia());
+                    cidade.setText(startup.getDetalhe_startup().getCidade());
+                    razao.setText(startup.getDetalhe_startup().getRazaoSocial());
+                    email.setText(startup.getDetalhe_startup().getEmail());
+                    rua.setText(startup.getDetalhe_startup().getRua());
+                    bairro.setText(startup.getDetalhe_startup().getBairro());
+                    estado.setText(startup.getDetalhe_startup().getEstado());
+                    telefone.setText(startup.getDetalhe_startup().getTelefone());
+                    bio.setText(startup.getDetalhe_startup().getBiografia());
+                    apresentacao.setText(startup.getDetalhe_startup().getApresentacao());
+                    link.setText(startup.getDetalhe_startup().getLink());
 
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+            return view;
+    }
+
+    private void setData(int count){
+        ArrayList<BarEntry> barEntries = new ArrayList<>();
+
+        for(int i = 0; i < count; i++)
+        {
+            if(i == 1) {
+                double value = 100;
+                barEntries.add(new BarEntry(i, (int) value));
+            } else{
+                double value2 = 101;
+                barEntries.add(new BarEntry(i, (int) value2));
             }
+        }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+        BarDataSet set = new BarDataSet(barEntries, "Meta em R$ / Investido");
+        set.setColors(ColorTemplate.MATERIAL_COLORS);
+        set.setDrawValues(true);
 
-            }
-        });
-        return view;
+        BarData data = new BarData(set);
+
+        barChart.setData(data);
+        barChart.invalidate();
+        barChart.animateY(500);
     }
 
     private void loadUserInformation() {
