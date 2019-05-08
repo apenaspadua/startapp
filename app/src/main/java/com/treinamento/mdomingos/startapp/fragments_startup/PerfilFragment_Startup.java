@@ -166,8 +166,7 @@ public class PerfilFragment_Startup extends Fragment {
             public void onClick(View v) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle("Atualizar Progresso");
-                builder.setMessage("Insira seu progresso no gráfico e mantenha-o em dia!");
+                View view = LayoutInflater.from(getActivity()).inflate(R.layout.alert_dialog_custom, null);
 
                 input = new EditText(getContext());
                 builder.setView(input);
@@ -189,8 +188,8 @@ public class PerfilFragment_Startup extends Fragment {
                     }
                 });
 
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
+                builder.setView(view);
+                builder.show();
             }
         });
 
