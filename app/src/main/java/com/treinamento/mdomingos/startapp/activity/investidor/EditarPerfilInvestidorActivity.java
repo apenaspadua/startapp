@@ -93,6 +93,9 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
                 telefone.setText(investidor.getDetalhe_investidor().getTelefone());
                 bio.setText(investidor.getDetalhe_investidor().getBiografia());
                 apresentacao.setText(investidor.getDetalhe_investidor().getApresentacao());
+                cep.setText(investidor.getDetalhe_investidor().getCep());
+                cnpj.setText(investidor.getDetalhe_investidor().getCnpj());
+                cpf.setText(investidor.getDetalhe_investidor().getCpf());
 
             }
 

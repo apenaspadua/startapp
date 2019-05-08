@@ -8,7 +8,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 import com.treinamento.mdomingos.startapp.R;
 import com.treinamento.mdomingos.startapp.activity.startup.PerfilVisitadoStartupActivity;
@@ -19,6 +22,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class FeedAdapter extends RecyclerView.ViewHolder {
 
     View mView;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
 
 
     public FeedAdapter(@NonNull View itemView) {
@@ -38,6 +43,9 @@ public class FeedAdapter extends RecyclerView.ViewHolder {
         ImageView imagePublication = mView.findViewById(R.id.imagem_publicacao_feed);
         RelativeLayout botaoSaberMais = mView.findViewById(R.id.botao_sabermais_feed);
 
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
+
         //set data
 
         name.setText(nomeFantasia);
@@ -50,10 +58,13 @@ public class FeedAdapter extends RecyclerView.ViewHolder {
         botaoSaberMais.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, PerfilVisitadoStartupActivity.class);
-                intent.putExtra("publicacoes",  id);
-                context.startActivity(intent);
-
+                if(firebaseUser.getUid() != id){
+                    Intent intent = new Intent(context, PerfilVisitadoStartupActivity.class);
+                    intent.putExtra("publicacoes",  id);
+                    context.startActivity(intent);
+                } else {
+                    Toast.makeText(context, "Para visitar vá até o seu perfil", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

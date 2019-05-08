@@ -56,7 +56,7 @@ public class EditarPerfilStartupActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri imageUri;
 
-    private EditText razaoSocial, nomeFantasia, email, telefone, cep, cnpj, rua, cidade, bairro, estado, bio,  apresentacao, link;
+    private EditText razaoSocial, nomeFantasia, email, telefone, cep, cnpj, rua, cidade, bairro, estado, bio,  apresentacao, link, objetivo;
     private RelativeLayout botaoConcluir;
     private FirebaseAuth firebaseAuth;
 
@@ -93,6 +93,9 @@ public class EditarPerfilStartupActivity extends AppCompatActivity {
                 bio.setText(startup.getDetalhe_startup().getBiografia());
                 apresentacao.setText(startup.getDetalhe_startup().getApresentacao());
                 link.setText(startup.getDetalhe_startup().getLink());
+                cep.setText(startup.getDetalhe_startup().getCep());
+                cnpj.setText(startup.getDetalhe_startup().getCnpj());
+                objetivo.setText(startup.getDetalhe_startup().getMeta());
             }
 
             @Override
@@ -114,6 +117,7 @@ public class EditarPerfilStartupActivity extends AppCompatActivity {
         telefone = findViewById(R.id.telefone_editar_startup_id);
         cep = findViewById(R.id.cep_editar_startup_id);
         cnpj = findViewById(R.id.cnpj_editar_startup_id);
+        objetivo = findViewById(R.id.objetivo_editar_startup_id);
         rua = findViewById(R.id.rua_editar_startup_id);
         cidade = findViewById(R.id.cidade_editar_startup_id);
         bairro = findViewById(R.id.bairro_editar_startup_id);
@@ -199,6 +203,7 @@ public class EditarPerfilStartupActivity extends AppCompatActivity {
                     final String bioRecebida = bio.getText().toString();
                     final String apresentacaoRecebido = apresentacao.getText().toString();
                     final String linkRecebido = link.getText().toString();
+                    final String objtivoRecebido = objetivo.getText().toString();
 
                     String cnpjSemFormatacao = cnpjRecebido.replace(".", "");
                     cnpjSemFormatacao = cnpjSemFormatacao.replace("/", "");
@@ -243,9 +248,12 @@ public class EditarPerfilStartupActivity extends AppCompatActivity {
                     } else if (Validator.isCNPJ(cnpjSemFormatacao) ==  false) {
                         cnpj.setError("Insira um CNPJ da válido");
 
+                    } else if (Validator.stringEmpty(cnpjSemFormatacao)) {
+                        objetivo.setError("Insira um valor a atingir");
+
                     } else {
 
-                        Startup startup = new Startup(razaoSocialRecebido, nomeFantasiaRecebido, emailRecebido, telefoneRecebido, cepRecebido, ruaRecebida, bairroRecebido,cidadeRecebido, estadoRecebido, cnpjRecebido);
+                        Startup startup = new Startup(razaoSocialRecebido, nomeFantasiaRecebido, emailRecebido, telefoneRecebido, cepRecebido, ruaRecebida, bairroRecebido,cidadeRecebido, estadoRecebido, cnpjRecebido, objtivoRecebido);
                         startup.salvarStartup(firebaseUser.getUid());
                         Startup startup1 = new Startup(bioRecebida, apresentacaoRecebido, linkRecebido);
                         startup1.salvarBioStartup(firebaseUser.getUid());

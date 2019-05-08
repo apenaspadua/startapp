@@ -37,7 +37,7 @@ import java.util.concurrent.ExecutionException;
 
 public class CadastroStartupActivity extends AppCompatActivity {
 
-    private EditText razaoSocial, nomeFantasia, email, telefone, cep, cnpj, rua, cidade, bairro, estado;
+    private EditText razaoSocial, nomeFantasia, email, telefone, cep, cnpj, rua, cidade, bairro, estado, objetivo;
     private RelativeLayout botaoConcluir;
     private ProgressDialog progressDialog;
 
@@ -55,6 +55,7 @@ public class CadastroStartupActivity extends AppCompatActivity {
         telefone = findViewById(R.id.telefone_cadastro_startup_id);
         cep = findViewById(R.id.cep_cadastro_startup_id);
         cnpj = findViewById(R.id.cnpj_cadastro_startup_id);
+        objetivo = findViewById(R.id.objetivo_cadastro_startup_id);
         rua = findViewById(R.id.rua_cadastro_startup_id);
         cidade = findViewById(R.id.cidade_cadastro_startup_id);
         bairro = findViewById(R.id.bairro_cadastro_startup_id);
@@ -118,6 +119,7 @@ public class CadastroStartupActivity extends AppCompatActivity {
             final String cidadeRecebido = cidade.getText().toString();
             final String estadoRecebido = estado.getText().toString();
             final String cnpjRecebido = cnpj.getText().toString();
+            final String objetivoRecebido = objetivo.getText().toString();
 
             String cnpjSemFormatacao = cnpjRecebido.replace(".", "");
             cnpjSemFormatacao = cnpjSemFormatacao.replace("/", "");
@@ -159,9 +161,12 @@ public class CadastroStartupActivity extends AppCompatActivity {
             } else if (Validator.isCNPJ(cnpjSemFormatacao) ==  false) {
                 cnpj.setError("Insira um CNPJ da válido");
 
+            } else if (Validator.stringEmpty(objetivoRecebido)) {
+                    objetivo.setError("Insira um valor a atingir");
+
             } else {
 
-                Startup startup = new Startup(razaoSocialRecebido, nomeFantasiaRecebido, emailRecebido, telefoneRecebido, cepRecebido, ruaRecebida, bairroRecebido,cidadeRecebido, estadoRecebido, cnpjRecebido);
+                Startup startup = new Startup(razaoSocialRecebido, nomeFantasiaRecebido, emailRecebido, telefoneRecebido, cepRecebido, ruaRecebida, bairroRecebido,cidadeRecebido, estadoRecebido, cnpjRecebido, objetivoRecebido);
                 startup.salvarStartup(firebaseUser.getUid());
 
                 Publicacao publicacao = new Publicacao(nomeFantasiaRecebido, cidadeRecebido, estadoRecebido);

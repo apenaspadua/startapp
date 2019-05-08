@@ -9,15 +9,15 @@
     <color name="colorCinzaLight">#A7A7A7</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBage">#C0B3A0</color>
-    <color name="Facebook">#3B5998</color>
+    <color name="Facebook">#80d8ff</color>
     <color name="Cadastrese">#0289BE</color>
     <color name="Twitter">#00ACED</color>
     <color name="Google">#DD4B39</color>
-    <color name="colorTransparenteDark">#2A707070</color>
+    <color name="colorTransparenteDark">#286F6F6F</color>
     <color name="colorTranspatenteLight">#00CCCCCC</color>
     <color name="colorLink">#0289BE</color>
     <color name="marine">#57BC90</color>
-    <color name="indigo">#031424</color>
+    <color name="indigo">#32333C</color>
 
 
 </resources>
