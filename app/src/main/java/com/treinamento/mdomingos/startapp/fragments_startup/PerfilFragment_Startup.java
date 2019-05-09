@@ -1,4 +1,3 @@
-
 package com.treinamento.mdomingos.startapp.fragments_startup;
 
 import android.app.AlertDialog;
@@ -24,13 +23,10 @@ import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
-import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -48,10 +44,6 @@ import com.treinamento.mdomingos.startapp.activity.startup.EditarPerfilStartupAc
 import com.treinamento.mdomingos.startapp.activity.startup.EnviaArquivosActivity;
 import com.treinamento.mdomingos.startapp.model.Startup;
 import com.treinamento.mdomingos.startapp.model.StartupResponse;
-import com.treinamento.mdomingos.startapp.utils.ColorGraph;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -64,27 +56,15 @@ public class PerfilFragment_Startup extends Fragment {
     private FirebaseUser user;
     private String imageURL;
     private ProgressBar progressBar, progresso;
-    private TextView nome;
-    private TextView cidade;
-    private TextView razao;
-    private TextView email;
-    private TextView rua;
-    private TextView bairro;
-    private TextView estado;
-    private TextView telefone;
-    private TextView bio;
-    private TextView editar;
-    private TextView apresentacao;
-    private TextView link;
-    private TextView atualizar;
-    private TextView meta;
-    private TextView investido;
+    private TextView nome,cidade, razao, email, rua, bairro, estado, telefone, bio, editar, apresentacao, link, meta, investido;
+    private RelativeLayout atualizar;
+    private EditText insereAtualiza;
     private CircleImageView foto;
     private RelativeLayout editarVideo;
     private FirebaseStorage storage;
-    private EditText input;
+    private int investidoInt;
+    private int metaInt;
     private int cont;
-    private int investidoInt, metaInt;
     private Handler hdlr = new Handler();
 
     private VideoView videoView;
@@ -97,14 +77,12 @@ public class PerfilFragment_Startup extends Fragment {
         loadUserInformation();
         progressBar.setVisibility(View.VISIBLE);
         editar.setTextColor(Color.parseColor("#57BC90"));
-        loadProgress();
         loadVideo();
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-
         inflater.inflate(R.menu.dropdown_menu_home, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -164,20 +142,19 @@ public class PerfilFragment_Startup extends Fragment {
         atualizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 View view = LayoutInflater.from(getActivity()).inflate(R.layout.alert_dialog_custom, null);
-
-                input = new EditText(getContext());
-                builder.setView(input);
-
+                insereAtualiza = view.findViewById(R.id.atualiza_barra_id);
                 builder.setPositiveButton("Atualizar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        investidoInt = Integer.parseInt(input.getText().toString());
+                        progressDialog.setMessage("Atualizando...");
+                        progressDialog.show();
+                        investidoInt = Integer.parseInt(insereAtualiza.getText().toString());
                         Startup startup = new Startup();
                         startup.setInvestido(String.valueOf(investidoInt));
                         startup.salvarProgesso(user.getUid());
+                        Toast.makeText(getActivity(), "Progresso Atualizado", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -239,34 +216,44 @@ public class PerfilFragment_Startup extends Fragment {
                 bio.setText(startup.getDetalhe_startup().getBiografia());
                 apresentacao.setText(startup.getDetalhe_startup().getApresentacao());
                 link.setText(startup.getDetalhe_startup().getLink());
-                meta.setText(startup.getDetalhe_startup().getMeta());
+                meta.setText("R$ " + startup.getDetalhe_startup().getMeta());
                 metaInt = Integer.parseInt(startup.getDetalhe_startup().getMeta());
-                investido.setText(startup.getDetalhe_startup().getInvestido());
-
+                investido.setText("R$ " + startup.getDetalhe_startup().getInvestido());
+                if (startup.getDetalhe_startup().getInvestido() != null) {
+                    try {
+                        investidoInt = Integer.parseInt(startup.getDetalhe_startup().getInvestido());
+                    } catch(NumberFormatException e) {
+                        investidoInt = 0;
+                    }
+                }
+                loadProgress(investidoInt);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
         return view;
     }
 
-    private void loadProgress(){
-//        progresso.setMax(metaInt);
-
+    private void loadProgress(final int dado){
+        cont = progresso.getProgress();
         new Thread(new Runnable() {
             @Override
             public void run() {
+                while(cont < metaInt) {
+                    cont += 1;
                     hdlr.post(new Runnable() {
                         public void run() {
-//                            progresso.setProgress(investidoInt);investidoInt
+                            progresso.setMax(metaInt);
+                            progresso.setProgress(dado);
                         }
                     });
                     try {
-                        Thread.sleep(100);
+                        Thread.sleep(1);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-
+                }
             }
         }).start();
     }

@@ -21,19 +21,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFF"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
         android:paddingBottom="16dp"
         android:layout_below="@+id/title"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 
-        <TextView
-            android:id="@+id/text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="Atualize o quanto já foi arrecadado e mantenha-o em dia!"
-            android:textSize="18sp" />
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="Atualize o quanto já foi arrecadado e mantenha-o em dia!"
+                android:textSize="16sp"/>
+
+            <android.support.design.widget.TextInputLayout
+                style="@style/TextInputRegister"
+                android:layout_marginTop="80dp">
+                <EditText
+                    android:hint="R$ Investido"
+                    android:id="@+id/atualiza_barra_id"
+                    style="@style/EditTextRegister"
+                    android:inputType="number" />
+            </android.support.design.widget.TextInputLayout>
 
 
     </RelativeLayout>
