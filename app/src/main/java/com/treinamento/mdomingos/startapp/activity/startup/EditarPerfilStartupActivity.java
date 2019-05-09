@@ -76,6 +76,7 @@ public class EditarPerfilStartupActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        loadUserInformation();
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.child("Usuarios").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
@@ -136,7 +137,6 @@ public class EditarPerfilStartupActivity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        loadUserInformation();
         progressBar.setVisibility(View.VISIBLE);
 
         //Mascara para cnpj
