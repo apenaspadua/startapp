@@ -344,14 +344,13 @@
                 android:layout_height="50dp"
                 android:layout_margin="6dp"
                 android:layout_marginBottom="10dp"
+                android:gravity="center"
                 android:background="@drawable/button_ronded"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="120dp"
-                    android:layout_marginLeft="110dp"
                     android:gravity="center_vertical"
                     android:text="CONCLUIR EDIÇÃO"
                     android:textAllCaps="false"
