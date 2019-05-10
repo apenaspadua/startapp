@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -40,13 +41,14 @@ public class PerfilVisitadoStartupActivity extends AppCompatActivity{
     private Task<Uri> storageReference;
     private FirebaseUser user;
     private String imageURL;
-    private ProgressBar progressBar;
-    private TextView nome, cidade, razao, email, rua, bairro, estado, telefone, bio, apresentacao, link;
+    private ProgressBar progressBar, progresso;
+    private TextView nome, cidade, razao, email, rua, bairro, estado, telefone, bio, apresentacao, link, meta, investido;
     private CircleImageView foto;
     private RelativeLayout editarVideo;
     private FirebaseStorage storage;
     private String data;
-
+    private int investidoInt = 0, metaInt = 0, cont = 0;
+    private Handler hdlr = new Handler();
 
     private VideoView videoView;
     private Uri videoUri;
@@ -84,6 +86,9 @@ public class PerfilVisitadoStartupActivity extends AppCompatActivity{
         foto = findViewById(R.id.foto_perfilVisitado_startup_id);
         videoView = findViewById(R.id.upload_video_perfilVisitado_id);
         progressBar = findViewById(R.id.progressBar_perfilVisitado_startup);
+        meta = findViewById(R.id.meta_progressbar_perfilVisitado_startup);
+        investido = findViewById(R.id.conquistado_progressbar_perilVisitado_startup);
+        progresso = findViewById(R.id.progressbar_progresso_perfilVisitado_startup);
         progressDialog = new ProgressDialog(this);
 
 
@@ -124,6 +129,23 @@ public class PerfilVisitadoStartupActivity extends AppCompatActivity{
                     apresentacao.setText(startup.getDetalhe_startup().getApresentacao());
                     link.setText(startup.getDetalhe_startup().getLink());
 
+                    if(startup.getProgresso_startup() == null){
+                        return;
+                    } else {
+                        meta.setText("R$ " + startup.getProgresso_startup().getMeta());
+
+                        investido.setText("R$ " + startup.getProgresso_startup().getInvestido());
+                    }
+                    if (startup.getProgresso_startup().getInvestido() != null) {
+                        try {
+                            investidoInt = Integer.parseInt(startup.getProgresso_startup().getInvestido());
+                            metaInt =  Integer.parseInt(startup.getProgresso_startup().getMeta());
+                        } catch(NumberFormatException e) {
+                            investidoInt = 0;
+                            metaInt = 0;
+                        }
+                    }
+                    loadProgress(investidoInt, metaInt);
                 }
 
                 @Override
@@ -132,8 +154,31 @@ public class PerfilVisitadoStartupActivity extends AppCompatActivity{
 
             });
         }
-
     }
+
+    private void loadProgress(final int dado, final int dadoMax){
+        cont = progresso.getProgress();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(cont < dadoMax) {
+                    cont += 1;
+                    hdlr.post(new Runnable() {
+                        public void run() {
+                            progresso.setMax(dadoMax);
+                            progresso.setProgress(dado);
+                        }
+                    });
+                    try {
+                        Thread.sleep(1);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+    }
+
 
     private void loadUserInformation() {
         storageReference = FirebaseStorage.getInstance().getReference().child("foto_perfil").

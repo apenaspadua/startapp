@@ -44,6 +44,7 @@ import com.treinamento.mdomingos.startapp.activity.startup.EditarPerfilStartupAc
 import com.treinamento.mdomingos.startapp.activity.startup.EnviaArquivosActivity;
 import com.treinamento.mdomingos.startapp.model.Startup;
 import com.treinamento.mdomingos.startapp.model.StartupResponse;
+import com.treinamento.mdomingos.startapp.utils.Validator;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -62,7 +63,7 @@ public class PerfilFragment_Startup extends Fragment {
     private CircleImageView foto;
     private RelativeLayout editarVideo;
     private FirebaseStorage storage;
-    private int investidoInt, metaInt, cont;
+    private int investidoInt = 0, metaInt = 0, cont = 0;
     private Handler hdlr = new Handler();
 
     private VideoView videoView;
@@ -137,6 +138,7 @@ public class PerfilFragment_Startup extends Fragment {
         meta = view.findViewById(R.id.meta_progressbar_perfil_startup);
         investido = view.findViewById(R.id.conquistado_progressbar_peril_startup);
 
+
         atualizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,7 +146,10 @@ public class PerfilFragment_Startup extends Fragment {
                 View view = LayoutInflater.from(getActivity()).inflate(R.layout.alert_dialog_custom, null);
 
                 insereAtualizaMeta = view.findViewById(R.id.objetivo_cadastro_startup_id);
+                insereAtualizaMeta.setText("0");
                 insereAtualizaProgresso = view.findViewById(R.id.atualiza_barra_id);
+                insereAtualizaProgresso.setText("0");
+
                 builder.setPositiveButton("Atualizar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -222,17 +227,23 @@ public class PerfilFragment_Startup extends Fragment {
                 apresentacao.setText(startup.getDetalhe_startup().getApresentacao());
                 link.setText(startup.getDetalhe_startup().getLink());
 
-//                 meta.setText("R$ " + startup.getDetalhe_startup().getMeta());
+                if(startup.getProgresso_startup() == null){
+                    return;
+                } else {
+                    meta.setText("R$ " + startup.getProgresso_startup().getMeta());
 
-//                investido.setText("R$ " + startup.getDetalhe_startup().getInvestido());
-//                if (startup.getDetalhe_startup().getInvestido() != null) {
-//                    try {
-//                        investidoInt = Integer.parseInt(startup.getDetalhe_startup().getInvestido());
-//                    } catch(NumberFormatException e) {
-//                        investidoInt = 0;
-//                    }
-//                }
-//                loadProgress(investidoInt);
+                    investido.setText("R$ " + startup.getProgresso_startup().getInvestido());
+                }
+                if (startup.getProgresso_startup().getInvestido() != null) {
+                    try {
+                        investidoInt = Integer.parseInt(startup.getProgresso_startup().getInvestido());
+                        metaInt =  Integer.parseInt(startup.getProgresso_startup().getMeta());
+                    } catch(NumberFormatException e) {
+                        investidoInt = 0;
+                        metaInt = 0;
+                    }
+                }
+                loadProgress(investidoInt, metaInt);
             }
 
             @Override
@@ -241,17 +252,17 @@ public class PerfilFragment_Startup extends Fragment {
         return view;
     }
 
-    private void loadProgress(final int dado){
+    private void loadProgress(final int dado, final int dadoMax){
         cont = progresso.getProgress();
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while(cont < metaInt) {
+                while(cont < dadoMax) {
                     cont += 1;
                     hdlr.post(new Runnable() {
                         public void run() {
-                            progresso.setMax(metaInt);
-                            progresso.setProgress(dado);
+                        progresso.setMax(dadoMax);
+                        progresso.setProgress(dado);
                         }
                     });
                     try {
