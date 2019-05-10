@@ -130,6 +130,7 @@ public class PerfilFragment_Investidor extends Fragment {
                     public void onClick(View v) {
                         editar.setTextColor(Color.parseColor("#0289BE"));
                         startActivity(new Intent(getActivity(), EditarPerfilInvestidorActivity.class));
+                        getActivity().finish();
                     }
                 });
             }

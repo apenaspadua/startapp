@@ -4,10 +4,10 @@ import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -44,7 +44,6 @@ import com.treinamento.mdomingos.startapp.model.StartupResponse;
 import com.treinamento.mdomingos.startapp.utils.FirebaseConfig;
 import com.treinamento.mdomingos.startapp.utils.HttpService;
 import com.treinamento.mdomingos.startapp.utils.MaskFormatter;
-import com.treinamento.mdomingos.startapp.utils.UploadStorage;
 import com.treinamento.mdomingos.startapp.utils.Validator;
 
 import java.util.concurrent.ExecutionException;
@@ -72,7 +71,6 @@ public class EditarPerfilStartupActivity extends AppCompatActivity {
     private String imageURL;
 
 
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -96,7 +94,6 @@ public class EditarPerfilStartupActivity extends AppCompatActivity {
                 link.setText(startup.getDetalhe_startup().getLink());
                 cep.setText(startup.getDetalhe_startup().getCep());
                 cnpj.setText(startup.getDetalhe_startup().getCnpj());
-                meta.setText(startup.getDetalhe_startup().getMeta());
             }
 
             @Override
@@ -203,7 +200,6 @@ public class EditarPerfilStartupActivity extends AppCompatActivity {
                     final String bioRecebida = bio.getText().toString();
                     final String apresentacaoRecebido = apresentacao.getText().toString();
                     final String linkRecebido = link.getText().toString();
-                    final String metaRecebida = meta.getText().toString();
 
                     String cnpjSemFormatacao = cnpjRecebido.replace(".", "");
                     cnpjSemFormatacao = cnpjSemFormatacao.replace("/", "");
@@ -248,12 +244,9 @@ public class EditarPerfilStartupActivity extends AppCompatActivity {
                     } else if (Validator.isCNPJ(cnpjSemFormatacao) ==  false) {
                         cnpj.setError("Insira um CNPJ da válido");
 
-                    } else if (Validator.stringEmpty(metaRecebida)) {
-                        meta.setError("Insira um valor a atingir");
-
                     } else {
 
-                        Startup startup = new Startup(razaoSocialRecebido, nomeFantasiaRecebido, emailRecebido, telefoneRecebido, cepRecebido, ruaRecebida, bairroRecebido,cidadeRecebido, estadoRecebido, cnpjRecebido, metaRecebida);
+                        Startup startup = new Startup(razaoSocialRecebido, nomeFantasiaRecebido, emailRecebido, telefoneRecebido, cepRecebido, ruaRecebida, bairroRecebido,cidadeRecebido, estadoRecebido, cnpjRecebido);
                         startup.salvarStartup(firebaseUser.getUid());
                         Startup startup1 = new Startup(bioRecebida, apresentacaoRecebido, linkRecebido);
                         startup1.salvarBioStartup(firebaseUser.getUid());
@@ -362,5 +355,11 @@ public class EditarPerfilStartupActivity extends AppCompatActivity {
         });
     }
 
- }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(this, BaseFragmentStartup.class));
+        finish();
+    }
+}
 

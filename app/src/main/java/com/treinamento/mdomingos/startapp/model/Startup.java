@@ -40,7 +40,7 @@ public class Startup {
         this.link = link;
     }
 
-    public Startup(String razaoSocial, String nomeFantasia, String email, String telefone, String cep, String rua, String bairro, String cidade, String estado, String cnpj, String meta) {
+    public Startup(String razaoSocial, String nomeFantasia, String email, String telefone, String cep, String rua, String bairro, String cidade, String estado, String cnpj) {
         this.razaoSocial = razaoSocial;
         this.nomeFantasia = nomeFantasia;
         this.email = email;
@@ -51,7 +51,6 @@ public class Startup {
         this.cidade = cidade;
         this.estado = estado;
         this.cnpj = cnpj;
-        this.meta = meta;
     }
 
     public void salvarStartup(String id){
@@ -73,9 +72,11 @@ public class Startup {
         databaseReference.child("Usuarios").child(id).child("detalhe_startup").child("foto_perfil").setValue(imagemPerfil);
     }
 
-    public void salvarProgesso(String id){
+
+    public void salvarMetaProgesso(String id){
         DatabaseReference databaseReference = FirebaseConfig.getFirebase();
-        databaseReference.child("Usuarios").child(id).child("detalhe_startup").child("investido").setValue(investido);
+        databaseReference.child("Usuarios").child(id).child("progresso_startup").child("meta").setValue(meta);
+        databaseReference.child("Usuarios").child(id).child("progresso_startup").child("investido").setValue(investido);
     }
 
     public String getRazaoSocial() {

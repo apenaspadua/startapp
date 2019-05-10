@@ -181,28 +181,6 @@
                     android:inputType="number" />
             </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
-                style="@style/TextInputRegister">
-
-                <ImageView
-                    android:id="@+id/button_help_cadastro_startup_id"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="end"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="15dp"
-                    android:background="@drawable/ic_help"
-                    android:scaleType="fitXY"
-                    android:layout_marginRight="15dp" />
-
-                <EditText
-                    android:id="@+id/objetivo_cadastro_startup_id"
-                    style="@style/EditTextRegister"
-                    android:hint="Objetivo de investimento em R$ *"
-                    android:inputType="number" />
-
-            </android.support.design.widget.TextInputLayout>
-
 
             <RelativeLayout
                 android:id="@+id/botao_terminar_cadastro_startup_id"

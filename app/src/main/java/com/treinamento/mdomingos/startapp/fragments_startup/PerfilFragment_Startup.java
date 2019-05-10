@@ -58,13 +58,11 @@ public class PerfilFragment_Startup extends Fragment {
     private ProgressBar progressBar, progresso;
     private TextView nome,cidade, razao, email, rua, bairro, estado, telefone, bio, editar, apresentacao, link, meta, investido;
     private RelativeLayout atualizar;
-    private EditText insereAtualiza;
+    private EditText insereAtualizaProgresso, insereAtualizaMeta;
     private CircleImageView foto;
     private RelativeLayout editarVideo;
     private FirebaseStorage storage;
-    private int investidoInt;
-    private int metaInt;
-    private int cont;
+    private int investidoInt, metaInt, cont;
     private Handler hdlr = new Handler();
 
     private VideoView videoView;
@@ -108,7 +106,7 @@ public class PerfilFragment_Startup extends Fragment {
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("");
-        View view = inflater.inflate(R.layout.fragment_perfil_startup, container, false);
+        final View view = inflater.inflate(R.layout.fragment_perfil_startup, container, false);
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
@@ -144,16 +142,22 @@ public class PerfilFragment_Startup extends Fragment {
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 View view = LayoutInflater.from(getActivity()).inflate(R.layout.alert_dialog_custom, null);
-                insereAtualiza = view.findViewById(R.id.atualiza_barra_id);
+
+                insereAtualizaMeta = view.findViewById(R.id.objetivo_cadastro_startup_id);
+                insereAtualizaProgresso = view.findViewById(R.id.atualiza_barra_id);
                 builder.setPositiveButton("Atualizar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         progressDialog.setMessage("Atualizando...");
                         progressDialog.show();
-                        investidoInt = Integer.parseInt(insereAtualiza.getText().toString());
+
+                        metaInt = Integer.parseInt(insereAtualizaMeta.getText().toString());
+                        investidoInt = Integer.parseInt(insereAtualizaProgresso.getText().toString());
+
                         Startup startup = new Startup();
+                        startup.setMeta(String.valueOf(metaInt));
                         startup.setInvestido(String.valueOf(investidoInt));
-                        startup.salvarProgesso(user.getUid());
+                        startup.salvarMetaProgesso(user.getUid());
                         Toast.makeText(getActivity(), "Progresso Atualizado", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -175,6 +179,7 @@ public class PerfilFragment_Startup extends Fragment {
             public void onClick(View v) {
                 editar.setTextColor(Color.parseColor("#0289BE"));
                 startActivity(new Intent(getActivity(), EditarPerfilStartupActivity.class));
+                getActivity().finish();
             }
         });
 
@@ -216,17 +221,18 @@ public class PerfilFragment_Startup extends Fragment {
                 bio.setText(startup.getDetalhe_startup().getBiografia());
                 apresentacao.setText(startup.getDetalhe_startup().getApresentacao());
                 link.setText(startup.getDetalhe_startup().getLink());
-                meta.setText("R$ " + startup.getDetalhe_startup().getMeta());
-                metaInt = Integer.parseInt(startup.getDetalhe_startup().getMeta());
-                investido.setText("R$ " + startup.getDetalhe_startup().getInvestido());
-                if (startup.getDetalhe_startup().getInvestido() != null) {
-                    try {
-                        investidoInt = Integer.parseInt(startup.getDetalhe_startup().getInvestido());
-                    } catch(NumberFormatException e) {
-                        investidoInt = 0;
-                    }
-                }
-                loadProgress(investidoInt);
+
+//                 meta.setText("R$ " + startup.getDetalhe_startup().getMeta());
+
+//                investido.setText("R$ " + startup.getDetalhe_startup().getInvestido());
+//                if (startup.getDetalhe_startup().getInvestido() != null) {
+//                    try {
+//                        investidoInt = Integer.parseInt(startup.getDetalhe_startup().getInvestido());
+//                    } catch(NumberFormatException e) {
+//                        investidoInt = 0;
+//                    }
+//                }
+//                loadProgress(investidoInt);
             }
 
             @Override

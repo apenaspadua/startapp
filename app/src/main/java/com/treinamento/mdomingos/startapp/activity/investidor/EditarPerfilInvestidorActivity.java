@@ -394,6 +394,13 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(this, BaseFragmentInvestidor.class));
+        finish();
+    }
 }
 
 

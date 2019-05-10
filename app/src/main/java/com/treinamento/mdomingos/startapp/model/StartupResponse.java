@@ -13,6 +13,7 @@ public class StartupResponse implements Serializable{
     private int perfil;
     private String email;
     private Startup detalhe_startup;
+    private Startup progresso_startup;
 
 
     public StartupResponse() {
@@ -48,5 +49,13 @@ public class StartupResponse implements Serializable{
 
     public void setDetalhe_startup(Startup detalhe_startup) {
         this.detalhe_startup = detalhe_startup;
+    }
+
+    public Startup getProgresso_startup() {
+        return progresso_startup;
+    }
+
+    public void setProgresso_startup(Startup progresso_startup) {
+        this.progresso_startup = progresso_startup;
     }
 }

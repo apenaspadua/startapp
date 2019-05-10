@@ -37,9 +37,32 @@
                 android:text="Atualize o quanto já foi arrecadado e mantenha-o em dia!"
                 android:textSize="16sp"/>
 
+        <android.support.design.widget.TextInputLayout
+            style="@style/TextInputRegister"
+            android:layout_marginTop="80dp">
+
+            <ImageView
+                android:id="@+id/button_help_cadastro_startup_id"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="end"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="15dp"
+                android:background="@drawable/ic_help"
+                android:scaleType="fitXY"
+                android:layout_marginRight="15dp" />
+
+            <EditText
+                android:id="@+id/objetivo_cadastro_startup_id"
+                style="@style/EditTextRegister"
+                android:hint="Objetivo de investimento em R$ *"
+                android:inputType="number" />
+
+        </android.support.design.widget.TextInputLayout>
+
             <android.support.design.widget.TextInputLayout
                 style="@style/TextInputRegister"
-                android:layout_marginTop="80dp">
+                android:layout_marginTop="170dp">
                 <EditText
                     android:hint="R$ Investido"
                     android:id="@+id/atualiza_barra_id"
