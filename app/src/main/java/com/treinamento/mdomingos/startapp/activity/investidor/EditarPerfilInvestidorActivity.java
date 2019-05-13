@@ -357,6 +357,7 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
 
                     progressBar.setVisibility(View.INVISIBLE);
                     Toast.makeText(EditarPerfilInvestidorActivity.this, "Imagem alterada com sucesso", Toast.LENGTH_SHORT).show();
+                    finish();
 
                 }
             }).addOnFailureListener(new OnFailureListener() {

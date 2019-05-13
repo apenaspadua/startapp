@@ -39,6 +39,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.treinamento.mdomingos.startapp.R;
+import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentStartup;
 import com.treinamento.mdomingos.startapp.activity.login.LoginActivity;
 import com.treinamento.mdomingos.startapp.activity.startup.EditarPerfilStartupActivity;
 import com.treinamento.mdomingos.startapp.activity.startup.EnviaArquivosActivity;
@@ -98,6 +99,7 @@ public class PerfilFragment_Startup extends Fragment {
         } else {
             if (item.getItemId() == R.id.editar_perfil_item_dropdown_menu_id){
                 startActivity(new Intent(getActivity(), EditarPerfilStartupActivity.class));
+                getActivity().finish();
             }
         }
         return super.onOptionsItemSelected(item);
@@ -146,10 +148,21 @@ public class PerfilFragment_Startup extends Fragment {
                 View view = LayoutInflater.from(getActivity()).inflate(R.layout.alert_dialog_custom, null);
 
                 insereAtualizaMeta = view.findViewById(R.id.objetivo_cadastro_startup_id);
-                insereAtualizaMeta.setText("0");
                 insereAtualizaProgresso = view.findViewById(R.id.atualiza_barra_id);
-                insereAtualizaProgresso.setText("0");
 
+                final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+                databaseReference.child("Usuarios").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+                   @Override
+                   public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                       StartupResponse startup = dataSnapshot.getValue(StartupResponse.class);
+                       insereAtualizaMeta.setText(startup.getProgresso_startup().getMeta());
+                       insereAtualizaProgresso.setText(startup.getProgresso_startup().getInvestido());
+                   }
+                   @Override
+                   public void onCancelled(@NonNull DatabaseError databaseError) {
+                        return;
+                   }
+                });
                 builder.setPositiveButton("Atualizar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

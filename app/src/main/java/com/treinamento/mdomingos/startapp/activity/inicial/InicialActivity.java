@@ -54,45 +54,6 @@ public class InicialActivity extends AppCompatActivity {
         firebaseUser = firebaseAuth.getCurrentUser();
 
         //functions
-//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//        if (user != null) {
-//            DatabaseReference databaseReference = FirebaseConfig.getFirebase();
-//            databaseReference.child("Usuarios").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//
-//                    Usuarios usuario = dataSnapshot.getValue(Usuarios.class);
-//
-//                    if (usuario.getPerfil() == 1) {
-//                        if (usuario.getDetalhes_completo() == 0) {
-//                            Intent intent = new Intent(InicialActivity.this, SlidesPosCadastroActivity.class);
-//                            startActivity(intent);
-//                            finish();
-//                        } else {
-//                            Intent intent = new Intent(InicialActivity.this, BaseFragmentInvestidor.class);
-//                            startActivity(intent);
-//                            finish();
-//                        }
-//                    } else if (usuario.getPerfil() == 2) {
-//                        if (usuario.getDetalhes_completo() == 0) {
-//                            Intent intent = new Intent(InicialActivity.this, SlidesPosCadastroActivity.class);
-//                            startActivity(intent);
-//                            finish();
-//                        } else {
-//                            Intent intent = new Intent(InicialActivity.this, BaseFragmentStartup.class);
-//                            startActivity(intent);
-//                            finish();
-//                        }
-//                    }
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                }
-//            });
-
-//        } else {
 
             botaoCadastrar.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -102,6 +63,7 @@ public class InicialActivity extends AppCompatActivity {
                         progressBar.setVisibility(View.VISIBLE);
                         Intent intent = new Intent(InicialActivity.this, CadastroLoginActivity.class);
                         startActivity(intent);
+                        finish();
                     } else {
                         Toast.makeText(InicialActivity.this, "Sem conexão com a internet", Toast.LENGTH_SHORT).show();
                     }
@@ -116,6 +78,7 @@ public class InicialActivity extends AppCompatActivity {
                         jaPossuoConta.setTextColor(Color.parseColor("#0289BE"));
                         Intent intent = new Intent(InicialActivity.this, LoginActivity.class);
                         startActivity(intent);
+                        finish();
                     } else {
                         Toast.makeText(InicialActivity.this, "Sem conexão com a internet", Toast.LENGTH_SHORT).show();
                     }

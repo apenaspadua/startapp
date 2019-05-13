@@ -1,15 +1,9 @@
 package com.treinamento.mdomingos.startapp.activity.others;
 
 import android.content.Intent;
-import android.os.Handler;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.WindowManager;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.VideoView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,11 +18,9 @@ import com.treinamento.mdomingos.startapp.activity.inicial.InicialActivity;
 import com.treinamento.mdomingos.startapp.model.Usuarios;
 import com.treinamento.mdomingos.startapp.utils.FirebaseConfig;
 
-
 public class SplashScrean extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,15 +29,6 @@ public class SplashScrean extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
-
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                startActivity(new Intent(getBaseContext(), InicialActivity.class));
-//                finish();
-//            }
-//        }, 5000);
 
         //functions
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -56,27 +39,30 @@ public class SplashScrean extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                     Usuarios usuario = dataSnapshot.getValue(Usuarios.class);
-
-                    if (usuario.getPerfil() == 1) {
-                        if (usuario.getDetalhes_completo() == 0) {
-                            Intent intent = new Intent(SplashScrean.this, SlidesPosCadastroActivity.class);
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            Intent intent = new Intent(SplashScrean.this, BaseFragmentInvestidor.class);
-                            startActivity(intent);
-                            finish();
+                    if(usuario != null){
+                        if (usuario.getPerfil() == 1) {
+                            if (usuario.getDetalhes_completo() == 0) {
+                                Intent intent = new Intent(SplashScrean.this, SlidesPosCadastroActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Intent intent = new Intent(SplashScrean.this, BaseFragmentInvestidor.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        } else if (usuario.getPerfil() == 2) {
+                            if (usuario.getDetalhes_completo() == 0) {
+                                Intent intent = new Intent(SplashScrean.this, SlidesPosCadastroActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Intent intent = new Intent(SplashScrean.this, BaseFragmentStartup.class);
+                                startActivity(intent);
+                                finish();
+                            }
                         }
-                    } else if (usuario.getPerfil() == 2) {
-                        if (usuario.getDetalhes_completo() == 0) {
-                            Intent intent = new Intent(SplashScrean.this, SlidesPosCadastroActivity.class);
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            Intent intent = new Intent(SplashScrean.this, BaseFragmentStartup.class);
-                            startActivity(intent);
-                            finish();
-                        }
+                    } else {
+                       return;
                     }
                 }
 

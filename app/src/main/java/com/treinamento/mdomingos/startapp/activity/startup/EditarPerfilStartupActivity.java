@@ -318,6 +318,7 @@ public class EditarPerfilStartupActivity extends AppCompatActivity {
 
                     progressBar.setVisibility(View.INVISIBLE);
                     Toast.makeText(EditarPerfilStartupActivity.this, "Imagem alterada com sucesso", Toast.LENGTH_SHORT).show();
+                    finish();
 
                 }
             }).addOnFailureListener(new OnFailureListener() {

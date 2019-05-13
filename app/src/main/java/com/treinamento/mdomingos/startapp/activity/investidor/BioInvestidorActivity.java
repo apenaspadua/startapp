@@ -61,7 +61,7 @@ public class BioInvestidorActivity extends AppCompatActivity {
                     } else {
                         Investidor investidor = new Investidor(bioRecebida, apresentacaoRecebida);
                         investidor.salvarBioInvestidor(firebaseUser.getUid());
-                        startActivity(new Intent(BioInvestidorActivity.this, SlidesPosCadastroActivity.class));
+                        startActivity(new Intent(BioInvestidorActivity.this,  BaseFragmentInvestidor.class));
                         finish();
                     }
                 } else {

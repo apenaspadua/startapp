@@ -36,6 +36,7 @@ import com.treinamento.mdomingos.startapp.R;
 
 import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentInvestidor;
 import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentStartup;
+import com.treinamento.mdomingos.startapp.activity.inicial.InicialActivity;
 import com.treinamento.mdomingos.startapp.activity.investidor.BioInvestidorActivity;
 import com.treinamento.mdomingos.startapp.activity.investidor.CadastroInvestidorActivity;
 import com.treinamento.mdomingos.startapp.activity.others.SlidesPosCadastroActivity;
@@ -76,102 +77,102 @@ public class LoginActivity extends AppCompatActivity {
         botaoLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onResume();
+            onResume();
 
-                final String email = usernane.getText().toString();
-                final String senha = passowrd.getText().toString();
+            final String email = usernane.getText().toString();
+            final String senha = passowrd.getText().toString();
 
-                if(FirebaseConfig.firebaseConection()) {
-                    if (Validator.stringEmpty(email)) {
-                        usernane.setError("Insira seu email");
-                        onResume();
+            if(FirebaseConfig.firebaseConection()) {
+                if (Validator.stringEmpty(email)) {
+                    usernane.setError("Insira seu email");
+                    onResume();
 
-                    } else if (Validator.stringEmpty(senha)) {
-                        passowrd.setError("Insira sua senha");
-                        onResume();
+                } else if (Validator.stringEmpty(senha)) {
+                    passowrd.setError("Insira sua senha");
+                    onResume();
 
-                    } else {
+                } else {
 
-                        progressDialog.setMessage("Logando...");
-                        progressDialog.show();
+                    progressDialog.setMessage("Logando...");
+                    progressDialog.show();
 
-                        firebaseAuth.signInWithEmailAndPassword(email, senha).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    firebaseUser = firebaseAuth.getCurrentUser();
-                                    if (firebaseUser != null && firebaseUser.isEmailVerified()) {
+                    firebaseAuth.signInWithEmailAndPassword(email, senha).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            firebaseUser = firebaseAuth.getCurrentUser();
+                            if (firebaseUser != null && firebaseUser.isEmailVerified()) {
 
-                                        DatabaseReference databaseReference = FirebaseConfig.getFirebase();
-                                        databaseReference.child("Usuarios").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                DatabaseReference databaseReference = FirebaseConfig.getFirebase();
+                                databaseReference.child("Usuarios").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                                Usuarios usuario =  dataSnapshot.getValue(Usuarios.class);
+                                        Usuarios usuario =  dataSnapshot.getValue(Usuarios.class);
 
-                                                if(usuario.getPerfil() == 1){
-                                                    if((usuario.getDetalhes_completo() == 0) && usuario.getBio_completa() == 0 ) {
-                                                        Intent intent = new Intent(LoginActivity.this, SlidesPosCadastroActivity.class);
-                                                        startActivity(intent);
-                                                        progressDialog.dismiss();
-                                                        finish();
-                                                    } else {
-                                                        Intent intent = new Intent(LoginActivity.this, BaseFragmentInvestidor.class);
-                                                        startActivity(intent);
-                                                        progressDialog.dismiss();
-                                                        finish();
-                                                    }
-                                                } else if (usuario.getPerfil() == 2){
-                                                    if((usuario.getDetalhes_completo() == 0) && (usuario.getBio_completa() == 0) ) {
-                                                        Intent intent = new Intent(LoginActivity.this, SlidesPosCadastroActivity.class);
-                                                        startActivity(intent);
-                                                        progressDialog.dismiss();
-                                                        finish();
-                                                    } else {
-                                                        Intent intent = new Intent(LoginActivity.this, BaseFragmentStartup.class);
-                                                        startActivity(intent);
-                                                        progressDialog.dismiss();
-                                                        finish();
-                                                    }
-                                                }
-                                                else {
-
-                                                    new AlertDialog.Builder(LoginActivity.this).setTitle("Alerta").
-                                                            setMessage("Sem perfil.").setPositiveButton("Entendi", new DialogInterface.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(DialogInterface dialogInterface, int i) {
-                                                            progressDialog.dismiss();
-                                                        }
-                                                    }).show();
-                                                }
-
-                                            }
-
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                            }
-                                        });
-
-                                    } else {
-                                        new AlertDialog.Builder(LoginActivity.this).setTitle("Você ainda não validou sua conta").
-                                                setMessage("Vá ao seu email para realizar a confirmação.").setPositiveButton("Entendi", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                        if(usuario.getPerfil() == 1){
+                                            if((usuario.getDetalhes_completo() == 0) && usuario.getBio_completa() == 0 ) {
+                                                Intent intent = new Intent(LoginActivity.this, SlidesPosCadastroActivity.class);
+                                                startActivity(intent);
                                                 progressDialog.dismiss();
+                                                finish();
+                                            } else {
+                                                Intent intent = new Intent(LoginActivity.this, BaseFragmentInvestidor.class);
+                                                startActivity(intent);
+                                                progressDialog.dismiss();
+                                                finish();
                                             }
-                                        }).show();
-                                    }
+                                        } else if (usuario.getPerfil() == 2){
+                                                if((usuario.getDetalhes_completo() == 0) && (usuario.getBio_completa() == 0) ) {
+                                                    Intent intent = new Intent(LoginActivity.this, SlidesPosCadastroActivity.class);
+                                                    startActivity(intent);
+                                                    progressDialog.dismiss();
+                                                    finish();
+                                                } else {
+                                                    Intent intent = new Intent(LoginActivity.this, BaseFragmentStartup.class);
+                                                    startActivity(intent);
+                                                    progressDialog.dismiss();
+                                                    finish();
+                                                }
+                                            }
+                                            else {
+
+                                                new AlertDialog.Builder(LoginActivity.this).setTitle("Alerta").
+                                                        setMessage("Sem perfil.").setPositiveButton("Entendi", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                                        progressDialog.dismiss();
+                                                    }
+                                                }).show();
+                                            }
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                        }
+                                    });
+
                                 } else {
-                                    Log.i("userLogado", "Falha ao Logar!!!");
-                                    new AlertDialog.Builder(LoginActivity.this).setTitle("Falha ao Logar").
-                                            setMessage("Usuário ou senha incorretos. Se não verifique sua conexão. ").setPositiveButton("Entendi", new DialogInterface.OnClickListener() {
+                                    new AlertDialog.Builder(LoginActivity.this).setTitle("Você ainda não validou sua conta").
+                                            setMessage("Vá ao seu email para realizar a confirmação.").setPositiveButton("Entendi", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int i) {
                                             progressDialog.dismiss();
                                         }
                                     }).show();
                                 }
+                            } else {
+                                Log.i("userLogado", "Falha ao Logar!!!");
+                                new AlertDialog.Builder(LoginActivity.this).setTitle("Falha ao Logar").
+                                        setMessage("Usuário ou senha incorretos. Se não verifique sua conexão. ").setPositiveButton("Entendi", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        progressDialog.dismiss();
+                                    }
+                                }).show();
+                            }
 
                            }
 
@@ -185,10 +186,8 @@ public class LoginActivity extends AppCompatActivity {
                     Log.i("sem internet", "sem conexao");
                     Toast.makeText(LoginActivity.this, "Sem conexão com a internet", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
-
         botaoFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -215,24 +214,24 @@ public class LoginActivity extends AppCompatActivity {
                     alerta.setPositiveButton(getResources().getString(R.string.alertSim), new DialogInterface.OnClickListener(){
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            usernane.setEnabled(false);
-                            progressBar.setVisibility(View.VISIBLE);
-                            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-                            firebaseAuth.sendPasswordResetEmail(usernane.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        Toast.makeText(LoginActivity.this, "Email de redefinição enviado", Toast.LENGTH_SHORT).show();
-                                        progressBar.setVisibility(View.GONE);
-                                        usernane.setEnabled(true);
+                        usernane.setEnabled(false);
+                        progressBar.setVisibility(View.VISIBLE);
+                        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                        firebaseAuth.sendPasswordResetEmail(usernane.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(LoginActivity.this, "Email de redefinição enviado", Toast.LENGTH_SHORT).show();
+                                progressBar.setVisibility(View.GONE);
+                                usernane.setEnabled(true);
 
-                                        onResume();
-                                    } else {
-                                        Toast.makeText(LoginActivity.this, "Falha na solicitação deste email", Toast.LENGTH_SHORT).show();
-                                        progressBar.setVisibility(View.GONE);
-                                        usernane.setEnabled(true);
-                                        onResume();
-                                    }
+                                onResume();
+                            } else {
+                                Toast.makeText(LoginActivity.this, "Falha na solicitação deste email", Toast.LENGTH_SHORT).show();
+                                progressBar.setVisibility(View.GONE);
+                                usernane.setEnabled(true);
+                                onResume();
+                            }
                                 }
                             });
                         }
@@ -272,6 +271,12 @@ public class LoginActivity extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
         botaoTextEsqueceuSenha.setTextColor(Color.parseColor("#A7A7A7"));
         botaoCadastrese.setTextColor(Color.parseColor("#A7A7A7"));
+    }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(this, InicialActivity.class));
+        finish();
     }
 }
