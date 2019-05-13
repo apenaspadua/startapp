@@ -9,9 +9,9 @@
     <application
         android:name=".utils.FirebaseConfig"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_logo_startaap"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_logo_startaap"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activity.investidor.PerfilVisitadoInvestidorActivity"></activity>
@@ -24,14 +24,14 @@
         <activity android:name=".activity.investidor.EditarPerfilInvestidorActivity" />
         <activity android:name=".activity.startup.CadastroStartupActivity" />
         <activity android:name=".activity.investidor.CadastroInvestidorActivity" />
-        <activity android:name=".activity.others.SplashScrean" />
+        <activity android:name=".activity.inicial.InicialActivity" />
         <activity android:name=".activity.home.BaseFragmentInvestidor" />
         <activity android:name=".activity.others.EnviandoEmailActivity" />
         <activity android:name=".activity.others.SlidesPosCadastroActivity" />
         <activity android:name=".activity.login.LoginActivity" />
         <activity android:name=".activity.others.TermosActivity" />
         <activity android:name=".activity.investidor.BioInvestidorActivity" />
-        <activity android:name=".activity.inicial.InicialActivity">
+        <activity android:name=".activity.others.SplashScrean">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
