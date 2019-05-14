@@ -1,6 +1,7 @@
 package com.treinamento.mdomingos.startapp.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.treinamento.mdomingos.startapp.R;
+import com.treinamento.mdomingos.startapp.chat.MensagemActivity;
 import com.treinamento.mdomingos.startapp.model.Usuarios;
 
 import java.util.List;
@@ -34,7 +36,7 @@ public class UserAdapterContacts extends RecyclerView.Adapter<UserAdapterContact
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        Usuarios usuarios = mUsers.get(i);
+        final Usuarios usuarios = mUsers.get(i);
         viewHolder.username.setText(usuarios.getNome());
         if(usuarios.getPerfil() == 1) {
 
@@ -53,9 +55,20 @@ public class UserAdapterContacts extends RecyclerView.Adapter<UserAdapterContact
             if (usuarios.getFoto_perfil() == null) {
                 viewHolder.profile_image.setImageResource(R.drawable.startup_icon2);
             } else {
-                Glide.with(mContext).load(usuarios.getFoto_perfil()).into(viewHolder.profile_image);
+                  Glide.with(mContext).load(usuarios.getFoto_perfil()).into(viewHolder.profile_image);
             }
+
         }
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(mContext, MensagemActivity.class);
+                intent.putExtra("userid", usuarios.getId());
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override
