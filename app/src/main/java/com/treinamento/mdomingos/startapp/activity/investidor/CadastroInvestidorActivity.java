@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.treinamento.mdomingos.startapp.R;
 import com.treinamento.mdomingos.startapp.model.CEP;
 import com.treinamento.mdomingos.startapp.model.Investidor;
+import com.treinamento.mdomingos.startapp.model.Usuarios;
 import com.treinamento.mdomingos.startapp.utils.FirebaseConfig;
 import com.treinamento.mdomingos.startapp.utils.HttpService;
 import com.treinamento.mdomingos.startapp.utils.MaskFormatter;
@@ -190,10 +191,12 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
                                 return;
 
                             } else {
-
+                                progressDialog.setMessage("Guardando dados...");
                                 Investidor investidor = new Investidor(nomeRecebido, emailRecebido, telefoneRecebido, empresaRecebida, dataRecebida, cepRecebido, ruaRecebida, bairroRecebido, cidadeRecebido, estadoRecebido, null, cpfRecebido);
                                 investidor.salvarInvestidor(firebaseUser.getUid());
-                                progressDialog.setMessage("Guardando dados...");
+                                Usuarios usuarios = new Usuarios();
+                                usuarios.setNome(nomeRecebido);
+                                usuarios.salvarMais(firebaseUser.getUid());
                                 progressDialog.show();
                                 Intent intent = new Intent(CadastroInvestidorActivity.this, BioInvestidorActivity.class);
                                 startActivity(intent);
@@ -204,9 +207,12 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
                             if (Validator.isCNPJ(cnpjSemFormatacao) == false) {
                                 cnpj.setError("Insira um CNPJ válido");
                             } else {
+                                progressDialog.setMessage("Guardando dados...");
                                 Investidor investidor = new Investidor(nomeRecebido, emailRecebido, telefoneRecebido, empresaRecebida, dataRecebida, cepRecebido, ruaRecebida, bairroRecebido, cidadeRecebido, estadoRecebido, cnpjRecebido, null);
                                 investidor.salvarInvestidor(firebaseUser.getUid());
-                                progressDialog.setMessage("Guardando dados...");
+                                Usuarios usuarios = new Usuarios();
+                                usuarios.setNome(nomeRecebido);
+                                usuarios.salvarMais(firebaseUser.getUid());
                                 progressDialog.show();
                                 Intent intent = new Intent(CadastroInvestidorActivity.this, BioInvestidorActivity.class);
                                 startActivity(intent);

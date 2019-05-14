@@ -67,10 +67,10 @@ public class Startup {
         databaseReference.child("Usuarios").child(id).child("bio_completa").setValue(1);
     }
 
-    public void salvarFotoPerfil(String id){
-        DatabaseReference databaseReference = FirebaseConfig.getFirebase();
-        databaseReference.child("Usuarios").child(id).child("detalhe_startup").child("foto_perfil").setValue(imagemPerfil);
-    }
+//    public void salvarFotoPerfil(String id){
+//        DatabaseReference databaseReference = FirebaseConfig.getFirebase();
+//        databaseReference.child("Usuarios").child(id).child("detalhe_startup").child("foto_perfil").setValue(imagemPerfil);
+//    }
 
 
     public void salvarMetaProgesso(String id){

@@ -41,6 +41,7 @@ import com.treinamento.mdomingos.startapp.model.CEP;
 import com.treinamento.mdomingos.startapp.model.Publicacao;
 import com.treinamento.mdomingos.startapp.model.Startup;
 import com.treinamento.mdomingos.startapp.model.StartupResponse;
+import com.treinamento.mdomingos.startapp.model.Usuarios;
 import com.treinamento.mdomingos.startapp.utils.FirebaseConfig;
 import com.treinamento.mdomingos.startapp.utils.HttpService;
 import com.treinamento.mdomingos.startapp.utils.MaskFormatter;
@@ -308,9 +309,9 @@ public class EditarPerfilStartupActivity extends AppCompatActivity {
                     Uri downloadUrl = urlTask.getResult();
                     final String downUrl = String.valueOf(downloadUrl);
 
-                    Startup startup = new Startup();
-                    startup.setImagemPerfil(downUrl);
-                    startup.salvarFotoPerfil(firebaseUser.getUid());
+                    Usuarios usuarios = new Usuarios();
+                    usuarios.setFoto_perfil(downUrl);
+                    usuarios.salvarFotoPerfil(firebaseUser.getUid());
 
                     Publicacao publicacao = new Publicacao();
                     publicacao.setFotoPerfil(downUrl);

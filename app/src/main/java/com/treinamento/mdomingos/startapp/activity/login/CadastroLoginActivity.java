@@ -147,7 +147,6 @@ public class CadastroLoginActivity extends AppCompatActivity {
                                               usuario.setEmail(emailRecebido);
                                               usuario.salvar();
 
-
                                         Intent intent = new Intent(CadastroLoginActivity.this, EnviandoEmailActivity.class);
                                         startActivity(intent);
                                         finish();

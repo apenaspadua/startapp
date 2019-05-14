@@ -42,6 +42,7 @@ import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentInvestidor;
 import com.treinamento.mdomingos.startapp.model.CEP;
 import com.treinamento.mdomingos.startapp.model.Investidor;
 import com.treinamento.mdomingos.startapp.model.InvestidorResponse;
+import com.treinamento.mdomingos.startapp.model.Usuarios;
 import com.treinamento.mdomingos.startapp.utils.FirebaseConfig;
 import com.treinamento.mdomingos.startapp.utils.HttpService;
 import com.treinamento.mdomingos.startapp.utils.MaskFormatter;
@@ -351,9 +352,9 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
                     Uri downloadUrl = urlTask.getResult();
                     final String downUrl = String.valueOf(downloadUrl);
 
-                    Investidor investidor = new Investidor();
-                    investidor.setImagemPerfil(downUrl);
-                    investidor.salvarFotoPerfil(firebaseUser.getUid());
+                    Usuarios usuarios = new Usuarios();
+                    usuarios.setFoto_perfil(downUrl);
+                    usuarios.salvarFotoPerfil(firebaseUser.getUid());
 
                     progressBar.setVisibility(View.INVISIBLE);
                     Toast.makeText(EditarPerfilInvestidorActivity.this, "Imagem alterada com sucesso", Toast.LENGTH_SHORT).show();

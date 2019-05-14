@@ -12,11 +12,12 @@ import com.treinamento.mdomingos.startapp.utils.FirebaseConfig;
 public class Usuarios {
 
     private String id;
+    private String nome;
+    private String foto_perfil;
     private String email;
     private int perfil;
     private int detalhes_completo;
     private int bio_completa;
-
 
     public Usuarios() {
     }
@@ -26,12 +27,36 @@ public class Usuarios {
         databaseReference.child("Usuarios").child(getId()).setValue(this);
     }
 
+    public void salvarMais(String id){
+        DatabaseReference databaseReference = FirebaseConfig.getFirebase();
+        databaseReference.child("Usuarios").child(id).child("nome").setValue(nome);
+    }
+
+    public void salvarFotoPerfil(String id){
+        DatabaseReference databaseReference = FirebaseConfig.getFirebase();
+        databaseReference.child("Usuarios").child(id).child("foto_perfil").setValue(foto_perfil);
+    }
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getFoto_perfil() {
+        return foto_perfil;
+    }
+
+    public void setFoto_perfil(String foto_perfil) {
+        this.foto_perfil = foto_perfil;
     }
 
     public String getEmail() {
