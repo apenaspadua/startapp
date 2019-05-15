@@ -9,12 +9,13 @@
     <application
         android:name=".utils.FirebaseConfig"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_logo_startaap"
+        android:icon="@mipmap/ic_logo_app"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_logo_startaap"
+        android:roundIcon="@mipmap/ic_logo_app"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".chat.ContatosChatActivity"></activity>
+        <activity android:name=".chat.MensagemActivity"></activity>
+        <activity android:name=".chat.ContatosChatActivity" />
         <activity android:name=".chat.ChatActivity" />
         <activity android:name=".activity.investidor.PerfilVisitadoInvestidorActivity" />
         <activity android:name=".activity.startup.PerfilVisitadoStartupActivity" />

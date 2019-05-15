@@ -149,7 +149,7 @@ public class BaseFragmentStartup extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(BaseFragmentStartup.this, ChatActivity.class));
-                finish();
+
             }
         });
     }

@@ -12,13 +12,30 @@
         android:id="@+id/toolbar_chat"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:background="@color/Cadastrese"
+        android:background="@color/marine"
         app:layout_collapseMode="pin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_scrollFlags="scroll|enterAlways">
-        <!--app:theme="@style/Toolbar">-->
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/lato_light"
+            android:text="Minhas conversas"
+            android:textColor="@color/colorWhite"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/vp_pagina_startup_id"
+            app:layout_constraintStart_toEndOf="@+id/imageview_home_startup_id"
+            app:layout_constraintTop_toTopOf="@+id/toolbar_startup" />
     </android.support.v7.widget.Toolbar>
 
     <android.support.v7.widget.RecyclerView
@@ -38,7 +55,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginBottom="28dp"
-        android:backgroundTint="@color/Twitter"
+        android:backgroundTint="@color/marine"
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
