@@ -51,11 +51,11 @@ public class MessageAdapter  extends RecyclerView.Adapter<MessageAdapter.ViewHol
 
         Chat chat = mChat.get(i);
         viewHolder.show_message.setText(chat.getMessage());
-
-//        if(imageUrl.equals("default")){
-//            viewHolder.profile_image.setImageResource(R.drawable.startup_icon2);
+//
+//        if(imageUrl.equals("")){
+//           viewHolder.profile_image.setImageResource(R.drawable.startup_icon2);
 //        } else {
-////            Glide.with(mContext).load(imageUrl).into(viewHolder.profile_image);
+//            Glide.with(mContext).load(imageUrl).into(viewHolder.profile_image);
 //        }
 
     }

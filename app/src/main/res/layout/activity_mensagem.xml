@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#e6e6e6"
+    android:background="@color/colorWhite"
     android:layout_height="match_parent"
     tools:context=".activity.chat.ChatActivity">
 
@@ -66,7 +66,10 @@
         android:id="@+id/bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="7dp"
+        android:padding="5dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
         android:background="@drawable/button_custom_facebook"
         android:layout_alignParentBottom="true">
 
@@ -74,20 +77,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/text_send"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:background="@color/colorTranspatenteLight"
             android:hint="Escreva uma mensagem..."
             android:layout_toLeftOf="@+id/btn_send"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="15dp" />
 
         <ImageButton
+            android:backgroundTint="@color/marine"
             android:background="@drawable/ic_send"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:id="@+id/btn_send"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"/>
 
     </RelativeLayout>
 
