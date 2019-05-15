@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.treinamento.mdomingos.startapp.R;
-import com.treinamento.mdomingos.startapp.chat.MensagemActivity;
+import com.treinamento.mdomingos.startapp.activity.chat.MensagemActivity;
 import com.treinamento.mdomingos.startapp.model.Usuarios;
 
 import java.util.List;
@@ -38,6 +38,7 @@ public class UserAdapterContacts extends RecyclerView.Adapter<UserAdapterContact
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         final Usuarios usuarios = mUsers.get(i);
         viewHolder.username.setText(usuarios.getNome());
+
         if(usuarios.getPerfil() == 1) {
 
             viewHolder.identi.setText("Investidor");

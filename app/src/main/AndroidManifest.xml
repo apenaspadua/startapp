@@ -14,9 +14,9 @@
         android:roundIcon="@mipmap/ic_logo_app"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".chat.MensagemActivity"></activity>
-        <activity android:name=".chat.ContatosChatActivity" />
-        <activity android:name=".chat.ChatActivity" />
+        <activity android:name=".activity.chat.MensagemActivity"></activity>
+        <activity android:name=".activity.chat.ContatosChatActivity" />
+        <activity android:name=".activity.chat.ChatActivity" />
         <activity android:name=".activity.investidor.PerfilVisitadoInvestidorActivity" />
         <activity android:name=".activity.startup.PerfilVisitadoStartupActivity" />
         <activity android:name=".activity.startup.EnviaArquivosActivity" />

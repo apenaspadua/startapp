@@ -35,7 +35,8 @@
             android:text="identifier"
             android:id="@+id/identific_chat_list"
             android:textSize="14dp"
-            android:fontFamily="@font/lato_bold"
+            android:textColor="@color/marine"
+            android:fontFamily="@font/lato_bolditalic"
             />
 
     </LinearLayout>

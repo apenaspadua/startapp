@@ -1,4 +1,4 @@
-package com.treinamento.mdomingos.startapp.chat;
+package com.treinamento.mdomingos.startapp.activity.chat;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.treinamento.mdomingos.startapp.R;
-import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentStartup;
 
 public class ChatActivity extends AppCompatActivity {
 
