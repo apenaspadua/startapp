@@ -116,7 +116,7 @@
                 android:hint="Escreva aqui"
                 android:fontFamily="@font/lato_regular"
                 android:textSize="14dp"
-                android:background="@drawable/button_custom_facebook"
+                android:background="@drawable/button_custom_twitter"
                 android:minLines="100"
                 android:maxLines="100"
                 android:scrollbars="vertical"

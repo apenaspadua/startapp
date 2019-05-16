@@ -64,7 +64,6 @@ public class UserAdapterContacts extends RecyclerView.Adapter<UserAdapterContact
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(mContext, MensagemActivity.class);
                 intent.putExtra("userid", usuarios.getId());
                 mContext.startActivity(intent);

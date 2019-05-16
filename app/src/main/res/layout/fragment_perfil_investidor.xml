@@ -208,7 +208,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_custom_facebook"
+                android:background="@drawable/button_custom_twitter"
                 android:orientation="vertical">
 
                 <TextView
@@ -247,7 +247,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_custom_facebook"
+                android:background="@drawable/button_custom_twitter"
                 android:orientation="vertical">
 
                 <TextView
@@ -297,7 +297,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_custom_facebook"
+                android:background="@drawable/button_custom_twitter"
                 android:orientation="vertical">
 
                 <TextView

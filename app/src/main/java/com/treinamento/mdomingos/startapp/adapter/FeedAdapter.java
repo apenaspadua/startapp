@@ -58,12 +58,12 @@ public class FeedAdapter extends RecyclerView.ViewHolder {
         botaoSaberMais.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(firebaseUser.getUid() != id){
+                if(firebaseUser.getUid().equals(id)){
+                    Toast.makeText(context, "Para visitar vá até o seu perfil", Toast.LENGTH_SHORT).show();
+                } else {
                     Intent intent = new Intent(context, PerfilVisitadoStartupActivity.class);
                     intent.putExtra("publicacoes",  id);
                     context.startActivity(intent);
-                } else {
-                    Toast.makeText(context, "Para visitar vá até o seu perfil", Toast.LENGTH_SHORT).show();
                 }
             }
         });

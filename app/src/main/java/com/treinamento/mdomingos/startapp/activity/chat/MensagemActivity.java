@@ -54,7 +54,6 @@ public class MensagemActivity extends AppCompatActivity {
 
     ValueEventListener seenListner;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,7 +113,7 @@ public class MensagemActivity extends AppCompatActivity {
                     if (usuarios.getFoto_perfil() == null) {
                         imagemPerfil.setImageResource(R.drawable.investidor_icon2);
                     } else {
-                        Glide.with(MensagemActivity.this).load(usuarios.getFoto_perfil()).into(imagemPerfil);
+                        Glide.with(getApplicationContext()).load(usuarios.getFoto_perfil()).into(imagemPerfil);
                     }
 
                 } else if (usuarios.getPerfil() == 2) {
@@ -122,7 +121,7 @@ public class MensagemActivity extends AppCompatActivity {
                     if (usuarios.getFoto_perfil() == null) {
                         imagemPerfil.setImageResource(R.drawable.startup_icon2);
                     } else {
-                        Glide.with(MensagemActivity.this).load(usuarios.getFoto_perfil()).into(imagemPerfil);
+                        Glide.with(getApplicationContext()).load(usuarios.getFoto_perfil()).into(imagemPerfil);
                     }
                 }
 
@@ -138,6 +137,8 @@ public class MensagemActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        seenMessage(userid);
     }
 
 
@@ -153,7 +154,7 @@ public class MensagemActivity extends AppCompatActivity {
 
                     if(chat.getReceiver().equals(user.getUid()) && chat.getSender().equals(userid)) {
                         HashMap<String, Object> hashMap = new HashMap<>();
-                        hashMap.put("Não visto", true);
+                        hashMap.put("issen", true);
                         snapshot.getRef().updateChildren(hashMap);
                     }
 
@@ -177,7 +178,7 @@ public class MensagemActivity extends AppCompatActivity {
         hashMap.put("sender", sender);
         hashMap.put("receiver", receiver);
         hashMap.put("message", message);
-        hashMap.put("nao visto", false);
+        hashMap.put("issen", true);
 
 
         reference.child("Chats").push().setValue(hashMap);

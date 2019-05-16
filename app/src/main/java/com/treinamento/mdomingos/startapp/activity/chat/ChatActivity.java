@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -113,7 +114,7 @@ public class ChatActivity extends AppCompatActivity {
                         }
                     }
                 }
-
+                    Glide.with(getApplicationContext());
                     userAdapterContacts = new UserAdapterContacts(ChatActivity.this, usuariosList);
                     recyclerView.setAdapter(userAdapterContacts);
             }

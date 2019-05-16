@@ -51,12 +51,16 @@ public class MessageAdapter  extends RecyclerView.Adapter<MessageAdapter.ViewHol
 
         Chat chat = mChat.get(i);
         viewHolder.show_message.setText(chat.getMessage());
-//
-//        if(imageUrl.equals("")){
-//           viewHolder.profile_image.setImageResource(R.drawable.startup_icon2);
-//        } else {
-//            Glide.with(mContext).load(imageUrl).into(viewHolder.profile_image);
-//        }
+
+        if(i == mChat.size() - 1){
+            if(chat.getIseen()){
+                viewHolder.txt_seen.setText("Visto");
+            } else {
+                viewHolder.txt_seen.setText("Não vizualizado");
+            }
+        } else{
+            viewHolder.txt_seen.setVisibility(View.GONE);
+        }
 
     }
 
@@ -68,7 +72,7 @@ public class MessageAdapter  extends RecyclerView.Adapter<MessageAdapter.ViewHol
 
     public class ViewHolder extends  RecyclerView.ViewHolder{
 
-        public TextView show_message;
+        public TextView show_message, txt_seen;
         public ImageView profile_image;
 
         public ViewHolder(View itemView){
@@ -76,6 +80,7 @@ public class MessageAdapter  extends RecyclerView.Adapter<MessageAdapter.ViewHol
 
             show_message = itemView.findViewById(R.id.show_message);
             profile_image = itemView.findViewById(R.id.image_profile_message_left_chat);
+            txt_seen = itemView.findViewById(R.id.txt_seen);
 
         }
     }

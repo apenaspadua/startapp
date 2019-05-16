@@ -62,7 +62,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_margin="6dp"
-                    android:background="@drawable/button_custom_facebook"
+                    android:background="@drawable/button_custom_twitter"
                     android:orientation="horizontal">
 
                     <ImageView

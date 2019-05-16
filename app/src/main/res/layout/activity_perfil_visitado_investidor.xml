@@ -179,6 +179,7 @@
                     android:layout_marginTop="10dp"
                     android:background="@drawable/ic_send"
                     android:scaleType="fitXY"
+                    android:backgroundTint="@color/colorWhite"
                     android:layout_marginLeft="200dp" />
 
 
@@ -216,7 +217,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_custom_facebook"
+                android:background="@drawable/button_custom_twitter"
                 android:orientation="vertical">
 
                 <TextView
@@ -255,7 +256,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_custom_facebook"
+                android:background="@drawable/button_custom_twitter"
                 android:orientation="vertical">
 
                 <TextView
@@ -305,7 +306,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_custom_facebook"
+                android:background="@drawable/button_custom_twitter"
                 android:orientation="vertical">
 
                 <TextView
