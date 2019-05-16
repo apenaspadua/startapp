@@ -281,8 +281,14 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
 
                                 Investidor investidor = new Investidor(nomeRecebido, emailRecebido, telefoneRecebido, empresaRecebida, dataRecebida, cepRecebido, ruaRecebida, bairroRecebido, cidadeRecebido, estadoRecebido, null, cpfRecebido);
                                 investidor.salvarInvestidor(firebaseUser.getUid());
+
                                 Investidor investidor1 = new Investidor(bioRecebida, apresentacaoRecebida);
                                 investidor1.salvarBioInvestidor(firebaseUser.getUid());
+
+                                Usuarios usuarios = new Usuarios();
+                                usuarios.setNome(nomeRecebido);
+                                usuarios.salvarMais(firebaseUser.getUid());
+
                                 progressDialog.setMessage("Salvando dados...");
                                 progressDialog.show();
                                 Toast.makeText(EditarPerfilInvestidorActivity.this, "Alterado com sucesso", Toast.LENGTH_SHORT).show();
@@ -358,7 +364,7 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
 
                     progressBar.setVisibility(View.INVISIBLE);
                     Toast.makeText(EditarPerfilInvestidorActivity.this, "Imagem alterada com sucesso", Toast.LENGTH_SHORT).show();
-                    finish();
+
 
                 }
             }).addOnFailureListener(new OnFailureListener() {

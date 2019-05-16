@@ -155,8 +155,15 @@ public class PerfilFragment_Startup extends Fragment {
                    @Override
                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                        StartupResponse startup = dataSnapshot.getValue(StartupResponse.class);
-                       insereAtualizaMeta.setText(startup.getProgresso_startup().getMeta());
-                       insereAtualizaProgresso.setText(startup.getProgresso_startup().getInvestido());
+
+                       if(startup.getProgresso_startup() == null) {
+                           insereAtualizaMeta.setText("0");
+                           insereAtualizaProgresso.setText("0");
+                       }
+                       else {
+                           insereAtualizaMeta.setText(startup.getProgresso_startup().getMeta());
+                           insereAtualizaProgresso.setText(startup.getProgresso_startup().getInvestido());
+                       }
                    }
                    @Override
                    public void onCancelled(@NonNull DatabaseError databaseError) {

@@ -251,6 +251,10 @@ public class EditarPerfilStartupActivity extends AppCompatActivity {
                         Startup startup1 = new Startup(bioRecebida, apresentacaoRecebido, linkRecebido);
                         startup1.salvarBioStartup(firebaseUser.getUid());
 
+                        Usuarios usuarios = new Usuarios();
+                        usuarios.setNome(nomeFantasiaRecebido);
+                        usuarios.salvarMais(firebaseUser.getUid());
+
                         Publicacao publicacao = new Publicacao(nomeFantasiaRecebido,cidadeRecebido, estadoRecebido);
                         publicacao.salvarDados(firebaseUser.getUid());
                         publicacao.setDescricao(bioRecebida);
@@ -319,7 +323,7 @@ public class EditarPerfilStartupActivity extends AppCompatActivity {
 
                     progressBar.setVisibility(View.INVISIBLE);
                     Toast.makeText(EditarPerfilStartupActivity.this, "Imagem alterada com sucesso", Toast.LENGTH_SHORT).show();
-                    finish();
+
 
                 }
             }).addOnFailureListener(new OnFailureListener() {

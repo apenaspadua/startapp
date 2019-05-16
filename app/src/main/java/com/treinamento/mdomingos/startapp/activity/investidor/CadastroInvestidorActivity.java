@@ -194,9 +194,11 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
                                 progressDialog.setMessage("Guardando dados...");
                                 Investidor investidor = new Investidor(nomeRecebido, emailRecebido, telefoneRecebido, empresaRecebida, dataRecebida, cepRecebido, ruaRecebida, bairroRecebido, cidadeRecebido, estadoRecebido, null, cpfRecebido);
                                 investidor.salvarInvestidor(firebaseUser.getUid());
+
                                 Usuarios usuarios = new Usuarios();
                                 usuarios.setNome(nomeRecebido);
                                 usuarios.salvarMais(firebaseUser.getUid());
+
                                 progressDialog.show();
                                 Intent intent = new Intent(CadastroInvestidorActivity.this, BioInvestidorActivity.class);
                                 startActivity(intent);

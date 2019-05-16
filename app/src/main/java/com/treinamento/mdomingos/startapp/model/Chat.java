@@ -5,13 +5,16 @@ public class Chat {
     private String sender;
     private String receiver;
     private String message;
+    private boolean iseen;
 
     public Chat(){}
 
-    public Chat(String sender, String receiver, String message) {
+    public Chat(String sender, String receiver, String message, boolean iseen) {
         this.sender = sender;
         this.receiver = receiver;
         this.message = message;
+        this.iseen = iseen;
+
     }
 
     public String getSender() {
@@ -36,5 +39,13 @@ public class Chat {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public boolean getIseen() {
+        return iseen;
+    }
+
+    public void setIseen(boolean iseen) {
+        this.iseen = iseen;
     }
 }
