@@ -21,10 +21,14 @@ import com.google.firebase.firestore.auth.User;
 import com.treinamento.mdomingos.startapp.R;
 import com.treinamento.mdomingos.startapp.adapter.UserAdapterContacts;
 import com.treinamento.mdomingos.startapp.model.Chat;
+import com.treinamento.mdomingos.startapp.model.Chatlist;
 import com.treinamento.mdomingos.startapp.model.Usuarios;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
+import static java.security.AccessController.getContext;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -33,6 +37,8 @@ public class ChatActivity extends AppCompatActivity {
     private UserAdapterContacts userAdapterContacts;
     private RecyclerView recyclerView;
     private List<Usuarios> usuariosList;
+    private List<Chatlist> usersList;
+
 
     FirebaseUser user;
     DatabaseReference reference;
@@ -90,33 +96,21 @@ public class ChatActivity extends AppCompatActivity {
 
     private void  readChats(){
         usuariosList = new ArrayList<>();
-
-        reference = FirebaseDatabase.getInstance().getReference("Usuarios");
+        reference = FirebaseDatabase.getInstance().getReference("Users");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 usuariosList.clear();
-
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Usuarios usuarios = snapshot.getValue(Usuarios.class);
-
-                    for(String id : userListString){
-                        if(usuarios.getId().equals(id)){
-                            if(usuariosList.size() != 0){
-                                for(Usuarios usuarios1: usuariosList){
-                                    if(!usuarios.getId().equals(usuarios1.getId())){
-                                        usuariosList.add(usuarios);
-                                    }
-                                }
-                            } else {
-                                usuariosList.add(usuarios);
-                            }
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Usuarios  usuarios = snapshot.getValue(Usuarios.class);
+                    for (Chatlist chatlist : usersList){
+                        if (usuarios.getId().equals(chatlist.getId())){
+                            usuariosList.add(usuarios);
                         }
                     }
                 }
-                    Glide.with(getApplicationContext());
-                    userAdapterContacts = new UserAdapterContacts(ChatActivity.this, usuariosList);
-                    recyclerView.setAdapter(userAdapterContacts);
+                userAdapterContacts = new UserAdapterContacts(ChatActivity.this, usuariosList, true);
+                recyclerView.setAdapter(userAdapterContacts);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {

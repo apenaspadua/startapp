@@ -21,10 +21,12 @@ public class UserAdapterContacts extends RecyclerView.Adapter<UserAdapterContact
 
     private Context mContext;
     private List<Usuarios> mUsers;
+    private boolean ischat;
 
-    public UserAdapterContacts(Context context, List<Usuarios> mUsers){
+    public UserAdapterContacts(Context context, List<Usuarios> mUsers, boolean ischat){
         this.mContext = context;
         this.mUsers = mUsers;
+        this.ischat = ischat;
     }
 
     @NonNull
