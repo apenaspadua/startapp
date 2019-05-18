@@ -32,11 +32,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="identifier"
-            android:id="@+id/identific_chat_list"
-            android:textSize="14dp"
-            android:fontFamily="@font/lato_bold"
-            />
+            android:layout_below="@id/usermame_chat_list"
+            android:layout_toRightOf="@id/image_profile_list_contacts_chat"
+            android:layout_marginTop="5dp"
+            android:id="@+id/last_msg"
+            android:visibility="gone"
+            android:textColor="@color/colorCinzaLight"
+            android:maxLines="1"
+            android:fontFamily="@font/lato_regular"/>
 
     </LinearLayout>
 

@@ -8,7 +8,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -25,12 +27,13 @@ import com.treinamento.mdomingos.startapp.model.Usuarios;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContatosChatActivity extends AppCompatActivity {
+public class UsersChatActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private UserAdapterContacts userAdapterContacts;
-    private List<Usuarios> usuariosList;
+    private List<Usuarios> mUsers;
     private EditText serach_users;
+    private ImageView imageSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +43,17 @@ public class ContatosChatActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view_chat_contacts);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        imageSearch = findViewById(R.id.imageview_chat_startup_id);
 
-        usuariosList = new ArrayList<>();
+        mUsers = new ArrayList<>();
         readUser();
+
+        imageSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                serach_users.setVisibility(View.VISIBLE);
+            }
+        });
 
         serach_users = findViewById(R.id.serach_users);
         serach_users.addTextChangedListener(new TextWatcher() {
@@ -73,21 +84,19 @@ public class ContatosChatActivity extends AppCompatActivity {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                    usuariosList.clear();
+                    mUsers.clear();
 
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         Usuarios usuarios = snapshot.getValue(Usuarios.class);
-
                         assert usuarios != null;
                         assert user != null;
 
                         if (!usuarios.getId().equals(user.getUid())) {
-                            usuariosList.add(usuarios);
+                            mUsers.add(usuarios);
                         }
                     }
 
-                    userAdapterContacts = new UserAdapterContacts(ContatosChatActivity.this, usuariosList, false);
+                    userAdapterContacts = new UserAdapterContacts(UsersChatActivity.this, mUsers, false);
                     recyclerView.setAdapter(userAdapterContacts);
             }
 
@@ -108,21 +117,16 @@ public class ContatosChatActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (serach_users.getText().toString().equals("")) {
-                    usuariosList.clear();
+                    mUsers.clear();
 
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         Usuarios usuarios = snapshot.getValue(Usuarios.class);
 
-                        assert usuarios != null;
-                        assert firebaseUser != null;
-
                         if (!usuarios.getId().equals(firebaseUser.getUid())) {
-                            usuariosList.add(usuarios);
+                            mUsers.add(usuarios);
                         }
                     }
-
-
-                    userAdapterContacts = new UserAdapterContacts(ContatosChatActivity.this, usuariosList, false);
+                    userAdapterContacts = new UserAdapterContacts(UsersChatActivity.this, mUsers, false);
                     recyclerView.setAdapter(userAdapterContacts);
                 }
             }

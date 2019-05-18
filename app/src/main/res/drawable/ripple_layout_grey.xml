@@ -1,0 +1,8 @@
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:color="@color/colorCinzaLight" tools:targetApi="lollipop">
+
+    <shape android:shape="rectangle">
+        <solid android:color="@color/colorCinzaLight"/>
+    </shape>
+</ripple>

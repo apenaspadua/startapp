@@ -60,11 +60,13 @@
         tools:layout_editor_absoluteX="16dp">
 
         <EditText
+            android:background="@drawable/edittext_custom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/serach_users"
+            android:visibility="gone"
             android:fontFamily="@font/poppins_regular"
-            android:hint="Encontre seu novo sócio"
+            android:hint="Procure aqui"
             android:textSize="16dp"
             android:layout_margin="5dp" />
     </LinearLayout>

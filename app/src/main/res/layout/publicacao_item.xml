@@ -105,6 +105,7 @@
             android:id="@+id/texto_descricao_feed_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:maxLines="5"
             android:text="Lorem Ipsum é simplesmente uma simulaçãooo erado. Se popularizou na década de 60, quando a Letraset lançou decalques contendo passagens de Lorem Ipsum, e mais recentemente quando passou a ser integrado a softwares ." />
     </LinearLayout>
 
