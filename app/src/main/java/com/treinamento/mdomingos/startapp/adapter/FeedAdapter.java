@@ -40,7 +40,7 @@ public class FeedAdapter extends RecyclerView.ViewHolder {
         TextView state = mView.findViewById(R.id.text_estado_feed_startup);
         TextView descri = mView.findViewById(R.id.texto_descricao_feed_id);
         CircleImageView imageProfile = mView.findViewById(R.id.imageview_feed_startup_id);
-        ImageView imagePublication = mView.findViewById(R.id.imagem_publicacao_feed);
+        ImageView imagePublication = mView.findViewById(R.id.imageView_publi);
         RelativeLayout botaoSaberMais = mView.findViewById(R.id.botao_sabermais_feed);
 
         firebaseAuth = FirebaseAuth.getInstance();
