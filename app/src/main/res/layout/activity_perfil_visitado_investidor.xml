@@ -154,33 +154,19 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginRight="70dp"
                 android:background="@drawable/button_ronded"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:gravity="center">
 
 
                 <TextView
                     android:id="@+id/text_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
-                    android:layout_marginBottom="14dp"
                     android:text="INICIAR CONVERSA "
                     android:textColor="@color/colorWhite"
                     android:textSize="14sp"
                     android:textStyle="bold"
-                    android:layout_marginStart="40dp"
-                    app:fontFamily="@font/poppins_medium"
-                    android:layout_marginLeft="40dp" />
-
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="200dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/ic_send"
-                    android:scaleType="fitXY"
-                    android:backgroundTint="@color/colorWhite"
-                    android:layout_marginLeft="200dp" />
+                    app:fontFamily="@font/poppins_medium" />
 
 
             </RelativeLayout>
