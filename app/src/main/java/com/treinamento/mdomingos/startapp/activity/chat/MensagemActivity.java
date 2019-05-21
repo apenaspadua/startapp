@@ -174,7 +174,7 @@ public class MensagemActivity extends AppCompatActivity {
                     Chat chat = snapshot.getValue(Chat.class);
                     if(chat.getReceiver().equals(user.getUid()) && chat.getSender().equals(userid)) {
                         HashMap<String, Object> hashMap = new HashMap<>();
-                        hashMap.put("issen", true);
+                        hashMap.put("isseen", true);
                         snapshot.getRef().updateChildren(hashMap);
                     }
 
@@ -198,7 +198,7 @@ public class MensagemActivity extends AppCompatActivity {
         hashMap.put("sender", sender);
         hashMap.put("receiver", receiver);
         hashMap.put("message", message);
-        hashMap.put("issen", true);
+        hashMap.put("isseen", false);
 
         reference.child("Chats").push().setValue(hashMap);
 

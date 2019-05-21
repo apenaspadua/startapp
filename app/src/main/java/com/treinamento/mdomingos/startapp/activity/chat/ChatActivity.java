@@ -16,7 +16,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.treinamento.mdomingos.startapp.R;
+import com.treinamento.mdomingos.startapp.activity.chat.notifications.Token;
 import com.treinamento.mdomingos.startapp.adapter.UserAdapterContacts;
 import com.treinamento.mdomingos.startapp.model.Chatlist;
 import com.treinamento.mdomingos.startapp.model.Usuarios;
@@ -70,6 +72,8 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+        updateToken(FirebaseInstanceId.getInstance().getToken());
+
 
         contatos.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +82,12 @@ public class ChatActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void updateToken(String token){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Tokens");
+        Token token1 = new Token(token);
+        reference.child(user.getUid()).setValue(token1);
     }
 
     private void chatList(){

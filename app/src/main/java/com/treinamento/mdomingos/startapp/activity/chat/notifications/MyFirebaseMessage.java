@@ -10,6 +10,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,12 +26,16 @@ public class MyFirebaseMessage extends FirebaseMessagingService {
         super.onMessageReceived(remoteMessage);
 
         String sented = remoteMessage.getData().get("sented");
+
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+
         String user = remoteMessage.getData().get("user");
 
         SharedPreferences preferences = getSharedPreferences("PREFS", MODE_PRIVATE);
         String currentUser = preferences.getString("currentuser", "none");
 
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
 
         if (firebaseUser != null && sented.equals(firebaseUser.getUid())){
             if (!currentUser.equals(user)) {
@@ -43,6 +48,7 @@ public class MyFirebaseMessage extends FirebaseMessagingService {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void sendOreoNotification(RemoteMessage remoteMessage){
         String user = remoteMessage.getData().get("user");
         String icon = remoteMessage.getData().get("icon");
