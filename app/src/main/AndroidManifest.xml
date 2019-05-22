@@ -50,7 +50,7 @@
             </intent-filter>
         </service>
 
-        <service android:name="activity.chat.notifications.MyFirebaseMessage"
+        <service android:name=".activity.chat.notifications.MyFirebaseMessage"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

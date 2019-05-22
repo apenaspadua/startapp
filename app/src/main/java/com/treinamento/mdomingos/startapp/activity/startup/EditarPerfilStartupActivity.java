@@ -289,7 +289,7 @@ public class EditarPerfilStartupActivity extends AppCompatActivity {
 
         if(requestCode ==  PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data!= null && data.getData() != null){
             imageUri = data.getData();
-            Picasso.get().load(imageUri).into(foto);
+            Picasso.with(this).load(imageUri).into(foto);
             uploadFile();
         }
     }

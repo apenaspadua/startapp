@@ -21,6 +21,7 @@ import com.treinamento.mdomingos.startapp.activity.chat.MensagemActivity;
 
 public class MyFirebaseMessage extends FirebaseMessagingService {
 
+
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
@@ -112,4 +113,6 @@ public class MyFirebaseMessage extends FirebaseMessagingService {
         noti.notify(i, builder.build());
     }
 }
+
+
 

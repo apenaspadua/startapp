@@ -52,8 +52,8 @@ public class FeedAdapter extends RecyclerView.ViewHolder {
         city.setText(cidade);
         state.setText(estado);
         descri.setText(descricao);
-        Picasso.get().load(fotoPerfil).into(imageProfile);
-        Picasso.get().load(fotoPublicacao).fit().centerCrop().into(imagePublication);
+        Picasso.with(context).load(fotoPerfil).into(imageProfile);
+        Picasso.with(context).load(fotoPublicacao).fit().centerCrop().into(imagePublication);
 
         botaoSaberMais.setOnClickListener(new View.OnClickListener() {
             @Override

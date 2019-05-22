@@ -188,7 +188,7 @@ public class EnviaArquivosActivity extends AppCompatActivity {
 
         if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data!= null && data.getData() != null){
             imageUri = data.getData();
-            Picasso.get().load(imageUri).into(foto);
+            Picasso.with(this).load(imageUri).into(foto);
             uploadFile();
         }
 
@@ -279,7 +279,7 @@ public class EnviaArquivosActivity extends AppCompatActivity {
             public void onSuccess(Uri uri) {
                 imageURL = uri.toString();
 //                Glide.with(EnviaArquivosActivity.this).load(imageURL).into(foto);
-                Picasso.get().load(imageURL).fit().centerCrop().into(foto);
+                Picasso.with(EnviaArquivosActivity.this).load(imageURL).fit().centerCrop().into(foto);
                 progressBar.setVisibility(View.GONE);
             }
         }).addOnFailureListener(new OnFailureListener() {

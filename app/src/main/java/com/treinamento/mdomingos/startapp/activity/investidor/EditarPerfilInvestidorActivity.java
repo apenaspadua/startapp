@@ -39,6 +39,7 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.treinamento.mdomingos.startapp.R;
 import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentInvestidor;
+import com.treinamento.mdomingos.startapp.adapter.UserAdapterContacts;
 import com.treinamento.mdomingos.startapp.model.CEP;
 import com.treinamento.mdomingos.startapp.model.Investidor;
 import com.treinamento.mdomingos.startapp.model.InvestidorResponse;
@@ -334,7 +335,7 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
 
         if(requestCode ==  PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data!= null && data.getData() != null){
             imageUri = data.getData();
-            Picasso.get().load(imageUri).into(foto);
+            Picasso.with(this).load(imageUri).into(foto);
             uploadFile();
         }
     }

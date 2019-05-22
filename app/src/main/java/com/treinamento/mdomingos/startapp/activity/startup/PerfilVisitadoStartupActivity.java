@@ -1,18 +1,23 @@
 package com.treinamento.mdomingos.startapp.activity.startup;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
@@ -28,8 +33,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.treinamento.mdomingos.startapp.R;
+import com.treinamento.mdomingos.startapp.activity.chat.MensagemActivity;
+import com.treinamento.mdomingos.startapp.activity.chat.UsersChatActivity;
+import com.treinamento.mdomingos.startapp.adapter.UserAdapterContacts;
 import com.treinamento.mdomingos.startapp.model.Publicacao;
+import com.treinamento.mdomingos.startapp.model.Startup;
 import com.treinamento.mdomingos.startapp.model.StartupResponse;
+
+import java.io.Serializable;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -44,15 +55,17 @@ public class PerfilVisitadoStartupActivity extends AppCompatActivity{
     private ProgressBar progressBar, progresso;
     private TextView nome, cidade, razao, email, rua, bairro, estado, telefone, bio, apresentacao, link, meta, investido;
     private CircleImageView foto;
-    private RelativeLayout editarVideo;
+    private RelativeLayout iniciarConversa, tenhoInteresse;
     private FirebaseStorage storage;
     private String data;
     private int investidoInt = 0, metaInt = 0, cont = 0;
     private Handler hdlr = new Handler();
+    private String pegaNome;
 
     private VideoView videoView;
     private Uri videoUri;
     private MediaController mediaController;
+    private UserAdapterContacts userAdapterContacts;
 
     @Override
     protected void onStart() {
@@ -90,7 +103,8 @@ public class PerfilVisitadoStartupActivity extends AppCompatActivity{
         investido = findViewById(R.id.conquistado_progressbar_perilVisitado_startup);
         progresso = findViewById(R.id.progressbar_progresso_perfilVisitado_startup);
         progressDialog = new ProgressDialog(this);
-
+        iniciarConversa = findViewById(R.id.botao_iniciar_conversa_perfilVisitado_startup_id);
+        tenhoInteresse = findViewById(R.id.botao_tenho_intersse_startup_id);
 
         videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
@@ -105,6 +119,7 @@ public class PerfilVisitadoStartupActivity extends AppCompatActivity{
                 });
             }
         });
+
         videoView.start();
 
         Intent intent = getIntent();
@@ -118,6 +133,7 @@ public class PerfilVisitadoStartupActivity extends AppCompatActivity{
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     StartupResponse startup = dataSnapshot.getValue(StartupResponse.class);
                     nome.setText(startup.getDetalhe_startup().getNomeFantasia());
+                    pegaNome = startup.getDetalhe_startup().getNomeFantasia();
                     cidade.setText(startup.getDetalhe_startup().getCidade());
                     razao.setText(startup.getDetalhe_startup().getRazaoSocial());
                     email.setText(startup.getDetalhe_startup().getEmail());
@@ -154,6 +170,28 @@ public class PerfilVisitadoStartupActivity extends AppCompatActivity{
 
             });
         }
+
+        iniciarConversa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PerfilVisitadoStartupActivity.this, UsersChatActivity.class);
+                intent.putExtra("conversa", pegaNome);
+                startActivity(intent);
+            }
+        });
+
+        tenhoInteresse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(PerfilVisitadoStartupActivity.this);
+                View view = LayoutInflater.from(PerfilVisitadoStartupActivity.this).inflate(R.layout.alert_dialog_interesse, null);
+
+                builder.setView(view);
+                builder.show();
+            }
+
+        });
     }
 
     private void loadProgress(final int dado, final int dadoMax){

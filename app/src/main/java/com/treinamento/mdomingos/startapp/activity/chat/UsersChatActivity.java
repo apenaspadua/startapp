@@ -1,9 +1,9 @@
 package com.treinamento.mdomingos.startapp.activity.chat;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -34,11 +34,25 @@ public class UsersChatActivity extends AppCompatActivity {
     private List<Usuarios> mUsers;
     private EditText serach_users;
     private ImageView imageSearch;
+    private String nomeRecebid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contatos_chat);
+
+        serach_users = findViewById(R.id.serach_users);
+
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            nomeRecebid = extras.getString("conversa");
+
+            serach_users.setVisibility(View.VISIBLE);
+            serach_users.setText(nomeRecebid);
+            serachUsers(nomeRecebid);
+
+        }
 
         recyclerView = findViewById(R.id.recycler_view_chat_contacts);
         recyclerView.setHasFixedSize(true);
@@ -55,7 +69,7 @@ public class UsersChatActivity extends AppCompatActivity {
             }
         });
 
-        serach_users = findViewById(R.id.serach_users);
+
         serach_users.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
