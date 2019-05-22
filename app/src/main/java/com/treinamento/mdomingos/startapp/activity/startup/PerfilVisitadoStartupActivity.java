@@ -35,6 +35,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.treinamento.mdomingos.startapp.R;
 import com.treinamento.mdomingos.startapp.activity.chat.MensagemActivity;
 import com.treinamento.mdomingos.startapp.activity.chat.UsersChatActivity;
+import com.treinamento.mdomingos.startapp.activity.others.EnvioNotifyActivity;
 import com.treinamento.mdomingos.startapp.adapter.UserAdapterContacts;
 import com.treinamento.mdomingos.startapp.model.Publicacao;
 import com.treinamento.mdomingos.startapp.model.Startup;
@@ -55,9 +56,9 @@ public class PerfilVisitadoStartupActivity extends AppCompatActivity{
     private ProgressBar progressBar, progresso;
     private TextView nome, cidade, razao, email, rua, bairro, estado, telefone, bio, apresentacao, link, meta, investido;
     private CircleImageView foto;
-    private RelativeLayout iniciarConversa, tenhoInteresse;
+    private RelativeLayout iniciarConversa, tenhoInteresse, sim, nao;
     private FirebaseStorage storage;
-    private String data;
+    private String id;
     private int investidoInt = 0, metaInt = 0, cont = 0;
     private Handler hdlr = new Handler();
     private String pegaNome;
@@ -65,7 +66,6 @@ public class PerfilVisitadoStartupActivity extends AppCompatActivity{
     private VideoView videoView;
     private Uri videoUri;
     private MediaController mediaController;
-    private UserAdapterContacts userAdapterContacts;
 
     @Override
     protected void onStart() {
@@ -106,6 +106,7 @@ public class PerfilVisitadoStartupActivity extends AppCompatActivity{
         iniciarConversa = findViewById(R.id.botao_iniciar_conversa_perfilVisitado_startup_id);
         tenhoInteresse = findViewById(R.id.botao_tenho_intersse_startup_id);
 
+
         videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
@@ -125,10 +126,10 @@ public class PerfilVisitadoStartupActivity extends AppCompatActivity{
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         if (extras != null) {
-            data = extras.getString("publicacoes");
+            id = extras.getString("publicacoes");
 
             final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-            databaseReference.child("Usuarios").child(data).addValueEventListener(new ValueEventListener() {
+            databaseReference.child("Usuarios").child(id).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     StartupResponse startup = dataSnapshot.getValue(StartupResponse.class);
@@ -184,8 +185,29 @@ public class PerfilVisitadoStartupActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(PerfilVisitadoStartupActivity.this);
-                View view = LayoutInflater.from(PerfilVisitadoStartupActivity.this).inflate(R.layout.alert_dialog_interesse, null);
+                final AlertDialog.Builder builder = new AlertDialog.Builder(PerfilVisitadoStartupActivity.this);
+                final View view = LayoutInflater.from(PerfilVisitadoStartupActivity.this).inflate(R.layout.alert_dialog_interesse, null);
+
+                sim = view.findViewById(R.id.botao_sim);
+                nao = view.findViewById(R.id.botao_nao);
+
+                sim.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Intent intent = new Intent(PerfilVisitadoStartupActivity.this, EnvioNotifyActivity.class);
+                        intent.putExtra("notificacao", id);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+
+                nao.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                      finish();
+                    }
+                });
 
                 builder.setView(view);
                 builder.show();
@@ -220,7 +242,7 @@ public class PerfilVisitadoStartupActivity extends AppCompatActivity{
 
     private void loadUserInformation() {
         storageReference = FirebaseStorage.getInstance().getReference().child("foto_perfil").
-                child(data).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                child(id).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
 
             @Override
             public void onSuccess(Uri uri) {
@@ -238,7 +260,7 @@ public class PerfilVisitadoStartupActivity extends AppCompatActivity{
 
     private void loadVideo(){
         storageReference = FirebaseStorage.getInstance().getReference().child("video_publicacao").
-                child(data).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                child(id).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
 
             @Override
             public void onSuccess(Uri uri) {
