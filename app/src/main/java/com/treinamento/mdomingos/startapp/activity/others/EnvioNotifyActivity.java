@@ -1,9 +1,11 @@
 package com.treinamento.mdomingos.startapp.activity.others;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +26,7 @@ import com.treinamento.mdomingos.startapp.activity.chat.notifications.Data;
 import com.treinamento.mdomingos.startapp.activity.chat.notifications.MyResponse;
 import com.treinamento.mdomingos.startapp.activity.chat.notifications.Sender;
 import com.treinamento.mdomingos.startapp.activity.chat.notifications.Token;
+import com.treinamento.mdomingos.startapp.model.InvestidorResponse;
 import com.treinamento.mdomingos.startapp.model.Usuarios;
 
 import retrofit2.Call;
@@ -40,10 +43,11 @@ public class EnvioNotifyActivity extends AppCompatActivity {
     Intent intent;
     String userid;
     FirebaseUser user;
+    private String nomeInvestidor;
+
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
     boolean notify = false;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +69,21 @@ public class EnvioNotifyActivity extends AppCompatActivity {
         updateToken(FirebaseInstanceId.getInstance().getToken());
 
 
+        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("Usuarios").child(user.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                InvestidorResponse investidor = dataSnapshot.getValue(InvestidorResponse.class);
+
+                nomeInvestidor = investidor.getDetalhe_investidor().getNome();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         notify = true;
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Usuarios").child(userid);
@@ -72,10 +91,8 @@ public class EnvioNotifyActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                Usuarios usuarios = dataSnapshot.getValue(Usuarios.class);
-
                 if (notify) {
-                    sendNotifiaction(userid, usuarios.getNome());
+                    sendNotifiaction(userid, nomeInvestidor);
                 }
                 notify = false;
             }
@@ -86,13 +103,6 @@ public class EnvioNotifyActivity extends AppCompatActivity {
 
             }
 
-//            private void sendMessage(String sender, final String receiver, String message)
-//             HashMap<String, Object> hashMap = new HashMap<>();
-//        hashMap.put("sender", sender);
-//        hashMap.put("receiver", receiver);
-//        hashMap.put("message", message);
-//        hashMap.put("isseen", false);
-
             private void sendNotifiaction(String receiver, final String username) {
                 DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
                 Query query = tokens.orderByKey().equalTo(receiver);
@@ -101,7 +111,7 @@ public class EnvioNotifyActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             Token token = snapshot.getValue(Token.class);
-                            Data data = new Data(user.getUid(), R.mipmap.ic_logo_app, username + "se interessou pelo seu projeto!", "Você tem um novo interesse", userid);
+                            Data data = new Data(user.getUid(), R.mipmap.ic_logo_app, username + " se interessou pelo seu projeto!", "Você tem um novo interesse", userid);
                             Sender sender = new Sender(data, token.getToken());
 
                             apiService.sendNotification(sender).enqueue(new Callback<MyResponse>() {
@@ -111,6 +121,12 @@ public class EnvioNotifyActivity extends AppCompatActivity {
                                         if (response.body().success != 1) {
                                             Toast.makeText(EnvioNotifyActivity.this, "Falha!", Toast.LENGTH_SHORT).show();
                                         }
+
+                                        progressBar.setVisibility(View.GONE);
+                                        text1.setText("Notificação enviada!");
+                                        text2.setVisibility(View.VISIBLE);
+                                        text3.setVisibility(View.VISIBLE);
+                                        voltarHome.setVisibility(View.VISIBLE);
                                     }
                                 }
 
@@ -129,6 +145,15 @@ public class EnvioNotifyActivity extends AppCompatActivity {
                 });
             }
         });
+
+        voltarHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                voltarHome.setTextColor(Color.parseColor("#0289BE"));
+                finish();
+            }
+        });
+
     }
 
     private void updateToken(String token){

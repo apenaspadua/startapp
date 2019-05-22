@@ -36,10 +36,13 @@ import com.treinamento.mdomingos.startapp.R;
 import com.treinamento.mdomingos.startapp.activity.chat.MensagemActivity;
 import com.treinamento.mdomingos.startapp.activity.chat.UsersChatActivity;
 import com.treinamento.mdomingos.startapp.activity.others.EnvioNotifyActivity;
+import com.treinamento.mdomingos.startapp.activity.others.SejaUmInvestidorActivity;
 import com.treinamento.mdomingos.startapp.adapter.UserAdapterContacts;
+import com.treinamento.mdomingos.startapp.model.InvestidorResponse;
 import com.treinamento.mdomingos.startapp.model.Publicacao;
 import com.treinamento.mdomingos.startapp.model.Startup;
 import com.treinamento.mdomingos.startapp.model.StartupResponse;
+import com.treinamento.mdomingos.startapp.model.Usuarios;
 
 import java.io.Serializable;
 
@@ -54,7 +57,7 @@ public class PerfilVisitadoStartupActivity extends AppCompatActivity{
     private FirebaseUser user;
     private String imageURL;
     private ProgressBar progressBar, progresso;
-    private TextView nome, cidade, razao, email, rua, bairro, estado, telefone, bio, apresentacao, link, meta, investido;
+    private TextView nome, cidade, razao, email, rua, bairro, estado, telefone, bio, apresentacao, link, meta, investido, text_interesse;
     private CircleImageView foto;
     private RelativeLayout iniciarConversa, tenhoInteresse, sim, nao;
     private FirebaseStorage storage;
@@ -185,34 +188,56 @@ public class PerfilVisitadoStartupActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
 
-                final AlertDialog.Builder builder = new AlertDialog.Builder(PerfilVisitadoStartupActivity.this);
-                final View view = LayoutInflater.from(PerfilVisitadoStartupActivity.this).inflate(R.layout.alert_dialog_interesse, null);
-
-                sim = view.findViewById(R.id.botao_sim);
-                nao = view.findViewById(R.id.botao_nao);
-
-                sim.setOnClickListener(new View.OnClickListener() {
+                final DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+                reference.child("Usuarios").child(user.getUid()).addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onClick(View v) {
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        Usuarios usuarios = dataSnapshot.getValue(Usuarios.class);
 
-                        Intent intent = new Intent(PerfilVisitadoStartupActivity.this, EnvioNotifyActivity.class);
-                        intent.putExtra("notificacao", id);
-                        startActivity(intent);
-                        finish();
+                        if (usuarios.getPerfil() == 1) {
+
+                            final AlertDialog.Builder builder = new AlertDialog.Builder(PerfilVisitadoStartupActivity.this);
+                            final View view = LayoutInflater.from(PerfilVisitadoStartupActivity.this).inflate(R.layout.alert_dialog_interesse, null);
+
+                            sim = view.findViewById(R.id.botao_sim);
+                            nao = view.findViewById(R.id.botao_nao);
+
+
+                            sim.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                    Intent intent = new Intent(PerfilVisitadoStartupActivity.this, EnvioNotifyActivity.class);
+                                    intent.putExtra("notificacao", id);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            });
+
+                            nao.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    finish();
+                                }
+                            });
+
+                            builder.setView(view);
+                            builder.show();
+                        }
+                         else {
+
+                             startActivity(new Intent(PerfilVisitadoStartupActivity.this, SejaUmInvestidorActivity.class));
+                             finish();
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
                     }
                 });
-
-                nao.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                      finish();
-                    }
-                });
-
-                builder.setView(view);
-                builder.show();
             }
-
         });
     }
 
