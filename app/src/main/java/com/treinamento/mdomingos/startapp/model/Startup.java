@@ -21,6 +21,8 @@ public class Startup {
     private String cidade;
     private String estado;
     private String cnpj;
+    private String meta;
+    private String investido;
     private String telefone;
     private String biografia;
     private String apresentacao;
@@ -65,9 +67,16 @@ public class Startup {
         databaseReference.child("Usuarios").child(id).child("bio_completa").setValue(1);
     }
 
-    public void salvarFotoPerfil(String id){
+//    public void salvarFotoPerfil(String id){
+//        DatabaseReference databaseReference = FirebaseConfig.getFirebase();
+//        databaseReference.child("Usuarios").child(id).child("detalhe_startup").child("foto_perfil").setValue(imagemPerfil);
+//    }
+
+
+    public void salvarMetaProgesso(String id){
         DatabaseReference databaseReference = FirebaseConfig.getFirebase();
-        databaseReference.child("Usuarios").child(id).child("detalhe_startup").child("foto_perfil").setValue(imagemPerfil);
+        databaseReference.child("Usuarios").child(id).child("progresso_startup").child("meta").setValue(meta);
+        databaseReference.child("Usuarios").child(id).child("progresso_startup").child("investido").setValue(investido);
     }
 
     public String getRazaoSocial() {
@@ -148,6 +157,22 @@ public class Startup {
 
     public void setCnpj(String cnpj) {
         this.cnpj = cnpj;
+    }
+
+    public String getMeta() {
+        return meta;
+    }
+
+    public void setMeta(String meta) {
+        this.meta = meta;
+    }
+
+    public String getInvestido() {
+        return investido;
+    }
+
+    public void setInvestido(String investido) {
+        this.investido = investido;
     }
 
     public String getBiografia() {

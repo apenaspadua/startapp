@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/marine"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="Atualizar Progresso "
+        android:textColor="#fff"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <RelativeLayout
+        android:id="@+id/body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFF"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:paddingBottom="16dp"
+        android:layout_below="@+id/title"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="Atualize o quanto já foi arrecadado e mantenha-o em dia!"
+                android:textSize="16sp"/>
+
+        <android.support.design.widget.TextInputLayout
+            style="@style/TextInputRegister"
+            android:layout_marginTop="80dp">
+
+            <ImageView
+                android:id="@+id/button_help_cadastro_startup_id"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="end"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="15dp"
+                android:background="@drawable/ic_help"
+                android:scaleType="fitXY"
+                android:layout_marginRight="15dp" />
+
+            <EditText
+                android:id="@+id/objetivo_cadastro_startup_id"
+                style="@style/EditTextRegister"
+                android:hint="Objetivo de investimento em R$ *"
+                android:inputType="number" />
+
+        </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                style="@style/TextInputRegister"
+                android:layout_marginTop="170dp">
+                <EditText
+                    android:hint="R$ Investido"
+                    android:id="@+id/atualiza_barra_id"
+                    style="@style/EditTextRegister"
+                    android:inputType="number" />
+            </android.support.design.widget.TextInputLayout>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

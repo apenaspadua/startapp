@@ -1,13 +1,14 @@
 package com.treinamento.mdomingos.startapp.fragments_startup;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.OpenableColumns;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -25,7 +27,6 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -37,19 +38,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.treinamento.mdomingos.startapp.R;
+import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentStartup;
 import com.treinamento.mdomingos.startapp.activity.login.LoginActivity;
 import com.treinamento.mdomingos.startapp.activity.startup.EditarPerfilStartupActivity;
 import com.treinamento.mdomingos.startapp.activity.startup.EnviaArquivosActivity;
+import com.treinamento.mdomingos.startapp.model.Startup;
 import com.treinamento.mdomingos.startapp.model.StartupResponse;
-import com.treinamento.mdomingos.startapp.utils.UploadStorage;
+import com.treinamento.mdomingos.startapp.utils.Validator;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
-import static android.app.Activity.RESULT_OK;
 
 public class PerfilFragment_Startup extends Fragment {
 
@@ -59,11 +57,15 @@ public class PerfilFragment_Startup extends Fragment {
     private Task<Uri> storageReference;
     private FirebaseUser user;
     private String imageURL;
-    private ProgressBar progressBar;
-    private TextView nome, cidade, razao, email, rua, bairro, estado, telefone, bio, editar, apresentacao, link ;
+    private ProgressBar progressBar, progresso;
+    private TextView nome,cidade, razao, email, rua, bairro, estado, telefone, bio, editar, apresentacao, link, meta, investido;
+    private RelativeLayout atualizar;
+    private EditText insereAtualizaProgresso, insereAtualizaMeta;
     private CircleImageView foto;
     private RelativeLayout editarVideo;
     private FirebaseStorage storage;
+    private int investidoInt = 0, metaInt = 0, cont = 0;
+    private Handler hdlr = new Handler();
 
     private VideoView videoView;
     private Uri videoUri;
@@ -81,7 +83,6 @@ public class PerfilFragment_Startup extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-
         inflater.inflate(R.menu.dropdown_menu_home, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -98,6 +99,7 @@ public class PerfilFragment_Startup extends Fragment {
         } else {
             if (item.getItemId() == R.id.editar_perfil_item_dropdown_menu_id){
                 startActivity(new Intent(getActivity(), EditarPerfilStartupActivity.class));
+                getActivity().finish();
             }
         }
         return super.onOptionsItemSelected(item);
@@ -107,7 +109,7 @@ public class PerfilFragment_Startup extends Fragment {
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("");
-        View view = inflater.inflate(R.layout.fragment_perfil_startup, container, false);
+        final View view = inflater.inflate(R.layout.fragment_perfil_startup, container, false);
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
@@ -115,6 +117,7 @@ public class PerfilFragment_Startup extends Fragment {
         storage = FirebaseStorage.getInstance();
 
         editar = view.findViewById(R.id.text_editar_perfil_startup);
+        atualizar = view.findViewById(R.id.atualizar_grafico_id);
         nome = view.findViewById(R.id.nome_perfil_startup_id);
         cidade = view.findViewById(R.id.text_cidade_perfil_startup);
         razao = view.findViewById(R.id.text_razao_perfil_startup);
@@ -132,12 +135,76 @@ public class PerfilFragment_Startup extends Fragment {
         progressBar = view.findViewById(R.id.progressBar_perfil_startup);
         progressDialog = new ProgressDialog(getActivity());
 
+        //barra de progresso
+        progresso = view.findViewById(R.id.progressbar_progresso_perfil_startup);
+        meta = view.findViewById(R.id.meta_progressbar_perfil_startup);
+        investido = view.findViewById(R.id.conquistado_progressbar_peril_startup);
+
+
+        atualizar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                View view = LayoutInflater.from(getActivity()).inflate(R.layout.alert_dialog_custom, null);
+
+                insereAtualizaMeta = view.findViewById(R.id.objetivo_cadastro_startup_id);
+                insereAtualizaProgresso = view.findViewById(R.id.atualiza_barra_id);
+
+                final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+                databaseReference.child("Usuarios").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+                   @Override
+                   public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                       StartupResponse startup = dataSnapshot.getValue(StartupResponse.class);
+
+                       if(startup.getProgresso_startup() == null) {
+                           insereAtualizaMeta.setText("0");
+                           insereAtualizaProgresso.setText("0");
+                       }
+                       else {
+                           insereAtualizaMeta.setText(startup.getProgresso_startup().getMeta());
+                           insereAtualizaProgresso.setText(startup.getProgresso_startup().getInvestido());
+                       }
+                   }
+                   @Override
+                   public void onCancelled(@NonNull DatabaseError databaseError) {
+                        return;
+                   }
+                });
+                builder.setPositiveButton("Atualizar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        progressDialog.setMessage("Atualizando...");
+                        progressDialog.show();
+
+                        metaInt = Integer.parseInt(insereAtualizaMeta.getText().toString());
+                        investidoInt = Integer.parseInt(insereAtualizaProgresso.getText().toString());
+
+                        Startup startup = new Startup();
+                        startup.setMeta(String.valueOf(metaInt));
+                        startup.setInvestido(String.valueOf(investidoInt));
+                        startup.salvarMetaProgesso(user.getUid());
+                        Toast.makeText(getActivity(), "Progresso Atualizado", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                builder.setView(view);
+                builder.show();
+            }
+        });
 
         editar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 editar.setTextColor(Color.parseColor("#0289BE"));
                 startActivity(new Intent(getActivity(), EditarPerfilStartupActivity.class));
+                getActivity().finish();
             }
         });
 
@@ -163,7 +230,6 @@ public class PerfilFragment_Startup extends Fragment {
         });
         videoView.start();
 
-
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.child("Usuarios").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
@@ -181,14 +247,52 @@ public class PerfilFragment_Startup extends Fragment {
                 apresentacao.setText(startup.getDetalhe_startup().getApresentacao());
                 link.setText(startup.getDetalhe_startup().getLink());
 
+                if(startup.getProgresso_startup() == null){
+                    return;
+                } else {
+                    meta.setText("R$ " + startup.getProgresso_startup().getMeta());
+
+                    investido.setText("R$ " + startup.getProgresso_startup().getInvestido());
+                }
+                if (startup.getProgresso_startup().getInvestido() != null) {
+                    try {
+                        investidoInt = Integer.parseInt(startup.getProgresso_startup().getInvestido());
+                        metaInt =  Integer.parseInt(startup.getProgresso_startup().getMeta());
+                    } catch(NumberFormatException e) {
+                        investidoInt = 0;
+                        metaInt = 0;
+                    }
+                }
+                loadProgress(investidoInt, metaInt);
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
         return view;
+    }
+
+    private void loadProgress(final int dado, final int dadoMax){
+        cont = progresso.getProgress();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(cont < dadoMax) {
+                    cont += 1;
+                    hdlr.post(new Runnable() {
+                        public void run() {
+                        progresso.setMax(dadoMax);
+                        progresso.setProgress(dado);
+                        }
+                    });
+                    try {
+                        Thread.sleep(1);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
     }
 
     private void loadUserInformation() {
@@ -227,5 +331,4 @@ public class PerfilFragment_Startup extends Fragment {
             }
         });
     }
-
 }

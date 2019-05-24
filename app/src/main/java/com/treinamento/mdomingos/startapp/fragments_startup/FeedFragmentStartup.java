@@ -12,7 +12,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.treinamento.mdomingos.startapp.R;
-import com.treinamento.mdomingos.startapp.adapter.ImageAdapter;
+import com.treinamento.mdomingos.startapp.adapter.FeedAdapter;
 import com.treinamento.mdomingos.startapp.model.Publicacao;
 
 public class FeedFragmentStartup extends Fragment {
@@ -38,21 +38,23 @@ public class FeedFragmentStartup extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        FirebaseRecyclerAdapter<Publicacao, ImageAdapter> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Publicacao, ImageAdapter>(
+        FirebaseRecyclerAdapter<Publicacao, FeedAdapter> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Publicacao, FeedAdapter>(
                 Publicacao.class,
                 R.layout.publicacao_item,
-                ImageAdapter.class,
+                FeedAdapter.class,
                 mRef
         ) {
             @Override
-            protected void populateViewHolder(ImageAdapter viewHolder, Publicacao model, int position) {
+            protected void populateViewHolder(FeedAdapter viewHolder, Publicacao model, int position) {
                 viewHolder.setDetails(getContext(),
                         model.getNomeFantasia(),
                         model.getCidade(),
                         model.getEstado(),
                         model.getDescricao(),
                         model.getFotoPerfil(),
-                        model.getFotoPublicacao());
+                        model.getFotoPublicacao(),
+                        model.getId());
+
             }
         };
 

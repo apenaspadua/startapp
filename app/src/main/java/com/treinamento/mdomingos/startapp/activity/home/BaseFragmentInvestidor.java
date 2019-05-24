@@ -25,6 +25,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.treinamento.mdomingos.startapp.R;
 import com.treinamento.mdomingos.startapp.activity.login.LoginActivity;
 import com.treinamento.mdomingos.startapp.adapter.TabsAdapter;
+import com.treinamento.mdomingos.startapp.activity.chat.ChatActivity;
 import com.treinamento.mdomingos.startapp.fragments_investidor.FeedFragment_Investidor;
 import com.treinamento.mdomingos.startapp.fragments_investidor.NotifyFragment_Investidor;
 import com.treinamento.mdomingos.startapp.fragments_investidor.PerfilFragment_Investidor;
@@ -139,6 +140,14 @@ public class BaseFragmentInvestidor extends AppCompatActivity {
             }
 
 
+        });
+
+        imageViewChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(BaseFragmentInvestidor.this, ChatActivity.class));
+
+            }
         });
     }
     private void loadUserInformation() {

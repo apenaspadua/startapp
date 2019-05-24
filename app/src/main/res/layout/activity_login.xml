@@ -62,16 +62,15 @@
             android:layout_margin="6dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/button_ronded"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="center">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginStart="160dp"
-                android:layout_marginLeft="160dp"
-                android:gravity="center_vertical"
                 android:text="LOGIN"
                 android:textAllCaps="false"
+                android:gravity="center"
                 android:textColor="@color/colorWhite"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -96,10 +95,8 @@
             style="?android:attr/progressBarStyle"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:visibility="visible"
-            android:layout_marginLeft="150dp"
+            android:layout_gravity="center"
+            android:visibility="gone"
             android:indeterminateTint="@color/colorCinza"/>
 
         <LinearLayout
@@ -110,6 +107,7 @@
                 style="@style/SubTitleRegister"
                 android:gravity="center"
                 android:text="OU"
+                android:visibility="gone"
                 app:fontFamily="@font/lato_regular" />
 
         </LinearLayout>
@@ -120,8 +118,9 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_margin="6dp"
-            android:background="@drawable/button_custom_facebook"
-            android:orientation="horizontal">
+            android:background="@drawable/button_custom_twitter"
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="15dp"
@@ -162,7 +161,8 @@
             android:layout_height="50dp"
             android:layout_margin="6dp"
             android:background="@drawable/button_custom_twitter"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="30dp"

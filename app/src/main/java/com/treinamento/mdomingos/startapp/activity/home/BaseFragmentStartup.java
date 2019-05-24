@@ -25,9 +25,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.treinamento.mdomingos.startapp.R;
 import com.treinamento.mdomingos.startapp.activity.login.LoginActivity;
 import com.treinamento.mdomingos.startapp.adapter.TabsAdapter;
-import com.treinamento.mdomingos.startapp.fragments_investidor.FeedFragment_Investidor;
-import com.treinamento.mdomingos.startapp.fragments_investidor.NotifyFragment_Investidor;
-import com.treinamento.mdomingos.startapp.fragments_investidor.PerfilFragment_Investidor;
+import com.treinamento.mdomingos.startapp.activity.chat.ChatActivity;
 import com.treinamento.mdomingos.startapp.fragments_startup.FeedFragmentStartup;
 import com.treinamento.mdomingos.startapp.fragments_startup.NotifyFragment_Startup;
 import com.treinamento.mdomingos.startapp.fragments_startup.PerfilFragment_Startup;
@@ -142,7 +140,17 @@ public class BaseFragmentStartup extends AppCompatActivity {
 
 
         });
+
+
+        imageViewChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(BaseFragmentStartup.this, ChatActivity.class));
+
+            }
+        });
     }
+
     private void loadUserInformation() {
         storageReference = FirebaseStorage.getInstance().getReference().child("foto_perfil").
                 child(user.getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {

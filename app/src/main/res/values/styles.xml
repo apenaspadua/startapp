@@ -40,7 +40,8 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/colorRoxo</item>
         <item name="android:textSize">14sp</item>
-    </style>z
+    </style>
+    z
 
     <style name="SubTitleCompany">
         <item name="android:layout_width">match_parent</item>
@@ -76,6 +77,20 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!--<style name="CustomProgressBarHorizontal" parent="android:Widget.ProgressBar.Horizontal">-->
+    <!--<item name="android:progressDrawable">@drawable/custom_progress_bar_horizontal</item>-->
+    <!--<item name="android:minHeight">10dip</item>-->
+    <!--<item name="android:maxHeight">20dip</item>-->
+    <!--</style>-->
 
 
 </resources>

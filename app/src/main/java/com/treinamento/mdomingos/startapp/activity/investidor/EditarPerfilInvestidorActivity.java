@@ -39,9 +39,11 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.treinamento.mdomingos.startapp.R;
 import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentInvestidor;
+import com.treinamento.mdomingos.startapp.adapter.UserAdapterContacts;
 import com.treinamento.mdomingos.startapp.model.CEP;
 import com.treinamento.mdomingos.startapp.model.Investidor;
 import com.treinamento.mdomingos.startapp.model.InvestidorResponse;
+import com.treinamento.mdomingos.startapp.model.Usuarios;
 import com.treinamento.mdomingos.startapp.utils.FirebaseConfig;
 import com.treinamento.mdomingos.startapp.utils.HttpService;
 import com.treinamento.mdomingos.startapp.utils.MaskFormatter;
@@ -93,6 +95,9 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
                 telefone.setText(investidor.getDetalhe_investidor().getTelefone());
                 bio.setText(investidor.getDetalhe_investidor().getBiografia());
                 apresentacao.setText(investidor.getDetalhe_investidor().getApresentacao());
+                cep.setText(investidor.getDetalhe_investidor().getCep());
+                cnpj.setText(investidor.getDetalhe_investidor().getCnpj());
+                cpf.setText(investidor.getDetalhe_investidor().getCpf());
 
             }
 
@@ -277,8 +282,14 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
 
                                 Investidor investidor = new Investidor(nomeRecebido, emailRecebido, telefoneRecebido, empresaRecebida, dataRecebida, cepRecebido, ruaRecebida, bairroRecebido, cidadeRecebido, estadoRecebido, null, cpfRecebido);
                                 investidor.salvarInvestidor(firebaseUser.getUid());
+
                                 Investidor investidor1 = new Investidor(bioRecebida, apresentacaoRecebida);
                                 investidor1.salvarBioInvestidor(firebaseUser.getUid());
+
+                                Usuarios usuarios = new Usuarios();
+                                usuarios.setNome(nomeRecebido);
+                                usuarios.salvarMais(firebaseUser.getUid());
+
                                 progressDialog.setMessage("Salvando dados...");
                                 progressDialog.show();
                                 Toast.makeText(EditarPerfilInvestidorActivity.this, "Alterado com sucesso", Toast.LENGTH_SHORT).show();
@@ -324,7 +335,7 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
 
         if(requestCode ==  PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data!= null && data.getData() != null){
             imageUri = data.getData();
-            Picasso.get().load(imageUri).into(foto);
+            Picasso.with(this).load(imageUri).into(foto);
             uploadFile();
         }
     }
@@ -348,12 +359,13 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
                     Uri downloadUrl = urlTask.getResult();
                     final String downUrl = String.valueOf(downloadUrl);
 
-                    Investidor investidor = new Investidor();
-                    investidor.setImagemPerfil(downUrl);
-                    investidor.salvarFotoPerfil(firebaseUser.getUid());
+                    Usuarios usuarios = new Usuarios();
+                    usuarios.setFoto_perfil(downUrl);
+                    usuarios.salvarFotoPerfil(firebaseUser.getUid());
 
                     progressBar.setVisibility(View.INVISIBLE);
                     Toast.makeText(EditarPerfilInvestidorActivity.this, "Imagem alterada com sucesso", Toast.LENGTH_SHORT).show();
+
 
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -390,6 +402,13 @@ public class EditarPerfilInvestidorActivity extends AppCompatActivity {
             public void onFailure(@NonNull Exception exception) {
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(this, BaseFragmentInvestidor.class));
+        finish();
     }
 }
 

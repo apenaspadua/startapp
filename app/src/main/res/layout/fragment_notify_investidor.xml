@@ -6,29 +6,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments_investidor.PerfilFragment_Investidor">
 
-
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:gravity="center"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_notify_investidor"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent" />
 
 
-
-        <TextView
-            android:id="@+id/title_status"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingTop="10dp"
-            android:text="notificacoes"
-            android:textColor="@color/colorCinza"
-            android:textSize="20sp"
-            app:fontFamily="@font/lato_regular" />
-
-
-
-    </LinearLayout>
 </FrameLayout>
 

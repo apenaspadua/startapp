@@ -4,10 +4,10 @@ import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -41,10 +41,10 @@ import com.treinamento.mdomingos.startapp.model.CEP;
 import com.treinamento.mdomingos.startapp.model.Publicacao;
 import com.treinamento.mdomingos.startapp.model.Startup;
 import com.treinamento.mdomingos.startapp.model.StartupResponse;
+import com.treinamento.mdomingos.startapp.model.Usuarios;
 import com.treinamento.mdomingos.startapp.utils.FirebaseConfig;
 import com.treinamento.mdomingos.startapp.utils.HttpService;
 import com.treinamento.mdomingos.startapp.utils.MaskFormatter;
-import com.treinamento.mdomingos.startapp.utils.UploadStorage;
 import com.treinamento.mdomingos.startapp.utils.Validator;
 
 import java.util.concurrent.ExecutionException;
@@ -72,10 +72,10 @@ public class EditarPerfilStartupActivity extends AppCompatActivity {
     private String imageURL;
 
 
-
     @Override
     protected void onResume() {
         super.onResume();
+        loadUserInformation();
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.child("Usuarios").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
@@ -93,6 +93,8 @@ public class EditarPerfilStartupActivity extends AppCompatActivity {
                 bio.setText(startup.getDetalhe_startup().getBiografia());
                 apresentacao.setText(startup.getDetalhe_startup().getApresentacao());
                 link.setText(startup.getDetalhe_startup().getLink());
+                cep.setText(startup.getDetalhe_startup().getCep());
+                cnpj.setText(startup.getDetalhe_startup().getCnpj());
             }
 
             @Override
@@ -132,7 +134,6 @@ public class EditarPerfilStartupActivity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        loadUserInformation();
         progressBar.setVisibility(View.VISIBLE);
 
         //Mascara para cnpj
@@ -250,6 +251,10 @@ public class EditarPerfilStartupActivity extends AppCompatActivity {
                         Startup startup1 = new Startup(bioRecebida, apresentacaoRecebido, linkRecebido);
                         startup1.salvarBioStartup(firebaseUser.getUid());
 
+                        Usuarios usuarios = new Usuarios();
+                        usuarios.setNome(nomeFantasiaRecebido);
+                        usuarios.salvarMais(firebaseUser.getUid());
+
                         Publicacao publicacao = new Publicacao(nomeFantasiaRecebido,cidadeRecebido, estadoRecebido);
                         publicacao.salvarDados(firebaseUser.getUid());
                         publicacao.setDescricao(bioRecebida);
@@ -284,7 +289,7 @@ public class EditarPerfilStartupActivity extends AppCompatActivity {
 
         if(requestCode ==  PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data!= null && data.getData() != null){
             imageUri = data.getData();
-            Picasso.get().load(imageUri).into(foto);
+            Picasso.with(this).load(imageUri).into(foto);
             uploadFile();
         }
     }
@@ -308,9 +313,9 @@ public class EditarPerfilStartupActivity extends AppCompatActivity {
                     Uri downloadUrl = urlTask.getResult();
                     final String downUrl = String.valueOf(downloadUrl);
 
-                    Startup startup = new Startup();
-                    startup.setImagemPerfil(downUrl);
-                    startup.salvarFotoPerfil(firebaseUser.getUid());
+                    Usuarios usuarios = new Usuarios();
+                    usuarios.setFoto_perfil(downUrl);
+                    usuarios.salvarFotoPerfil(firebaseUser.getUid());
 
                     Publicacao publicacao = new Publicacao();
                     publicacao.setFotoPerfil(downUrl);
@@ -318,6 +323,7 @@ public class EditarPerfilStartupActivity extends AppCompatActivity {
 
                     progressBar.setVisibility(View.INVISIBLE);
                     Toast.makeText(EditarPerfilStartupActivity.this, "Imagem alterada com sucesso", Toast.LENGTH_SHORT).show();
+
 
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -354,5 +360,11 @@ public class EditarPerfilStartupActivity extends AppCompatActivity {
         });
     }
 
- }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(this, BaseFragmentStartup.class));
+        finish();
+    }
+}
 

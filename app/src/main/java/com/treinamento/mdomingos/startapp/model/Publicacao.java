@@ -28,6 +28,7 @@ public class Publicacao {
         databaseReference.child("Publicacoes").child(id).child("nomeFantasia").setValue(nomeFantasia);
         databaseReference.child("Publicacoes").child(id).child("cidade").setValue(cidade);
         databaseReference.child("Publicacoes").child(id).child("estado").setValue(estado);
+        databaseReference.child("Publicacoes").child(id).child("id").setValue(id);
     }
 
     public void salvarFotoPublicacao(String id){
@@ -49,8 +50,8 @@ public class Publicacao {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+        public void setId(String id) {
+            this.id = id;
     }
 
     public String getNomeFantasia() {

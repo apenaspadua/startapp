@@ -77,6 +77,7 @@ public class PerfilFragment_Investidor extends Fragment {
         } else {
             if (item.getItemId() == R.id.editar_perfil_item_dropdown_menu_id){
                 startActivity(new Intent(getActivity(), EditarPerfilInvestidorActivity.class));
+                getActivity().finish();
             }
         }
         return super.onOptionsItemSelected(item);
@@ -130,6 +131,7 @@ public class PerfilFragment_Investidor extends Fragment {
                     public void onClick(View v) {
                         editar.setTextColor(Color.parseColor("#0289BE"));
                         startActivity(new Intent(getActivity(), EditarPerfilInvestidorActivity.class));
+                        getActivity().finish();
                     }
                 });
             }

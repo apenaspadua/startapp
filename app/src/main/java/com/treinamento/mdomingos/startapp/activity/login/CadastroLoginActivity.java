@@ -22,6 +22,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.treinamento.mdomingos.startapp.R;
+import com.treinamento.mdomingos.startapp.activity.inicial.InicialActivity;
 import com.treinamento.mdomingos.startapp.activity.others.EnviandoEmailActivity;
 import com.treinamento.mdomingos.startapp.activity.others.TermosActivity;
 import com.treinamento.mdomingos.startapp.model.Usuarios;
@@ -107,8 +108,7 @@ public class CadastroLoginActivity extends AppCompatActivity {
 
                     }else if(Id == 0){
 
-                        new AlertDialog.Builder(CadastroLoginActivity.this).setTitle("Aviso").
-                                setMessage("Leia e aceite os Termos de uso.").setPositiveButton("Entendi", new DialogInterface.OnClickListener() {
+                        new AlertDialog.Builder(CadastroLoginActivity.this).setTitle("Aviso").setMessage("Leia e aceite os Termos de uso.").setPositiveButton("Entendi", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                             }
@@ -146,7 +146,6 @@ public class CadastroLoginActivity extends AppCompatActivity {
                                               usuario.setBio_completa(0);
                                               usuario.setEmail(emailRecebido);
                                               usuario.salvar();
-
 
                                         Intent intent = new Intent(CadastroLoginActivity.this, EnviandoEmailActivity.class);
                                         startActivity(intent);
@@ -200,6 +199,13 @@ public class CadastroLoginActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(this, InicialActivity.class));
+        finish();
     }
 }
 
