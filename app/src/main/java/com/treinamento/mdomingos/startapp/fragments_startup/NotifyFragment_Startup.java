@@ -57,8 +57,8 @@ public class NotifyFragment_Startup extends Fragment {
             @Override
             protected void populateViewHolder(NotifyAdapter viewHolder, Notificacao model, int position) {
                 viewHolder.setDetails(getContext(),
+                        model.getFotoPerfil(),
                         model.getDescricao(),
-                        model.getFoto_Perfil(),
                         model.getId());
             }
         };

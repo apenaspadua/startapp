@@ -7,7 +7,7 @@ public class Notificacao {
 
     private String id;
     private String descricao;
-    private String foto_perfil;
+    private String fotoPerfil;
 
 
     public Notificacao(){
@@ -15,13 +15,13 @@ public class Notificacao {
 
     public Notificacao(String desc, String fotoPerfil){
         this.descricao = desc;
-        this.foto_perfil = fotoPerfil;
+        this.fotoPerfil = fotoPerfil;
     }
 
     public void salvarNotificacao(String id, String cont) {
         DatabaseReference databaseReference = FirebaseConfig.getFirebase();
         databaseReference.child("Notificacoes").child(id).child(cont).child("descricao").setValue(descricao);
-        databaseReference.child("Notificacoes").child(id).child(cont).child("fotoPerfil").setValue(foto_perfil);
+        databaseReference.child("Notificacoes").child(id).child(cont).child("fotoPerfil").setValue(fotoPerfil);
     }
 
     public String getId() {
@@ -40,11 +40,11 @@ public class Notificacao {
         this.descricao = descricao;
     }
 
-    public String getFoto_Perfil() {
-        return foto_perfil;
+    public String getFotoPerfil() {
+        return fotoPerfil;
     }
 
-    public void setFoto_Perfil(String foto_perfil) {
-        this.foto_perfil = foto_perfil;
+    public void setFotoPerfil(String fotoPerfil) {
+        this.fotoPerfil = fotoPerfil;
     }
 }
