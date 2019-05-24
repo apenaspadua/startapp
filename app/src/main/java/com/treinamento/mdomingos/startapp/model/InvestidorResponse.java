@@ -13,6 +13,7 @@ public class InvestidorResponse implements Serializable {
     private int perfil;
     private String email;
     private Investidor detalhe_investidor;
+    private String foto_perfil;
 
 
     public InvestidorResponse() {
@@ -40,6 +41,14 @@ public class InvestidorResponse implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getFoto_Perfil() {
+        return foto_perfil;
+    }
+
+    public void setFoto_Perfil(String foto_perfil) {
+        this.foto_perfil = foto_perfil;
     }
 
     public Investidor getDetalhe_investidor() {

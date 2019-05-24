@@ -27,7 +27,10 @@ import com.treinamento.mdomingos.startapp.activity.chat.notifications.MyResponse
 import com.treinamento.mdomingos.startapp.activity.chat.notifications.Sender;
 import com.treinamento.mdomingos.startapp.activity.chat.notifications.Token;
 import com.treinamento.mdomingos.startapp.model.InvestidorResponse;
+import com.treinamento.mdomingos.startapp.model.Notificacao;
 import com.treinamento.mdomingos.startapp.model.Usuarios;
+
+import java.util.UUID;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,7 +46,8 @@ public class EnvioNotifyActivity extends AppCompatActivity {
     Intent intent;
     String userid;
     FirebaseUser user;
-    private String nomeInvestidor;
+    private String nomeInvestidor, fotoPerfil;
+    private String idNotify;
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -76,6 +80,7 @@ public class EnvioNotifyActivity extends AppCompatActivity {
                 InvestidorResponse investidor = dataSnapshot.getValue(InvestidorResponse.class);
 
                 nomeInvestidor = investidor.getDetalhe_investidor().getNome();
+                fotoPerfil = investidor.getFoto_Perfil();
             }
 
             @Override
@@ -92,7 +97,7 @@ public class EnvioNotifyActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 if (notify) {
-                    sendNotifiaction(userid, nomeInvestidor);
+                    sendNotifiaction(userid, nomeInvestidor, fotoPerfil);
                 }
                 notify = false;
             }
@@ -103,7 +108,7 @@ public class EnvioNotifyActivity extends AppCompatActivity {
 
             }
 
-            private void sendNotifiaction(String receiver, final String username) {
+            private void sendNotifiaction(String receiver, final String username, final  String fotoPerfil) {
                 DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
                 Query query = tokens.orderByKey().equalTo(receiver);
                 query.addValueEventListener(new ValueEventListener() {
@@ -121,6 +126,13 @@ public class EnvioNotifyActivity extends AppCompatActivity {
                                         if (response.body().success != 1) {
                                             Toast.makeText(EnvioNotifyActivity.this, "Falha!", Toast.LENGTH_SHORT).show();
                                         }
+
+                                        idNotify = UUID.randomUUID().toString();
+
+                                        Notificacao notificacao = new Notificacao();
+                                        notificacao.setDescricao(username + " mostrou um interesse pelo seu projeto. Entre em contato!");
+                                        notificacao.setFoto_Perfil(fotoPerfil);
+                                        notificacao.salvarNotificacao(userid, String.valueOf(idNotify));
 
                                         progressBar.setVisibility(View.GONE);
                                         text1.setText("Notificação enviada!");
