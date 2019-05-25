@@ -14,10 +14,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.treinamento.mdomingos.startapp.R;
-import com.treinamento.mdomingos.startapp.adapter.FeedAdapter;
 import com.treinamento.mdomingos.startapp.adapter.NotifyAdapter;
 import com.treinamento.mdomingos.startapp.model.Notificacao;
-import com.treinamento.mdomingos.startapp.model.Publicacao;
 
 public class NotifyFragment_Startup extends Fragment {
 
@@ -59,7 +57,7 @@ public class NotifyFragment_Startup extends Fragment {
                 viewHolder.setDetails(getContext(),
                         model.getFotoPerfil(),
                         model.getDescricao(),
-                        model.getId());
+                        model.getSenderId());
             }
         };
 

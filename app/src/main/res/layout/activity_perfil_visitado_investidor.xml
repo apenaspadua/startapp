@@ -146,7 +146,7 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/botao_iniciar_conversa_perfilVisitado_startup_id"
+                android:id="@+id/botao_iniciar_conversa_perfilVisitado_investidor_id"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_centerHorizontal="true"

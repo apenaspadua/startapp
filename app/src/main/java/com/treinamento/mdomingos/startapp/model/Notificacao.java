@@ -6,6 +6,7 @@ import com.treinamento.mdomingos.startapp.utils.FirebaseConfig;
 public class Notificacao {
 
     private String id;
+    private String senderId;
     private String descricao;
     private String fotoPerfil;
 
@@ -18,10 +19,11 @@ public class Notificacao {
         this.fotoPerfil = fotoPerfil;
     }
 
-    public void salvarNotificacao(String id, String cont) {
+    public void salvarNotificacao(String id, String cont, String senderId) {
         DatabaseReference databaseReference = FirebaseConfig.getFirebase();
         databaseReference.child("Notificacoes").child(id).child(cont).child("descricao").setValue(descricao);
         databaseReference.child("Notificacoes").child(id).child(cont).child("fotoPerfil").setValue(fotoPerfil);
+        databaseReference.child("Notificacoes").child(id).child(cont).child("senderId").setValue(senderId);
     }
 
     public String getId() {
@@ -30,6 +32,15 @@ public class Notificacao {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+
+    public String getSenderId() {
+        return senderId;
+    }
+
+    public void setSenderId(String senderId) {
+        this.senderId = senderId;
     }
 
     public String getDescricao() {

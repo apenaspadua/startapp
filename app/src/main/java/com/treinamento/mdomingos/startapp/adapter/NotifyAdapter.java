@@ -47,7 +47,6 @@ public class NotifyAdapter extends RecyclerView.ViewHolder {
         TextView descri = mView.findViewById(R.id.nome_startup_notify_id);
         CircleImageView imageProfile = mView.findViewById(R.id.imageview_notify_startup_id);
 
-
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
 
@@ -69,12 +68,12 @@ public class NotifyAdapter extends RecyclerView.ViewHolder {
 
                         if(usuarios.getPerfil() == 1){
 
-                            Intent intent = new Intent(context, PerfilVisitadoInvestidorActivity.class);
+                            Intent intent = new Intent(context, PerfilVisitadoStartupActivity.class);
                             intent.putExtra("notificacao",  id);
                             context.startActivity(intent);
 
                         } else {
-                            Intent intent = new Intent(context, PerfilVisitadoStartupActivity.class);
+                            Intent intent = new Intent(context, PerfilVisitadoInvestidorActivity.class);
                             intent.putExtra("notificacao",  id);
                             context.startActivity(intent);
                         }

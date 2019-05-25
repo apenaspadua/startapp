@@ -124,6 +124,7 @@ public class EnvioNotifyActivity extends AppCompatActivity {
                                 public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
                                     if (response.code() == 200) {
                                         if (response.body().success != 1) {
+
                                             Toast.makeText(EnvioNotifyActivity.this, "Falha!", Toast.LENGTH_SHORT).show();
                                         }
 
@@ -131,8 +132,9 @@ public class EnvioNotifyActivity extends AppCompatActivity {
 
                                         Notificacao notificacao = new Notificacao();
                                         notificacao.setDescricao(username + " mostrou um interesse pelo seu projeto. Entre em contato!");
-                                        notificacao.setFoto_Perfil(fotoPerfil);
-                                        notificacao.salvarNotificacao(userid, String.valueOf(idNotify));
+                                        notificacao.setFotoPerfil(fotoPerfil);
+                                        notificacao.setSenderId(user.getUid());
+                                        notificacao.salvarNotificacao(userid, String.valueOf(idNotify), user.getUid());
 
                                         progressBar.setVisibility(View.GONE);
                                         text1.setText("Notificação enviada!");
