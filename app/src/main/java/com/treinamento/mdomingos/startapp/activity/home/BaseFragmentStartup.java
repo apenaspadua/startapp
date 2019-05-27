@@ -24,6 +24,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.treinamento.mdomingos.startapp.R;
 import com.treinamento.mdomingos.startapp.activity.login.LoginActivity;
+import com.treinamento.mdomingos.startapp.activity.others.ListaGeralActivity;
+import com.treinamento.mdomingos.startapp.activity.others.SlideActivity;
+import com.treinamento.mdomingos.startapp.activity.others.SlidesPosCadastroActivity;
 import com.treinamento.mdomingos.startapp.adapter.TabsAdapter;
 import com.treinamento.mdomingos.startapp.activity.chat.ChatActivity;
 import com.treinamento.mdomingos.startapp.fragments_startup.FeedFragmentStartup;
@@ -43,7 +46,7 @@ public class BaseFragmentStartup extends AppCompatActivity {
     private FirebaseUser user;
     private String imageURL;
     private Task<Uri> storageReference;
-    private ImageView imageViewChat;
+    private ImageView imageViewChat, imageViewList;
     private CircleImageView imageViewProfile;
     private ProgressBar progressBar;
 
@@ -73,6 +76,7 @@ public class BaseFragmentStartup extends AppCompatActivity {
         tabLayout = findViewById(R.id.tabLayout_startup);
         imageViewProfile = findViewById(R.id.imageview_home_startup_id);
         imageViewChat = findViewById(R.id.imageview_chat_startup_id);
+        imageViewList = findViewById(R.id.imageview_lista_geral_startup_id);
         toolbar = findViewById(R.id.toolbar_startup);
         progressBar = findViewById(R.id.progressBar_base_startup);
         progressDialog = new ProgressDialog(this);
@@ -147,6 +151,21 @@ public class BaseFragmentStartup extends AppCompatActivity {
             public void onClick(View v) {
                 startActivity(new Intent(BaseFragmentStartup.this, ChatActivity.class));
 
+            }
+        });
+
+        titulo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(BaseFragmentStartup.this, SlideActivity.class));
+
+            }
+        });
+
+        imageViewList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(BaseFragmentStartup.this, ListaGeralActivity.class));
             }
         });
     }
