@@ -55,6 +55,7 @@
                     android:paddingBottom="10dp"
                     android:textSize="18dp"
                     android:text="você pode "
+                    android:visibility="gone"
                     app:fontFamily="@font/lato_regular" />
 
                 <RelativeLayout
@@ -62,6 +63,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_margin="6dp"
+                    android:visibility="gone"
                     android:background="@drawable/button_custom_twitter"
                     android:orientation="horizontal">
 
@@ -103,6 +105,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_margin="6dp"
+                    android:visibility="gone"
                     android:background="@drawable/button_custom_twitter"
                     android:orientation="horizontal">
 
@@ -152,6 +155,7 @@
                 android:gravity="center"
                 android:text=" ou se preferir"
                 android:textSize="18dp"
+                android:visibility="gone"
                 app:fontFamily="@font/lato_regular" />
         </LinearLayout>
 

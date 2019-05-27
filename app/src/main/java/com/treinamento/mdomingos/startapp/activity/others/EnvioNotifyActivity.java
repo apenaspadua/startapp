@@ -128,13 +128,13 @@ public class EnvioNotifyActivity extends AppCompatActivity {
                                             Toast.makeText(EnvioNotifyActivity.this, "Falha!", Toast.LENGTH_SHORT).show();
                                         }
 
-                                        idNotify = UUID.randomUUID().toString();
+                                            idNotify = UUID.randomUUID().toString();
 
-                                        Notificacao notificacao = new Notificacao();
-                                        notificacao.setDescricao(username + " mostrou um interesse pelo seu projeto. Entre em contato!");
-                                        notificacao.setFotoPerfil(fotoPerfil);
-                                        notificacao.setSenderId(user.getUid());
-                                        notificacao.salvarNotificacao(userid, String.valueOf(idNotify), user.getUid());
+                                            Notificacao notificacao = new Notificacao();
+                                            notificacao.setDescricao(username + " mostrou um interesse pelo seu projeto. Entre em contato!");
+                                            notificacao.setFotoPerfil(fotoPerfil);
+                                            notificacao.setSenderId(user.getUid());
+                                            notificacao.salvarNotificacao(userid, String.valueOf(idNotify), user.getUid());
 
                                         progressBar.setVisibility(View.GONE);
                                         text1.setText("Notificação enviada!");
@@ -176,4 +176,55 @@ public class EnvioNotifyActivity extends AppCompatActivity {
         reference.child(user.getUid()).setValue(token1);
     }
 }
+
+
+
+
+//
+//      firebaseDatabase = FirebaseDatabase.getInstance();
+//              mRef = firebaseDatabase.getReference("Usuarios");
+//
+//              mRef.addValueEventListener(new ValueEventListener() {
+//@Override
+//public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//        Usuarios usuarios = dataSnapshot.getValue(Usuarios.class);
+//
+//        if(usuarios.getPerfil() == 1){
+//
+//        idUsuario = usuarios.getId();
+//
+//final DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference();
+//        reference1.child("Usuarios").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+//@Override
+//public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//        StartupResponse startup = dataSnapshot.getValue(StartupResponse.class);
+//        pegaNome =  startup.getDetalhe_startup().getNomeFantasia();
+//        pegaImagemPerfil = startup.getDetalhe_startup().getImagemPerfil();
+//
+//        idNotify = UUID.randomUUID().toString();
+//
+//        Notificacao notificacao = new Notificacao();
+//        notificacao.setDescricao(pegaNome + " acabou de se cadastrar entre nós. Vá conhece-los!");
+//        notificacao.setFotoPerfil(pegaImagemPerfil);
+//        notificacao.setSenderId(firebaseUser.getUid());
+//        notificacao.salvarNotificacao(idUsuario, String.valueOf(idNotify), firebaseUser.getUid());
+//        }
+//
+//@Override
+//public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//        }
+//        });
+//
+//        } else {
+//        return;
+//        }
+//
+//        }
+//
+//@Override
+//public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//        }
+//        });
 
