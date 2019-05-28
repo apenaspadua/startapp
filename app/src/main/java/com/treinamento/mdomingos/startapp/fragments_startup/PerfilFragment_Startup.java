@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -38,14 +39,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.spark.submitbutton.SubmitButton;
 import com.treinamento.mdomingos.startapp.R;
-import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentStartup;
 import com.treinamento.mdomingos.startapp.activity.login.LoginActivity;
 import com.treinamento.mdomingos.startapp.activity.startup.EditarPerfilStartupActivity;
 import com.treinamento.mdomingos.startapp.activity.startup.EnviaArquivosActivity;
 import com.treinamento.mdomingos.startapp.model.Startup;
 import com.treinamento.mdomingos.startapp.model.StartupResponse;
-import com.treinamento.mdomingos.startapp.utils.Validator;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -58,11 +58,13 @@ public class PerfilFragment_Startup extends Fragment {
     private FirebaseUser user;
     private String imageURL;
     private ProgressBar progressBar, progresso;
-    private TextView nome,cidade, razao, email, rua, bairro, estado, telefone, bio, editar, apresentacao, link, meta, investido;
+    private TextView nome,cidade, razao, email, rua, bairro, estado, telefone, bio, editar, apresentacao, link, meta, investido, texto1, texto2;
+    private ImageView imagem, close;
+    private SubmitButton impulsionar;
     private RelativeLayout atualizar;
     private EditText insereAtualizaProgresso, insereAtualizaMeta;
     private CircleImageView foto;
-    private RelativeLayout editarVideo;
+    private RelativeLayout editarVideo, relativeLayout;
     private FirebaseStorage storage;
     private int investidoInt = 0, metaInt = 0, cont = 0;
     private Handler hdlr = new Handler();
@@ -78,6 +80,31 @@ public class PerfilFragment_Startup extends Fragment {
         progressBar.setVisibility(View.VISIBLE);
         editar.setTextColor(Color.parseColor("#57BC90"));
         loadVideo();
+
+
+        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("Usuarios").child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                StartupResponse startup = dataSnapshot.getValue(StartupResponse.class);
+
+                if (startup.getDetalhe_startup().getIsImpulse() == 1) {
+
+                    close.setVisibility(View.GONE);
+                    texto1.setVisibility(View.GONE);
+                    texto2.setVisibility(View.GONE);
+                    imagem.setVisibility(View.GONE);
+                    impulsionar.setVisibility(View.GONE);
+                    relativeLayout.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     @Override
@@ -134,11 +161,40 @@ public class PerfilFragment_Startup extends Fragment {
         editarVideo = view.findViewById(R.id.botao_editar_projeto_startup_id);
         progressBar = view.findViewById(R.id.progressBar_perfil_startup);
         progressDialog = new ProgressDialog(getActivity());
+        texto1 = view.findViewById(R.id.texto_impulsionar_id);
+        texto2 = view.findViewById(R.id.texto2_impulsionar_id);
+        close = view.findViewById(R.id.button_close_id);
+        imagem = view.findViewById(R.id.imagem_impulsionar_id);
+        impulsionar = view.findViewById(R.id.botao_impulsionar_id);
+        relativeLayout = view.findViewById(R.id.relative_layout_sumir_id);
 
         //barra de progresso
         progresso = view.findViewById(R.id.progressbar_progresso_perfil_startup);
         meta = view.findViewById(R.id.meta_progressbar_perfil_startup);
         investido = view.findViewById(R.id.conquistado_progressbar_peril_startup);
+
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                close.setVisibility(View.GONE);
+                texto1.setVisibility(View.GONE);
+                texto2.setVisibility(View.GONE);
+                imagem.setVisibility(View.GONE);
+                impulsionar.setVisibility(View.GONE);
+                relativeLayout.setVisibility(View.GONE);
+            }
+        });
+
+
+        impulsionar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Startup startup = new Startup();
+                startup.isImpulse(user.getUid(), 1);
+
+            }
+        });
 
 
         atualizar.setOnClickListener(new View.OnClickListener() {
@@ -151,7 +207,7 @@ public class PerfilFragment_Startup extends Fragment {
                 insereAtualizaProgresso = view.findViewById(R.id.atualiza_barra_id);
 
                 final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-                databaseReference.child("Usuarios").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+                databaseReference.child("Usuarios").child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                    @Override
                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                        StartupResponse startup = dataSnapshot.getValue(StartupResponse.class);
@@ -231,7 +287,7 @@ public class PerfilFragment_Startup extends Fragment {
         videoView.start();
 
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("Usuarios").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+        databaseReference.child("Usuarios").child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 StartupResponse startup = dataSnapshot.getValue(StartupResponse.class);

@@ -196,6 +196,7 @@
             </RelativeLayout>
 
             <ImageView
+                android:id="@+id/button_close_id"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="end"
@@ -205,6 +206,7 @@
                 android:scaleType="fitXY" />
 
             <TextView
+                android:id="@+id/texto_impulsionar_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
@@ -217,6 +219,7 @@
                 android:fontFamily="@font/lato_regular"/>
 
             <ImageView
+                android:id="@+id/imagem_impulsionar_id"
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
                 android:layout_gravity="center"
@@ -224,6 +227,7 @@
                 android:scaleType="fitXY" />
 
             <TextView
+                android:id="@+id/texto2_impulsionar_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
@@ -237,7 +241,7 @@
                 android:fontFamily="@font/lato_regular"/>
 
             <com.spark.submitbutton.SubmitButton
-                android:id="@+id/botao_salvar_arquivos_id"
+                android:id="@+id/botao_impulsionar_id"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_centerHorizontal="true"
@@ -252,6 +256,7 @@
                 app:sub_btn_tick_color="@color/white" />
 
             <RelativeLayout
+                android:id="@+id/relative_layout_sumir_id"
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
                 android:layout_marginTop="30dp"

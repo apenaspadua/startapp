@@ -164,6 +164,7 @@ public class CadastroStartupActivity extends AppCompatActivity {
 
                 Startup startup = new Startup(razaoSocialRecebido, nomeFantasiaRecebido, emailRecebido, telefoneRecebido, cepRecebido, ruaRecebida, bairroRecebido,cidadeRecebido, estadoRecebido, cnpjRecebido);
                 startup.salvarStartup(firebaseUser.getUid());
+                startup.isImpulse(firebaseUser.getUid(), 0);
 
                 progressDialog.setMessage("Guardando dados...");
                 Publicacao publicacao = new Publicacao(nomeFantasiaRecebido, cidadeRecebido, estadoRecebido);

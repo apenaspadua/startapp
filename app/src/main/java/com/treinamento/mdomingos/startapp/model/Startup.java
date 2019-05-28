@@ -28,7 +28,7 @@ public class Startup {
     private String apresentacao;
     private String link;
     private String imagemPerfil;
-
+    private int isImpulse;
 
     public Startup(){
 
@@ -72,6 +72,10 @@ public class Startup {
 //        databaseReference.child("Usuarios").child(id).child("detalhe_startup").child("foto_perfil").setValue(imagemPerfil);
 //    }
 
+    public void isImpulse(String id, int value){
+        DatabaseReference databaseReference = FirebaseConfig.getFirebase();
+        databaseReference.child("Usuarios").child(id).child("detalhe_startup").child("isImpulse").setValue(value);
+    }
 
     public void salvarMetaProgesso(String id){
         DatabaseReference databaseReference = FirebaseConfig.getFirebase();
@@ -205,5 +209,14 @@ public class Startup {
 
     public void setImagemPerfil(String imagemPerfil) {
         this.imagemPerfil = imagemPerfil;
+    }
+
+
+    public int getIsImpulse() {
+        return isImpulse;
+    }
+
+    public void setIsImpulse(int isImpulse) {
+        this.isImpulse = isImpulse;
     }
 }

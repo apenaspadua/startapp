@@ -82,7 +82,7 @@ public class PerfilVisitadoInvestidorActivity extends AppCompatActivity {
             id = extras.getString("notificacao");
 
             final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-            databaseReference.child("Usuarios").child(id).addValueEventListener(new ValueEventListener() {
+            databaseReference.child("Usuarios").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     InvestidorResponse investidorResponse = dataSnapshot.getValue(InvestidorResponse.class);

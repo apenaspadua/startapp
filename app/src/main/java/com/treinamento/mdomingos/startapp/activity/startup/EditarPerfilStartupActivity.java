@@ -78,7 +78,7 @@ public class EditarPerfilStartupActivity extends AppCompatActivity {
         loadUserInformation();
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("Usuarios").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+        databaseReference.child("Usuarios").child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 StartupResponse startup = dataSnapshot.getValue(StartupResponse.class);

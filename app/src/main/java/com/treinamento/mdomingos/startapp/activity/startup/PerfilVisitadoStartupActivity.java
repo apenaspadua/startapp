@@ -132,7 +132,7 @@ public class PerfilVisitadoStartupActivity extends AppCompatActivity{
             id = extras.getString("publicacoes");
 
             final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-            databaseReference.child("Usuarios").child(id).addValueEventListener(new ValueEventListener() {
+            databaseReference.child("Usuarios").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     StartupResponse startup = dataSnapshot.getValue(StartupResponse.class);
@@ -189,7 +189,7 @@ public class PerfilVisitadoStartupActivity extends AppCompatActivity{
             public void onClick(View v) {
 
                 final DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-                reference.child("Usuarios").child(user.getUid()).addValueEventListener(new ValueEventListener() {
+                reference.child("Usuarios").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         Usuarios usuarios = dataSnapshot.getValue(Usuarios.class);

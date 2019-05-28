@@ -111,7 +111,7 @@ public class PerfilFragment_Investidor extends Fragment {
 
 
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("Usuarios").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+        databaseReference.child("Usuarios").child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 InvestidorResponse investidor = dataSnapshot.getValue(InvestidorResponse.class);
