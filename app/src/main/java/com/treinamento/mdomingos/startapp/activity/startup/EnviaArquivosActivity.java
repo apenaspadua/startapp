@@ -31,6 +31,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.spark.submitbutton.SubmitButton;
 import com.squareup.picasso.Picasso;
 import com.treinamento.mdomingos.startapp.R;
 import com.treinamento.mdomingos.startapp.activity.home.BaseFragmentStartup;
@@ -44,9 +45,10 @@ public class EnviaArquivosActivity extends AppCompatActivity {
     private Uri imageUri;
     private Uri videoUri;
 
-    private RelativeLayout botaoSalvar, pegaFoto, pegaVideo;
+    private RelativeLayout pegaFoto, pegaVideo;
     private FirebaseAuth firebaseAuth;
     private TextView nomeVideo;
+    private SubmitButton botaoSalvar;
 
     private ProgressBar progressBar;
     private FirebaseUser firebaseUser;
@@ -107,7 +109,7 @@ public class EnviaArquivosActivity extends AppCompatActivity {
             public void onClick(View v) {
                 progressDialog.setMessage("Salvando alterações...");
                 startActivity(new Intent(EnviaArquivosActivity.this, BaseFragmentStartup.class));
-                finish();
+
             }
         });
     }

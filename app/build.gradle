@@ -21,6 +21,7 @@ android {
 }
 repositories {
     maven { url 'https://jitpack.io' }
+    maven { url 'https://dl.bintray.com/spark/maven' }
 }
 
 dependencies {
@@ -60,6 +61,9 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.5.0'
 
     implementation 'com.android.support:multidex:1.0.3'
+
+    implementation 'me.spark:submitbutton:1.0.1'
+
 
 
 }

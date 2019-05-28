@@ -4,13 +4,16 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -23,15 +26,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.treinamento.mdomingos.startapp.R;
-import com.treinamento.mdomingos.startapp.activity.login.LoginActivity;
-import com.treinamento.mdomingos.startapp.activity.others.ListaGeralActivity;
-import com.treinamento.mdomingos.startapp.activity.others.SlideActivity;
-import com.treinamento.mdomingos.startapp.activity.others.SlidesPosCadastroActivity;
-import com.treinamento.mdomingos.startapp.adapter.TabsAdapter;
 import com.treinamento.mdomingos.startapp.activity.chat.ChatActivity;
+import com.treinamento.mdomingos.startapp.activity.login.LoginActivity;
+import com.treinamento.mdomingos.startapp.activity.others.SlideActivity;
+import com.treinamento.mdomingos.startapp.adapter.TabsAdapter;
 import com.treinamento.mdomingos.startapp.fragments_startup.FeedFragmentStartup;
 import com.treinamento.mdomingos.startapp.fragments_startup.NotifyFragment_Startup;
 import com.treinamento.mdomingos.startapp.fragments_startup.PerfilFragment_Startup;
+import com.treinamento.mdomingos.startapp.utils.MyBounceInterpolator;
+
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -46,7 +49,7 @@ public class BaseFragmentStartup extends AppCompatActivity {
     private FirebaseUser user;
     private String imageURL;
     private Task<Uri> storageReference;
-    private ImageView imageViewChat, imageViewList;
+    private ImageView imageViewChat;
     private CircleImageView imageViewProfile;
     private ProgressBar progressBar;
 
@@ -76,7 +79,6 @@ public class BaseFragmentStartup extends AppCompatActivity {
         tabLayout = findViewById(R.id.tabLayout_startup);
         imageViewProfile = findViewById(R.id.imageview_home_startup_id);
         imageViewChat = findViewById(R.id.imageview_chat_startup_id);
-        imageViewList = findViewById(R.id.imageview_lista_geral_startup_id);
         toolbar = findViewById(R.id.toolbar_startup);
         progressBar = findViewById(R.id.progressBar_base_startup);
         progressDialog = new ProgressDialog(this);
@@ -161,13 +163,6 @@ public class BaseFragmentStartup extends AppCompatActivity {
 
             }
         });
-
-        imageViewList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(BaseFragmentStartup.this, ListaGeralActivity.class));
-            }
-        });
     }
 
     private void loadUserInformation() {
@@ -188,5 +183,18 @@ public class BaseFragmentStartup extends AppCompatActivity {
             }
         });
     }
+
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//
+//        Button button = findViewById(R.id.button);
+//        final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.animation);
+//
+//        MyBounceInterpolator interpolator = new MyBounceInterpolator(0.2, 20);
+//        myAnim.setInterpolator(interpolator);
+//
+//        button.startAnimation(myAnim);
+//    }
 
 }
