@@ -44,18 +44,21 @@ import com.treinamento.mdomingos.startapp.R;
 import com.treinamento.mdomingos.startapp.activity.login.LoginActivity;
 import com.treinamento.mdomingos.startapp.activity.startup.EditarPerfilStartupActivity;
 import com.treinamento.mdomingos.startapp.activity.startup.EnviaArquivosActivity;
+import com.treinamento.mdomingos.startapp.model.Notificacao;
 import com.treinamento.mdomingos.startapp.model.Startup;
 import com.treinamento.mdomingos.startapp.model.StartupResponse;
+import com.treinamento.mdomingos.startapp.model.Usuarios;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PerfilFragment_Startup extends Fragment {
 
     private ProgressDialog progressDialog;
-    private FirebaseUser firebaseUser;
-    private FirebaseAuth firebaseAuth;
     private Task<Uri> storageReference;
-    private FirebaseUser user;
     private String imageURL;
     private ProgressBar progressBar, progresso;
     private TextView nome,cidade, razao, email, rua, bairro, estado, telefone, bio, editar, apresentacao, link, meta, investido, texto1, texto2;
@@ -69,6 +72,18 @@ public class PerfilFragment_Startup extends Fragment {
     private int investidoInt = 0, metaInt = 0, cont = 0;
     private Handler hdlr = new Handler();
 
+    private FirebaseDatabase firebaseDatabase;
+    private FirebaseUser user;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
+    private DatabaseReference mRef;
+
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+
+    List<Integer> ids = new ArrayList<Integer>();
+
+    private String idUsuario, pegaNome, pegaImagemPerfil, idNotify;
+
     private VideoView videoView;
     private Uri videoUri;
     private MediaController mediaController;
@@ -81,8 +96,6 @@ public class PerfilFragment_Startup extends Fragment {
         editar.setTextColor(Color.parseColor("#57BC90"));
         loadVideo();
 
-
-        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.child("Usuarios").child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -185,18 +198,6 @@ public class PerfilFragment_Startup extends Fragment {
             }
         });
 
-
-        impulsionar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Startup startup = new Startup();
-                startup.isImpulse(user.getUid(), 1);
-
-            }
-        });
-
-
         atualizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -286,12 +287,13 @@ public class PerfilFragment_Startup extends Fragment {
         });
         videoView.start();
 
-        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.child("Usuarios").child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 StartupResponse startup = dataSnapshot.getValue(StartupResponse.class);
                 nome.setText(startup.getDetalhe_startup().getNomeFantasia());
+                pegaNome = startup.getDetalhe_startup().getNomeFantasia();
+                pegaImagemPerfil = startup.getDetalhe_startup().getImagemPerfil();
                 cidade.setText(startup.getDetalhe_startup().getCidade());
                 razao.setText(startup.getDetalhe_startup().getRazaoSocial());
                 email.setText(startup.getDetalhe_startup().getEmail());
@@ -325,9 +327,47 @@ public class PerfilFragment_Startup extends Fragment {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
-        return view;
-    }
 
+        impulsionar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Startup startup = new Startup();
+                startup.isImpulse(user.getUid(), 1);
+
+                databaseReference = FirebaseDatabase.getInstance().getReference("Usuarios");
+                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot idSnapshot : dataSnapshot.getChildren()){
+                            int id = idSnapshot.child("perfil").getValue(Integer.class);
+
+                            if (id == 1) {
+                                    idUsuario = (String) idSnapshot.getValue();
+                                    idNotify = UUID.randomUUID().toString();
+                                    Notificacao notificacao = new Notificacao();
+                                    notificacao.setDescricao(pegaNome + " acabou de se cadastrar entre nós. Vá conhece-los!");
+                                    notificacao.setFotoPerfil(pegaImagemPerfil);
+                                    notificacao.setSenderId(firebaseUser.getUid());
+                                    notificacao.salvarNotificacao(idUsuario, String.valueOf(idNotify), firebaseUser.getUid());
+
+                                } else {
+                                    return;
+                                }
+                            }
+                        }
+
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        });
+
+     return view;
+    }
     private void loadProgress(final int dado, final int dadoMax){
         cont = progresso.getProgress();
         new Thread(new Runnable() {
