@@ -33,6 +33,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.treinamento.mdomingos.startapp.R;
 import com.treinamento.mdomingos.startapp.activity.investidor.EditarPerfilInvestidorActivity;
 import com.treinamento.mdomingos.startapp.activity.login.LoginActivity;
+import com.treinamento.mdomingos.startapp.activity.others.ConfigActivity;
 import com.treinamento.mdomingos.startapp.model.InvestidorResponse;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -65,6 +66,7 @@ public class PerfilFragment_Investidor extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.logout_item_dropdown_menu_id){
@@ -74,15 +76,18 @@ public class PerfilFragment_Investidor extends Fragment {
             mAuth.signOut();
             startActivity(new Intent(getActivity(), LoginActivity.class));
             getActivity().finish();
-        } else {
-            if (item.getItemId() == R.id.editar_perfil_item_dropdown_menu_id){
-                startActivity(new Intent(getActivity(), EditarPerfilInvestidorActivity.class));
-                getActivity().finish();
-            }
-        }
-        return super.onOptionsItemSelected(item);
+        } else if (item.getItemId() == R.id.editar_perfil_item_dropdown_menu_id){
+            startActivity(new Intent(getActivity(), EditarPerfilInvestidorActivity.class));
+            getActivity().finish();
 
+        }else if (item.getItemId() == R.id.config_item_dropdown_menu_id){
+            startActivity(new Intent(getActivity(), ConfigActivity.class));
+            getActivity().finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
+
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

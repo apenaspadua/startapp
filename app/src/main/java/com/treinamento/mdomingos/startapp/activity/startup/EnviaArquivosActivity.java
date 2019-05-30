@@ -287,7 +287,10 @@ public class EnviaArquivosActivity extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
+                progressBar.setVisibility(View.GONE);
             }
         });
+
+        progressBar.setVisibility(View.GONE);
     }
 }

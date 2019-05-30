@@ -11,4 +11,9 @@
         android:id="@+id/logout_item_dropdown_menu_id"
         android:iconTint="@color/colorWhite"
         android:title="Fazer Logout"></item>
+
+    <item
+        android:id="@+id/config_item_dropdown_menu_id"
+        android:iconTint="@color/colorWhite"
+        android:title="Configuração"></item>
 </menu>

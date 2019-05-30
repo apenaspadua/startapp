@@ -108,22 +108,26 @@ public class LoginActivity extends AppCompatActivity {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                        Usuarios usuario =  dataSnapshot.getValue(Usuarios.class);
+                                        Usuarios usuario = dataSnapshot.getValue(Usuarios.class);
 
-                                        if(usuario.getPerfil() == 1){
-                                            if((usuario.getDetalhes_completo() == 0) && usuario.getBio_completa() == 0 ) {
-                                                Intent intent = new Intent(LoginActivity.this, SlidesPosCadastroActivity.class);
-                                                startActivity(intent);
-                                                progressDialog.dismiss();
-                                                finish();
-                                            } else {
-                                                Intent intent = new Intent(LoginActivity.this, BaseFragmentInvestidor.class);
-                                                startActivity(intent);
-                                                progressDialog.dismiss();
-                                                finish();
-                                            }
-                                        } else if (usuario.getPerfil() == 2){
-                                                if((usuario.getDetalhes_completo() == 0) && (usuario.getBio_completa() == 0) ) {
+                                        if (usuario.getId() == null) {
+                                            Toast.makeText(LoginActivity.this, "Usuario não existe", Toast.LENGTH_SHORT).show();
+                                        } else {
+
+                                            if (usuario.getPerfil() == 1) {
+                                                if ((usuario.getDetalhes_completo() == 0) && usuario.getBio_completa() == 0) {
+                                                    Intent intent = new Intent(LoginActivity.this, SlidesPosCadastroActivity.class);
+                                                    startActivity(intent);
+                                                    progressDialog.dismiss();
+                                                    finish();
+                                                } else {
+                                                    Intent intent = new Intent(LoginActivity.this, BaseFragmentInvestidor.class);
+                                                    startActivity(intent);
+                                                    progressDialog.dismiss();
+                                                    finish();
+                                                }
+                                            } else if (usuario.getPerfil() == 2) {
+                                                if ((usuario.getDetalhes_completo() == 0) && (usuario.getBio_completa() == 0)) {
                                                     Intent intent = new Intent(LoginActivity.this, SlidesPosCadastroActivity.class);
                                                     startActivity(intent);
                                                     progressDialog.dismiss();
@@ -134,8 +138,7 @@ public class LoginActivity extends AppCompatActivity {
                                                     progressDialog.dismiss();
                                                     finish();
                                                 }
-                                            }
-                                            else {
+                                            } else {
 
                                                 new AlertDialog.Builder(LoginActivity.this).setTitle("Alerta").
                                                         setMessage("Sem perfil.").setPositiveButton("Entendi", new DialogInterface.OnClickListener() {
@@ -147,7 +150,7 @@ public class LoginActivity extends AppCompatActivity {
                                             }
 
                                         }
-
+                                    }
                                         @Override
                                         public void onCancelled(@NonNull DatabaseError databaseError) {
 
