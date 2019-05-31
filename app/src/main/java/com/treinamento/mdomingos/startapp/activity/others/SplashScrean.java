@@ -27,60 +27,61 @@ public class SplashScrean extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screan);
 
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseUser = firebaseAuth.getCurrentUser();
+        if(FirebaseConfig.firebaseConection()) {
+            firebaseAuth = FirebaseAuth.getInstance();
+            firebaseUser = firebaseAuth.getCurrentUser();
+            //functions
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            if (user != null) {
+                DatabaseReference databaseReference = FirebaseConfig.getFirebase();
+                databaseReference.child("Usuarios").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        mAuth.signOut();
-
-        //functions
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            DatabaseReference databaseReference = FirebaseConfig.getFirebase();
-            databaseReference.child("Usuarios").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                    Usuarios usuario = dataSnapshot.getValue(Usuarios.class);
-                    if(usuario != null){
-                        if (usuario.getPerfil() == 1) {
-                            if (usuario.getDetalhes_completo() == 0) {
-                                Intent intent = new Intent(SplashScrean.this, SlidesPosCadastroActivity.class);
-                                startActivity(intent);
-                                finish();
-                            } else {
-                                Intent intent = new Intent(SplashScrean.this, BaseFragmentInvestidor.class);
-                                startActivity(intent);
-                                finish();
+                        Usuarios usuario = dataSnapshot.getValue(Usuarios.class);
+                        if (usuario != null) {
+                            if (usuario.getPerfil() == 1) {
+                                if (usuario.getDetalhes_completo() == 0) {
+                                    Intent intent = new Intent(SplashScrean.this, SlidesPosCadastroActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                } else {
+                                    Intent intent = new Intent(SplashScrean.this, BaseFragmentInvestidor.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            } else if (usuario.getPerfil() == 2) {
+                                if (usuario.getDetalhes_completo() == 0) {
+                                    Intent intent = new Intent(SplashScrean.this, SlidesPosCadastroActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                } else {
+                                    Intent intent = new Intent(SplashScrean.this, BaseFragmentStartup.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
                             }
-                        } else if (usuario.getPerfil() == 2) {
-                            if (usuario.getDetalhes_completo() == 0) {
-                                Intent intent = new Intent(SplashScrean.this, SlidesPosCadastroActivity.class);
-                                startActivity(intent);
-                                finish();
-                            } else {
-                                Intent intent = new Intent(SplashScrean.this, BaseFragmentStartup.class);
-                                startActivity(intent);
-                                finish();
-                            }
+                        } else {
+                            return;
                         }
-                    } else {
-                       return;
                     }
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                }
-            });
+                    }
+                });
+            } else {
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                mAuth.signOut();
+                Intent intent = new Intent(SplashScrean.this, InicialActivity.class);
+                startActivity(intent);
+                finish();
+            }
         } else {
-
-            Intent intent = new Intent(SplashScrean.this, InicialActivity.class);
+            Intent intent = new Intent(SplashScrean.this, SemConexaoActivity.class);
             startActivity(intent);
-            finish();
         }
-
     }
 }
 

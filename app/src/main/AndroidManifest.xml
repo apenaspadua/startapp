@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_logo_app"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.others.ConfigActivity"></activity>
+        <activity android:name=".activity.others.SemConexaoActivity"></activity>
+        <activity android:name=".activity.others.ConfigActivity" />
         <activity android:name=".activity.others.ListaGeralActivity" />
         <activity android:name=".activity.others.SlideActivity" />
         <activity android:name=".activity.others.SejaUmInvestidorActivity" />

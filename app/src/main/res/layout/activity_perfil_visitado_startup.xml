@@ -210,8 +210,7 @@
                     android:layout_gravity="center"
                     android:text="Nos ajude você também  :)"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/lato_hairline"/>
+                    android:fontFamily="@font/lato_regular"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -278,14 +277,14 @@
                         android:layout_marginLeft="10dp" />
                 </LinearLayout>
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="50dp"
                     android:gravity="start">
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:text="Meta"
                         android:gravity="start"
                         android:layout_marginStart="70dp"
@@ -295,19 +294,19 @@
                         android:layout_marginLeft="70dp" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="180dp"
+                        android:layout_marginStart="32dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginEnd="40dp"
+                        android:layout_marginEnd="70dp"
                         android:layout_marginRight="70dp"
                         android:fontFamily="@font/lato_bold"
-                        android:gravity="start"
+                        android:gravity="end"
                         android:text="Investimeto"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
-                </RelativeLayout>
+                </LinearLayout>
             </LinearLayout>
 
 
@@ -401,8 +400,7 @@
                 android:paddingBottom="14dp"
                 android:text="Gostou? Mostre interesse e nos ajude a crescer!"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                app:fontFamily="@font/lato_hairline" />
+                app:fontFamily="@font/lato_regular" />
 
             <RelativeLayout
                 android:id="@+id/botao_tenho_intersse_startup_id"
@@ -564,15 +562,17 @@
             </RelativeLayout>
 
             <TextView
-                style="@style/SubTitleCompany"
-                android:layout_marginTop="20sp"
+                android:paddingTop="15dp"
+                android:paddingBottom="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:gravity="center"
-                android:paddingBottom="10dp"
-                android:text="Aplicativo realizado pelos alunos de Sistemas
-                                                        Projeto Aplicado - FHO 2019"
-                android:textColor="@color/colorCinzaLight"
-                app:fontFamily="@font/lato_regular" />
-
+                android:text="Aplicativo realizado pelos alunos de Sistemas / Projeto Aplicado - FHO 2019 / Aplicativo para estudo disponibizado em versão teste."
+                android:textColor="@color/colorCinza"
+                android:textSize="12sp"
+                app:fontFamily="@font/lato_regular"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"/>
 
         </LinearLayout>
     </ScrollView>

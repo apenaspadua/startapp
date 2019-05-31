@@ -63,7 +63,7 @@ public class BioStartupActivity extends AppCompatActivity {
                         startup.salvarBioStartup(firebaseUser.getUid());
 
                         Publicacao publicacao = new Publicacao();
-                        publicacao.setDescricao(bioRecebida);
+                        publicacao.setDescricao(apresentacaoRecebida);
                         publicacao.salvarDescricao(firebaseUser.getUid());
 
                         startActivity(new Intent(BioStartupActivity.this, EnviaArquivosActivity.class));

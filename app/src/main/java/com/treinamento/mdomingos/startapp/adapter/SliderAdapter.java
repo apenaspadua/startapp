@@ -2,6 +2,7 @@ package com.treinamento.mdomingos.startapp.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
@@ -31,7 +32,7 @@ public class SliderAdapter extends PagerAdapter {
 
     // list of titles
     public String[] lst_title = {
-            "BEM VINDO A STARTAAP",
+            "BEM VINDO A STARTAPP",
             "PARA STARTUP'S",
             "PARA INVESTIDORES",
             "APROVEITE"
@@ -45,12 +46,13 @@ public class SliderAdapter extends PagerAdapter {
             "Aqui é uma terra sem lei, cadastre-se e encontre o sucesso!"
     };
 
-    // list of background colors
-    public int[]  lst_backgroundcolor = {
-            Color.rgb(55,55,55),
-            Color.rgb(239,85,85),
-            Color.rgb(110,49,89),
-            Color.rgb(55,55,55),
+    // list of background color
+
+    private static final int[] Icons = {
+            R.drawable.foto_6,
+            R.drawable.foto_7,
+            R.drawable.foto_1,
+            R.drawable.foto_3
     };
 
     @Override
@@ -77,7 +79,7 @@ public class SliderAdapter extends PagerAdapter {
 
         slideHeading.setText(lst_title[position]);
         slideDescription.setText(lst_description[position]);
-        layoutslide.setBackgroundColor(lst_backgroundcolor[position]);
+        layoutslide.setBackgroundResource(Icons[position]);
 
 
         container.addView(view);

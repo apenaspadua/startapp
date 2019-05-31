@@ -109,6 +109,7 @@ public class EnviaArquivosActivity extends AppCompatActivity {
             public void onClick(View v) {
                 progressDialog.setMessage("Salvando alterações...");
                 startActivity(new Intent(EnviaArquivosActivity.this, BaseFragmentStartup.class));
+                finish();
 
             }
         });

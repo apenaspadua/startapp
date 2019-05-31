@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
     private EditText usernane, passowrd;
-    private RelativeLayout botaoLogin, botaoFacebook,  botaoTwitter;
+    private RelativeLayout botaoLogin;
     private TextView botaoTextEsqueceuSenha, botaoCadastrese;
     private ProgressDialog progressDialog;
     private ProgressBar progressBar;
@@ -65,8 +65,6 @@ public class LoginActivity extends AppCompatActivity {
         passowrd = findViewById(R.id.senhaLogin_id);
         botaoLogin = findViewById(R.id.botao_login_id);
         botaoTextEsqueceuSenha = findViewById(R.id.esqueceu_senha);
-        botaoFacebook = findViewById(R.id.botao_facebook_id);
-        botaoTwitter = findViewById(R.id.botao_twitter_id);
         botaoCadastrese = findViewById(R.id.faca_cadastro_text_id);
         progressDialog = new ProgressDialog(LoginActivity.this);
         progressBar = findViewById(R.id.progressBarLogin);
@@ -110,8 +108,11 @@ public class LoginActivity extends AppCompatActivity {
 
                                         Usuarios usuario = dataSnapshot.getValue(Usuarios.class);
 
-                                        if (usuario.getId() == null) {
+                                        if (usuario == null) {
                                             Toast.makeText(LoginActivity.this, "Usuario não existe", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(LoginActivity.this, InicialActivity.class);
+                                            startActivity(intent);
+                                            finish();
                                         } else {
 
                                             if (usuario.getPerfil() == 1) {
@@ -189,19 +190,6 @@ public class LoginActivity extends AppCompatActivity {
                     Log.i("sem internet", "sem conexao");
                     Toast.makeText(LoginActivity.this, "Sem conexão com a internet", Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
-        botaoFacebook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        botaoTwitter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
             }
         });
 

@@ -9,266 +9,49 @@
     android:orientation="vertical"
     android:gravity="center"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorTransparenteUltraDark">
 
-    <TextView
-    android:id="@+id/title_Slide_id"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="0dp"
-    android:gravity="center"
-    android:text="Teste 1"
-    android:textColor="@color/colorWhite"
-    android:textSize="25sp"
-    app:fontFamily="@font/lato_regular" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@color/colorTransparenteUltraDark">
 
-    <TextView
-    android:id="@+id/subtitle_slide_id"
-    android:layout_width="390dp"
-    android:layout_height="wrap_content"
-    android:layout_alignParentStart="true"
-    android:layout_alignParentLeft="true"
-    android:layout_marginStart="0dp"
-    android:layout_marginLeft="0dp"
-    android:layout_marginTop="20dp"
-    android:gravity="center"
-    android:text="Testando Slide"
-    android:textColor="@color/colorWhite"
-    android:textSize="16sp"
-    app:fontFamily="@font/lato_regular" />
+            <TextView
+                android:id="@+id/title_Slide_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:text="Teste 1"
+                android:textColor="@color/white"
+                android:textSize="25sp"
+                app:fontFamily="@font/lato_regular" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/subtitle_slide_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="50dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:layout_marginBottom="15dp"
+                android:text="Testando Slide"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:fontFamily="@font/lato_regular" />
+
+        </LinearLayout>
+
+        </LinearLayout>
 
     </RelativeLayout>
-
-
-    <!--<?xml version="1.0" encoding="utf-8"?>-->
-    <!--<android.support.v4.widget.DrawerLayout-->
-    <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-    <!--xmlns:tools="http://schemas.android.com/tools"-->
-    <!--android:id="@+id/drawer_layout"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:fitsSystemWindows="true"-->
-    <!--tools:openDrawer="start">-->
-
-    <!--<ScrollView-->
-    <!--android:id="@+id/scrollView_id"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--tools:context=".activity.login.CadastroLoginActivity">-->
-
-
-    <!--<LinearLayout-->
-    <!--android:id="@+id/linearLayout_id"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="vertical"-->
-    <!--android:visibility="visible">-->
-
-
-    <!--<RelativeLayout-->
-    <!--android:id="@+id/relativeLayout"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:background="@color/colorPrimaryDark"-->
-    <!--app:layout_constraintHorizontal_bias="1.0"-->
-    <!--app:layout_constraintLeft_toLeftOf="parent"-->
-    <!--app:layout_constraintRight_toRightOf="parent"-->
-    <!--app:layout_constraintTop_toTopOf="parent">-->
-
-
-    <!--<LinearLayout-->
-    <!--android:id="@+id/linearLayout"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="vertical"-->
-    <!--android:gravity="center">-->
-
-    <!--<TextView-->
-    <!--style="@style/TitleText"-->
-    <!--android:paddingTop="30dp"-->
-    <!--android:paddingBottom="10dp"-->
-    <!--android:text="Seja Bem-Vindo Startup"-->
-    <!--app:fontFamily="@font/lato_regular" />-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="vertical"-->
-    <!--android:gravity="center"-->
-    <!--android:padding="20dp">-->
-
-    <!--<ImageView-->
-    <!--android:layout_width="100dp"-->
-    <!--android:layout_height="100dp"-->
-    <!--android:layout_centerVertical="true"-->
-    <!--android:background="@drawable/startup_icon2"-->
-    <!--android:scaleType="fitXY" />-->
-
-
-    <!--</LinearLayout>-->
-    <!--</LinearLayout>-->
-
-    <!--</RelativeLayout>-->
-
-
-    <!--<TextView-->
-    <!--style="@style/TitleRegister"-->
-    <!--android:paddingTop="10dp"-->
-    <!--android:paddingBottom="10dp"-->
-    <!--android:text="Preencha os dados abaixo para o concluir seu cadastro"-->
-    <!--app:fontFamily="@font/lato_regular" />-->
-
-
-    <!--<android.support.design.widget.TextInputLayout style="@style/TextInputRegister">-->
-
-    <!--<EditText-->
-    <!--android:id="@+id/razao_social_cadastro_startup_id"-->
-    <!--style="@style/EditTextRegister"-->
-    <!--android:hint="Razão Social *"-->
-    <!--android:inputType="text" />-->
-    <!--</android.support.design.widget.TextInputLayout>-->
-
-    <!--<android.support.design.widget.TextInputLayout style="@style/TextInputRegister">-->
-
-    <!--<EditText-->
-    <!--android:id="@+id/nome_cadastro_startup_id"-->
-    <!--style="@style/EditTextRegister"-->
-    <!--android:hint="Nome Fantasia *"-->
-    <!--android:inputType="text" />-->
-    <!--</android.support.design.widget.TextInputLayout>-->
-
-    <!--<android.support.design.widget.TextInputLayout-->
-    <!--style="@style/TextInputRegister">-->
-
-    <!--<EditText-->
-    <!--android:id="@+id/email_cadastro_startup_id"-->
-    <!--style="@style/EditTextRegister"-->
-    <!--android:layout_marginBottom="10dp"-->
-    <!--android:hint="Email para contato *"-->
-    <!--android:inputType="textEmailAddress" />-->
-    <!--</android.support.design.widget.TextInputLayout>-->
-
-    <!--<android.support.design.widget.TextInputLayout style="@style/TextInputRegister">-->
-
-    <!--<EditText-->
-    <!--android:id="@+id/telefone_cadastro_startup_id"-->
-    <!--style="@style/EditTextRegister"-->
-    <!--android:hint="Número para contato *"-->
-    <!--android:inputType="number" />-->
-    <!--</android.support.design.widget.TextInputLayout>-->
-
-    <!--<android.support.design.widget.TextInputLayout-->
-    <!--style="@style/TextInputRegister">-->
-
-    <!--<EditText-->
-    <!--android:id="@+id/cep_cadastro_startup_id"-->
-    <!--style="@style/EditTextRegister"-->
-    <!--android:layout_marginBottom="10dp"-->
-    <!--android:hint="CEP *"-->
-    <!--android:inputType="number" />-->
-    <!--</android.support.design.widget.TextInputLayout>-->
-
-    <!--<android.support.design.widget.TextInputLayout-->
-    <!--style="@style/TextInputRegister">-->
-
-    <!--<EditText-->
-    <!--android:id="@+id/rua_cadastro_startup_id"-->
-    <!--style="@style/EditTextRegister"-->
-    <!--android:layout_marginBottom="10dp"-->
-    <!--android:hint="Logradouro"-->
-    <!--android:inputType="text" />-->
-    <!--</android.support.design.widget.TextInputLayout>-->
-
-    <!--<android.support.design.widget.TextInputLayout-->
-    <!--style="@style/TextInputRegister">-->
-
-    <!--<EditText-->
-    <!--android:id="@+id/bairro_cadastro_startup_id"-->
-    <!--style="@style/EditTextRegister"-->
-    <!--android:layout_marginBottom="10dp"-->
-    <!--android:hint="Bairro"-->
-    <!--android:inputType="text" />-->
-    <!--</android.support.design.widget.TextInputLayout>-->
-
-    <!--<android.support.design.widget.TextInputLayout-->
-    <!--style="@style/TextInputRegister">-->
-
-    <!--<EditText-->
-    <!--android:id="@+id/cidade_cadastro_startup_id"-->
-    <!--style="@style/EditTextRegister"-->
-    <!--android:layout_marginBottom="10dp"-->
-    <!--android:hint="Cidade"-->
-    <!--android:inputType="text" />-->
-    <!--</android.support.design.widget.TextInputLayout>-->
-
-    <!--<android.support.design.widget.TextInputLayout-->
-    <!--style="@style/TextInputRegister">-->
-
-    <!--<EditText-->
-    <!--android:id="@+id/estado_cadastro_startup_id"-->
-    <!--style="@style/EditTextRegister"-->
-    <!--android:layout_marginBottom="10dp"-->
-    <!--android:hint="Estado"-->
-    <!--android:inputType="text" />-->
-    <!--</android.support.design.widget.TextInputLayout>-->
-
-    <!--<android.support.design.widget.TextInputLayout-->
-    <!--style="@style/TextInputRegister">-->
-
-    <!--<EditText-->
-    <!--android:id="@+id/cnpj_cadastro_startup_id"-->
-    <!--style="@style/EditTextRegister"-->
-    <!--android:layout_marginBottom="10dp"-->
-    <!--android:hint="CNPJ *"-->
-    <!--android:inputType="number" />-->
-    <!--</android.support.design.widget.TextInputLayout>-->
-
-    <!--<RelativeLayout-->
-    <!--android:id="@+id/botao_terminar_cadastro_startup_id"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="50dp"-->
-    <!--android:layout_margin="6dp"-->
-    <!--android:layout_marginBottom="10dp"-->
-    <!--android:background="@drawable/button_ronded"-->
-    <!--android:orientation="horizontal">-->
-
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_marginStart="100dp"-->
-    <!--android:layout_marginLeft="100dp"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:text="CONCLUIR CADASTRO"-->
-    <!--android:textAllCaps="false"-->
-    <!--android:textColor="@color/colorWhite"-->
-    <!--android:textSize="14sp"-->
-    <!--android:textStyle="bold"-->
-    <!--app:fontFamily="@font/poppins_medium" />-->
-
-    <!--</RelativeLayout>-->
-
-
-    <!--<TextView-->
-    <!--android:paddingTop="15dp"-->
-    <!--android:paddingBottom="20dp"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_marginStart="10dp"-->
-    <!--android:text="Aplicativo realizado pelos alunos de Sistemas / Projeto Aplicado - FHO 2019 / Aplicativo para estudo disponibizado em versão teste."-->
-    <!--android:textColor="@color/colorCinza"-->
-    <!--android:textSize="12sp"-->
-    <!--app:fontFamily="@font/lato_regular"-->
-    <!--android:layout_marginLeft="20dp" />-->
-
-    <!--</LinearLayout>-->
-
-    <!--</ScrollView>-->
-
-    <!--</android.support.v4.widget.DrawerLayout>-->
-
-
 
 

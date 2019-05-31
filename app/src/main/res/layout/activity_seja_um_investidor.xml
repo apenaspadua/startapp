@@ -4,6 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.others.SejaUmInvestidorActivity">
+    tools:context=".activity.others.SejaUmInvestidorActivity"
+    android:background="@drawable/foto_1">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/colorTransparenteUltraDark">
+
+        <TextView
+            android:layout_marginTop="215dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:text="Ops..."
+            android:textColor="@color/white"
+            android:textSize="40sp"
+            app:fontFamily="@font/poppins_regular" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:text="Função liberada apenas para Investidores!"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:fontFamily="@font/poppins_regular" />
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

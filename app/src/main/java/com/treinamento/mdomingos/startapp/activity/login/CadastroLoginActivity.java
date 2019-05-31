@@ -33,7 +33,7 @@ public class CadastroLoginActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
 
-    private RelativeLayout botaoCadastrar, botaoTwitter, botaoFacebook, botaoSouInvestidor, botaoSouStartup;
+    private RelativeLayout botaoCadastrar, botaoSouInvestidor, botaoSouStartup;
     private EditText email, senha, confirmaSenha;
     private CheckBox checkBox;
     private TextView termosDeUso;
@@ -47,8 +47,6 @@ public class CadastroLoginActivity extends AppCompatActivity {
 
         //Instance
         botaoCadastrar = findViewById(R.id.botao_cadastrar_login_id);
-        botaoTwitter = findViewById(R.id.botao_conecta_twitter_id);
-        botaoFacebook = findViewById(R.id.botao__conecta_facebook_id);
         botaoSouInvestidor = findViewById(R.id.botao_sou_investidor_id);
         botaoSouStartup = findViewById(R.id.botao_sou_startup_id);
         email = findViewById(R.id.email_cadastro_login_id);
@@ -185,19 +183,6 @@ public class CadastroLoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(CadastroLoginActivity.this, TermosActivity.class);
                 startActivity(intent);
-            }
-        });
-
-        botaoFacebook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        botaoTwitter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
             }
         });
     }

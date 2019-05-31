@@ -47,7 +47,7 @@ public class ConfigActivity extends AppCompatActivity {
                         setMessage("Deseja realmente apagar esta conta?").setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                      deleteUser();
+                      deleteAccount();
                     }
                 }).show();
             }
@@ -79,6 +79,7 @@ public class ConfigActivity extends AppCompatActivity {
 
                                     Toast.makeText(ConfigActivity.this, "Conta deletada!", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(ConfigActivity.this, InicialActivity.class));
+                                    deleteUser();
                                     finish();
                                 }else{
                                     Toast.makeText(ConfigActivity.this, "Falha ao deletar conta!", Toast.LENGTH_SHORT).show();
@@ -128,14 +129,14 @@ public class ConfigActivity extends AppCompatActivity {
                     ds.getRef().removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            deleteAccount();
+
                         }
                     });
                 }
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                deleteUser();
+                return;
             }
         });
     }
