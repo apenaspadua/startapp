@@ -14,9 +14,18 @@ public class StartupResponse implements Serializable{
     private String email;
     private Startup detalhe_startup;
     private Startup progresso_startup;
+    private String foto_perfil;
 
 
     public StartupResponse() {
+    }
+
+    public String getFoto_perfil() {
+        return foto_perfil;
+    }
+
+    public void setFoto_perfil(String foto_perfil) {
+        this.foto_perfil = foto_perfil;
     }
 
     public String getId() {

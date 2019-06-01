@@ -27,7 +27,7 @@ public class Startup {
     private String biografia;
     private String apresentacao;
     private String link;
-    private String imagemPerfil;
+    private String foto_perfil;
     private int isImpulse;
 
     public Startup(){
@@ -203,12 +203,12 @@ public class Startup {
         this.link = link;
     }
 
-    public String getImagemPerfil() {
-        return imagemPerfil;
+    public String getFoto_perfil() {
+        return foto_perfil;
     }
 
-    public void setImagemPerfil(String imagemPerfil) {
-        this.imagemPerfil = imagemPerfil;
+    public void setFoto_perfil(String imagemPerfil) {
+        this.foto_perfil = foto_perfil;
     }
 
 

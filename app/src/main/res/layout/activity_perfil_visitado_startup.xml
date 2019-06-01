@@ -9,7 +9,7 @@
         android:id="@+id/scrollView_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".activity.home.BaseFragmentStartup">
+        tools:context=".view.MainFragmentStartupActivity">
 
         <LinearLayout
             android:id="@+id/linearLayout_id"
@@ -196,118 +196,129 @@
             </RelativeLayout>
 
 
-            <LinearLayout
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_marginTop="15dp">
+                android:layout_height="250dp"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/textView2"
+                    android:layout_width="0dp"
                     android:layout_height="30dp"
-                    android:layout_marginBottom="15dp"
-                    android:gravity="center"
                     android:layout_gravity="center"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:fontFamily="@font/lato_regular"
+                    android:gravity="center"
                     android:text="Nos ajude você também  :)"
                     android:textSize="16sp"
-                    android:fontFamily="@font/lato_regular"/>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center">
 
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:background="@drawable/money_ic"
-                        android:scaleType="fitXY" />
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@drawable/money_ic"
+                    android:scaleType="fitXY"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:background="@drawable/money_ic"
-                        android:scaleType="fitXY" />
-
-                </LinearLayout>
 
                 <ProgressBar
                     android:id="@+id/progressbar_progresso_perfilVisitado_startup"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
-                    android:layout_marginTop="10dp"
-                    android:scaleY="2"
-                    android:minHeight="50dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginRight="24dp"
+                    android:layout_marginBottom="32dp"
+                    android:indeterminate="false"
                     android:minWidth="200dp"
-                    android:indeterminate="false">
-                </ProgressBar>
+                    android:minHeight="50dp"
+                    android:scaleY="2"
+                    app:layout_constraintBottom_toTopOf="@+id/conquistado_progressbar_perilVisitado_startup"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView"></ProgressBar>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+
+                <TextView
+                    android:id="@+id/meta_progressbar_perfilVisitado_startup"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_marginStart="70dp"
+                    android:layout_marginLeft="70dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginRight="24dp"
+                    android:fontFamily="@font/lato_regular"
+                    android:gravity="start"
+                    android:text="Sem objetivo"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toStartOf="@+id/conquistado_progressbar_perilVisitado_startup"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/progressbar_progresso_perfilVisitado_startup" />
 
-                    <TextView
-                        android:id="@+id/meta_progressbar_perfilVisitado_startup"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="70dp"
-                        android:layout_marginLeft="70dp"
-                        android:fontFamily="@font/lato_hairline"
-                        android:gravity="start"
-                        android:text="Sem objetivo"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/conquistado_progressbar_perilVisitado_startup"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="32dp"
-                        android:fontFamily="@font/lato_hairline"
-                        android:gravity="end"
-                        android:layout_marginEnd="70dp"
-                        android:text="Sem investimento"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:layout_marginRight="70dp"
-                        android:layout_marginLeft="10dp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/conquistado_progressbar_perilVisitado_startup"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="50dp"
-                    android:gravity="start">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="Meta"
-                        android:gravity="start"
-                        android:layout_marginStart="70dp"
-                        android:textSize="14sp"
-                        android:fontFamily="@font/lato_bold"
-                        android:textStyle="bold"
-                        android:layout_marginLeft="70dp" />
+                    android:layout_marginStart="24dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="70dp"
+                    android:layout_marginRight="70dp"
+                    android:fontFamily="@font/lato_regular"
+                    android:gravity="end"
+                    android:text="Sem investimento"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/meta_progressbar_perfilVisitado_startup"
+                    app:layout_constraintTop_toBottomOf="@+id/progressbar_progresso_perfilVisitado_startup" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="32dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginEnd="70dp"
-                        android:layout_marginRight="70dp"
-                        android:fontFamily="@font/lato_bold"
-                        android:gravity="end"
-                        android:text="Investimeto"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
 
-                </LinearLayout>
-            </LinearLayout>
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/lato_bold"
+                    android:gravity="start"
+                    android:text="Meta"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/conquistado_progressbar_perilVisitado_startup"
+                    app:layout_constraintTop_toBottomOf="@+id/conquistado_progressbar_perilVisitado_startup" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/lato_bold"
+                    android:gravity="start"
+                    android:text="Investimeto"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/meta_progressbar_perfilVisitado_startup"
+                    app:layout_constraintTop_toBottomOf="@+id/meta_progressbar_perfilVisitado_startup" />
+
+            </android.support.constraint.ConstraintLayout>
 
 
             <RelativeLayout

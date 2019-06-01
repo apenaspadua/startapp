@@ -9,7 +9,7 @@
         android:id="@+id/scrollView_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".activity.home.BaseFragmentStartup">
+        tools:context=".view.MainFragmentStartupActivity">
 
         <LinearLayout
             android:id="@+id/linearLayout_id"
@@ -218,6 +218,33 @@
                     android:text="Biografia"
                     android:textSize="15dp" />
             </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/botao_chamar_atencao_investidor_id"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/button_ronded"
+                android:gravity="clip_vertical|center_horizontal"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginBottom="14dp"
+                    android:text="CHAMAR ATENÇÃO DO INVESTIDOR"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:fontFamily="@font/poppins_medium" />
+
+            </RelativeLayout>
+
 
             <LinearLayout style="@style/TextInputRegister">
 

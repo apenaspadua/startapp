@@ -19,7 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.treinamento.mdomingos.startapp.R;
-import com.treinamento.mdomingos.startapp.activity.chat.MensagemActivity;
+import com.treinamento.mdomingos.startapp.view.MensagemActivity;
 import com.treinamento.mdomingos.startapp.model.Chat;
 import com.treinamento.mdomingos.startapp.model.Usuarios;
 

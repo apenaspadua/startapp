@@ -9,7 +9,7 @@
         android:id="@+id/scrollView_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".activity.home.BaseFragmentStartup">
+        tools:context=".view.MainFragmentStartupActivity">
 
         <LinearLayout
             android:id="@+id/linearLayout_id"
