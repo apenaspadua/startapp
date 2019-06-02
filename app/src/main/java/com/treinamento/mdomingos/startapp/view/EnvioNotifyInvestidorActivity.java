@@ -2,9 +2,9 @@ package com.treinamento.mdomingos.startapp.view;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -20,14 +20,14 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.treinamento.mdomingos.startapp.R;
+import com.treinamento.mdomingos.startapp.model.Notificacao;
+import com.treinamento.mdomingos.startapp.model.StartupResponse;
 import com.treinamento.mdomingos.startapp.service.APIService;
 import com.treinamento.mdomingos.startapp.service.notifications.Client;
 import com.treinamento.mdomingos.startapp.service.notifications.Data;
 import com.treinamento.mdomingos.startapp.service.notifications.MyResponse;
 import com.treinamento.mdomingos.startapp.service.notifications.Sender;
 import com.treinamento.mdomingos.startapp.service.notifications.Token;
-import com.treinamento.mdomingos.startapp.model.Notificacao;
-import com.treinamento.mdomingos.startapp.model.StartupResponse;
 
 import java.util.UUID;
 

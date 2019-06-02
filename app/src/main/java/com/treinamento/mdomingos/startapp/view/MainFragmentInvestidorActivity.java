@@ -4,11 +4,11 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
@@ -86,7 +86,6 @@ public class MainFragmentInvestidorActivity extends AppCompatActivity {
         tabsAdapter.addFragment(new PerfilFragmentInvestidor(), "");
 
         viewPager.setAdapter(tabsAdapter);
-//        viewPager.setPageTransformer(true, new AccordionTransformer());
         tabLayout.setupWithViewPager(viewPager);
 
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_home_ouline);
@@ -161,7 +160,7 @@ public class MainFragmentInvestidorActivity extends AppCompatActivity {
         imageViewList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainFragmentInvestidorActivity.this, ListaGeralActivity.class));
+                startActivity(new Intent(MainFragmentInvestidorActivity.this, StartupsSalvasActivity.class));
             }
         });
     }

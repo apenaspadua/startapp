@@ -17,7 +17,7 @@
         <activity android:name=".view.EnvioNotifyInvestidorActivity"></activity>
         <activity android:name=".view.SemConexaoActivity" />
         <activity android:name=".view.ConfigActivity" />
-        <activity android:name=".view.ListaGeralActivity" />
+        <activity android:name=".view.StartupsSalvasActivity" />
         <activity android:name=".view.SlideActivity" />
         <activity android:name=".view.SejaUmInvestidorActivity" />
         <activity android:name=".view.EnvioNotifyActivityStartup" />

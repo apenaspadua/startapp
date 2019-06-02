@@ -18,10 +18,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.treinamento.mdomingos.startapp.R;
-import com.treinamento.mdomingos.startapp.service.notifications.Token;
 import com.treinamento.mdomingos.startapp.adapter.UserAdapterContacts;
 import com.treinamento.mdomingos.startapp.model.Chatlist;
 import com.treinamento.mdomingos.startapp.model.Usuarios;
+import com.treinamento.mdomingos.startapp.service.notifications.Token;
 
 import java.util.ArrayList;
 import java.util.List;

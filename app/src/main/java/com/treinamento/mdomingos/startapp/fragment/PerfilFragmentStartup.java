@@ -39,12 +39,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.treinamento.mdomingos.startapp.R;
-import com.treinamento.mdomingos.startapp.view.LoginActivity;
+import com.treinamento.mdomingos.startapp.model.Startup;
+import com.treinamento.mdomingos.startapp.model.StartupResponse;
 import com.treinamento.mdomingos.startapp.view.ConfigActivity;
 import com.treinamento.mdomingos.startapp.view.EditarPerfilStartupActivity;
 import com.treinamento.mdomingos.startapp.view.EnviaArquivosActivity;
-import com.treinamento.mdomingos.startapp.model.Startup;
-import com.treinamento.mdomingos.startapp.model.StartupResponse;
+import com.treinamento.mdomingos.startapp.view.LoginActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 

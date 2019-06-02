@@ -19,8 +19,8 @@ import com.treinamento.mdomingos.startapp.model.CEP;
 import com.treinamento.mdomingos.startapp.model.Publicacao;
 import com.treinamento.mdomingos.startapp.model.Startup;
 import com.treinamento.mdomingos.startapp.model.Usuarios;
-import com.treinamento.mdomingos.startapp.utils.FirebaseConfig;
 import com.treinamento.mdomingos.startapp.service.HttpService;
+import com.treinamento.mdomingos.startapp.utils.FirebaseConfig;
 import com.treinamento.mdomingos.startapp.utils.MaskFormatter;
 import com.treinamento.mdomingos.startapp.utils.Validator;
 
@@ -177,7 +177,6 @@ public class CadastroStartupActivity extends AppCompatActivity {
     });
 
     }
-
 
     @Override
     public void finish() {

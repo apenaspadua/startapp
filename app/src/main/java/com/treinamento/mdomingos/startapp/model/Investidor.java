@@ -65,11 +65,6 @@ public class Investidor implements Serializable {
         databaseReference.child("Usuarios").child(id).child("bio_completa").setValue(1);
     }
 
-//    public void salvarFotoPerfil(String id){
-//        DatabaseReference databaseReference = FirebaseConfig.getFirebase();
-//        databaseReference.child("Usuarios").child(id).child("detalhe_investidor").child("foto_perfil").setValue(imagemPerfil);
-
-
     public String getNome() {
         return nome;
     }

@@ -175,7 +175,6 @@ public class PerfilVisitadoInvestidorActivity extends AppCompatActivity {
 
     }
 
-
     private void loadUserInformation() {
         storageReference = FirebaseStorage.getInstance().getReference().child("foto_perfil").
                 child(id).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {

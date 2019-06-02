@@ -73,7 +73,6 @@ public class InicialActivity extends AppCompatActivity {
             });
 
         }
-//    }
 
     @Override
     protected void onResume() {

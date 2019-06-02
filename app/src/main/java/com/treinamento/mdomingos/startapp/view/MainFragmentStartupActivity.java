@@ -28,7 +28,6 @@ import com.treinamento.mdomingos.startapp.fragment.FeedFragmentStartup;
 import com.treinamento.mdomingos.startapp.fragment.NotifyFragmentStartup;
 import com.treinamento.mdomingos.startapp.fragment.PerfilFragmentStartup;
 
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainFragmentStartupActivity extends AppCompatActivity {
@@ -85,7 +84,6 @@ public class MainFragmentStartupActivity extends AppCompatActivity {
         tabsAdapter.addFragment(new PerfilFragmentStartup(), "");
 
         viewPager.setAdapter(tabsAdapter);
-//        viewPager.setPageTransformer(true, new AccordionTransformer());
         tabLayout.setupWithViewPager(viewPager);
 
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_home_ouline);

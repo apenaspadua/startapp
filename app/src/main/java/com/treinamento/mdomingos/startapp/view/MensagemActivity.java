@@ -24,15 +24,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.treinamento.mdomingos.startapp.R;
+import com.treinamento.mdomingos.startapp.adapter.MessageAdapter;
+import com.treinamento.mdomingos.startapp.model.Chat;
+import com.treinamento.mdomingos.startapp.model.Usuarios;
 import com.treinamento.mdomingos.startapp.service.APIService;
 import com.treinamento.mdomingos.startapp.service.notifications.Client;
 import com.treinamento.mdomingos.startapp.service.notifications.Data;
 import com.treinamento.mdomingos.startapp.service.notifications.MyResponse;
 import com.treinamento.mdomingos.startapp.service.notifications.Sender;
 import com.treinamento.mdomingos.startapp.service.notifications.Token;
-import com.treinamento.mdomingos.startapp.adapter.MessageAdapter;
-import com.treinamento.mdomingos.startapp.model.Chat;
-import com.treinamento.mdomingos.startapp.model.Usuarios;
 
 import java.util.ArrayList;
 import java.util.HashMap;

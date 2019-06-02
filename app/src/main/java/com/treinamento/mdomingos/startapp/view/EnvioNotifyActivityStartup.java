@@ -20,14 +20,16 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.treinamento.mdomingos.startapp.R;
+import com.treinamento.mdomingos.startapp.model.InvestidorResponse;
+import com.treinamento.mdomingos.startapp.model.Notificacao;
+import com.treinamento.mdomingos.startapp.model.Salvos;
+import com.treinamento.mdomingos.startapp.model.StartupResponse;
 import com.treinamento.mdomingos.startapp.service.APIService;
 import com.treinamento.mdomingos.startapp.service.notifications.Client;
 import com.treinamento.mdomingos.startapp.service.notifications.Data;
 import com.treinamento.mdomingos.startapp.service.notifications.MyResponse;
 import com.treinamento.mdomingos.startapp.service.notifications.Sender;
 import com.treinamento.mdomingos.startapp.service.notifications.Token;
-import com.treinamento.mdomingos.startapp.model.InvestidorResponse;
-import com.treinamento.mdomingos.startapp.model.Notificacao;
 
 import java.util.UUID;
 
@@ -45,7 +47,7 @@ public class EnvioNotifyActivityStartup extends AppCompatActivity {
     Intent intent;
     String userid;
     FirebaseUser user;
-    private String nomeInvestidor, fotoPerfil;
+    private String nomeInvestidor, fotoPerfil, nomeStartup, fotoStartup;
     private String idNotify;
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -55,7 +57,7 @@ public class EnvioNotifyActivityStartup extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_envio_notify);
+        setContentView(R.layout.activity_envio_notify_startup);
 
         apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
 
@@ -94,6 +96,9 @@ public class EnvioNotifyActivityStartup extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                StartupResponse startup = dataSnapshot.getValue(StartupResponse.class);
+                nomeStartup = startup.getDetalhe_startup().getNomeFantasia();
+                fotoStartup = startup.getFoto_perfil();
 
                 if (notify) {
                     sendNotifiaction(userid, nomeInvestidor, fotoPerfil);
@@ -135,11 +140,14 @@ public class EnvioNotifyActivityStartup extends AppCompatActivity {
                                             notificacao.setSenderId(user.getUid());
                                             notificacao.salvarNotificacao(userid, String.valueOf(idNotify), user.getUid());
 
-                                        progressBar.setVisibility(View.GONE);
-                                        text1.setText("Notificação enviada!");
-                                        text2.setVisibility(View.VISIBLE);
-                                        text3.setVisibility(View.VISIBLE);
-                                        voltarHome.setVisibility(View.VISIBLE);
+                                            Salvos salvos = new Salvos();
+                                            salvos.ListarSalvos(user.getUid(), idNotify, nomeStartup, fotoStartup);
+
+                                            progressBar.setVisibility(View.GONE);
+                                            text1.setText("Notificação enviada!");
+                                            text2.setVisibility(View.VISIBLE);
+                                            text3.setVisibility(View.VISIBLE);
+                                            voltarHome.setVisibility(View.VISIBLE);
                                     }
                                 }
 

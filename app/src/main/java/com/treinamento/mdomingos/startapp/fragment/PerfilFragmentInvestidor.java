@@ -1,6 +1,5 @@
 package com.treinamento.mdomingos.startapp.fragment;
 
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -16,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -31,10 +31,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.treinamento.mdomingos.startapp.R;
+import com.treinamento.mdomingos.startapp.model.InvestidorResponse;
+import com.treinamento.mdomingos.startapp.view.ConfigActivity;
 import com.treinamento.mdomingos.startapp.view.EditarPerfilInvestidorActivity;
 import com.treinamento.mdomingos.startapp.view.LoginActivity;
-import com.treinamento.mdomingos.startapp.view.ConfigActivity;
-import com.treinamento.mdomingos.startapp.model.InvestidorResponse;
+import com.treinamento.mdomingos.startapp.view.StartupsSalvasActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -49,6 +50,7 @@ public class PerfilFragmentInvestidor extends Fragment {
     private FirebaseUser user;
     private String imageURL;
     private ProgressBar progressBar;
+    private RelativeLayout verSalvos;
 
     @Override
     public void onStart() {
@@ -113,6 +115,14 @@ public class PerfilFragmentInvestidor extends Fragment {
         apresentacao = view.findViewById(R.id.text_apresentacao_perfil_investidor);
         progressDialog = new ProgressDialog(getActivity());
         progressBar = view.findViewById(R.id.progressBar_perfil_investidor);
+        verSalvos = view.findViewById(R.id.botao_ver_salvos_investidor_id);
+
+        verSalvos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), StartupsSalvasActivity.class));
+            }
+        });
 
 
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();

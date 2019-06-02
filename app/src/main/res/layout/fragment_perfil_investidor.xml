@@ -150,12 +150,12 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/botao_iniciar_conversas_investidor_id"
+                android:id="@+id/botao_ver_salvos_investidor_id"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginLeft="70dp"
+                android:layout_marginLeft="50dp"
                 android:layout_marginTop="30dp"
-                android:layout_marginRight="70dp"
+                android:layout_marginRight="50dp"
                 android:background="@drawable/button_ronded"
                 android:gravity="clip_vertical|center_horizontal"
                 android:orientation="horizontal">
@@ -167,7 +167,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginTop="14dp"
                     android:layout_marginBottom="14dp"
-                    android:text="VER STARTUPS SALVAS "
+                    android:text="VER STARTUPS DO SEU INTERESSE "
                     android:textColor="@color/colorWhite"
                     android:textSize="14sp"
                     android:textStyle="bold"
@@ -201,7 +201,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="3dp"
                     android:layout_marginBottom="0dp"
-                    android:text="SOBRE O INVESTIDOR" />
+                    android:text="SOBRE VOCÊ" />
 
             </LinearLayout>
 

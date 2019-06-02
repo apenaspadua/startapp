@@ -20,8 +20,8 @@ import com.treinamento.mdomingos.startapp.R;
 import com.treinamento.mdomingos.startapp.model.CEP;
 import com.treinamento.mdomingos.startapp.model.Investidor;
 import com.treinamento.mdomingos.startapp.model.Usuarios;
-import com.treinamento.mdomingos.startapp.utils.FirebaseConfig;
 import com.treinamento.mdomingos.startapp.service.HttpService;
+import com.treinamento.mdomingos.startapp.utils.FirebaseConfig;
 import com.treinamento.mdomingos.startapp.utils.MaskFormatter;
 import com.treinamento.mdomingos.startapp.utils.Validator;
 
@@ -238,8 +238,4 @@ public class CadastroInvestidorActivity extends AppCompatActivity {
         super.finish();
         android.os.Process.killProcess(android.os.Process.myPid());
     }
-
-
-
-
 }

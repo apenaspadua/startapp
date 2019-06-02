@@ -144,7 +144,6 @@ public class EnviaArquivosActivity extends AppCompatActivity {
                     Uri downloadUrl = urlTask.getResult();
                     final String downUrl = String.valueOf(downloadUrl);
                     UploadStorage uploadStorage = new UploadStorage(downUrl);
-                  //  databaseReference.child("Usuarios").child(firebaseUser.getUid()).child("detalhe_startup").child("video_publicado").setValue(uploadStorage);
 
                 }
             }
@@ -219,8 +218,6 @@ public class EnviaArquivosActivity extends AppCompatActivity {
                     while (!urlTask.isSuccessful());
                     Uri downloadUrl = urlTask.getResult();
                     final String downUrl = String.valueOf(downloadUrl);
-//                    UploadStorage uploadStorage = new UploadStorage(downUrl);
-//                    databaseReference.child("Publicacoes").child(firebaseUser.getUid()).child("foto_publicacao").setValue(uploadStorage);
 
                     Publicacao publicacao = new Publicacao();
                     publicacao.setFotoPublicacao(downUrl);
@@ -280,7 +277,6 @@ public class EnviaArquivosActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Uri uri) {
                 imageURL = uri.toString();
-//                Glide.with(EnviaArquivosActivity.this).load(imageURL).into(foto);
                 Picasso.with(EnviaArquivosActivity.this).load(imageURL).fit().centerCrop().into(foto);
                 progressBar.setVisibility(View.GONE);
             }

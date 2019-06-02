@@ -1,6 +1,5 @@
 package com.treinamento.mdomingos.startapp.model;
 
-
 import com.google.firebase.database.DatabaseReference;
 import com.treinamento.mdomingos.startapp.utils.FirebaseConfig;
 
