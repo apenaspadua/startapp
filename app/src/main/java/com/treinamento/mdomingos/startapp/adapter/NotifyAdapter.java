@@ -73,7 +73,7 @@ public class NotifyAdapter extends RecyclerView.ViewHolder {
 
                         } else {
                             Intent intent = new Intent(context, PerfilVisitadoInvestidorActivity.class);
-                            intent.putExtra("notificacao",  id);
+                            intent.putExtra("notificacaoInvestidor",  id);
                             context.startActivity(intent);
                         }
 
