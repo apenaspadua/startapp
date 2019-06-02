@@ -15,6 +15,7 @@ public class Usuarios {
     private String nome;
     private String foto_perfil;
     private String email;
+    private String password;
     private int perfil;
     private int detalhes_completo;
     private int bio_completa;
@@ -67,6 +68,13 @@ public class Usuarios {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public int getPerfil() {
         return perfil;

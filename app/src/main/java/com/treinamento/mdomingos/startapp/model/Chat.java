@@ -14,7 +14,6 @@ public class Chat {
         this.receiver = receiver;
         this.message = message;
         this.iseen = iseen;
-
     }
 
     public String getSender() {

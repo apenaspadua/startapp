@@ -5,10 +5,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -19,9 +16,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import com.treinamento.mdomingos.startapp.R;
-import com.treinamento.mdomingos.startapp.activity.investidor.PerfilVisitadoInvestidorActivity;
-import com.treinamento.mdomingos.startapp.activity.startup.PerfilVisitadoStartupActivity;
 import com.treinamento.mdomingos.startapp.model.Usuarios;
+import com.treinamento.mdomingos.startapp.view.PerfilVisitadoInvestidorActivity;
+import com.treinamento.mdomingos.startapp.view.PerfilVisitadoStartupActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -50,7 +47,6 @@ public class NotifyAdapter extends RecyclerView.ViewHolder {
         TextView descri = mView.findViewById(R.id.nome_startup_notify_id);
         CircleImageView imageProfile = mView.findViewById(R.id.imageview_notify_startup_id);
 
-
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
 
@@ -58,7 +54,6 @@ public class NotifyAdapter extends RecyclerView.ViewHolder {
 
         Picasso.with(context).load(fotoPerfil).into(imageProfile);
         descri.setText(descricao);
-
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,12 +67,12 @@ public class NotifyAdapter extends RecyclerView.ViewHolder {
 
                         if(usuarios.getPerfil() == 1){
 
-                            Intent intent = new Intent(context, PerfilVisitadoInvestidorActivity.class);
-                            intent.putExtra("notificacao",  id);
+                            Intent intent = new Intent(context, PerfilVisitadoStartupActivity.class);
+                            intent.putExtra("publicacoes",  id);
                             context.startActivity(intent);
 
                         } else {
-                            Intent intent = new Intent(context, PerfilVisitadoStartupActivity.class);
+                            Intent intent = new Intent(context, PerfilVisitadoInvestidorActivity.class);
                             intent.putExtra("notificacao",  id);
                             context.startActivity(intent);
                         }
@@ -90,12 +85,8 @@ public class NotifyAdapter extends RecyclerView.ViewHolder {
                     }
                 });
 
-
             }
         });
 
-
     }
-
-
 }

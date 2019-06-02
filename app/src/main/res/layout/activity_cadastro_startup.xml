@@ -13,7 +13,7 @@
         android:id="@+id/scrollView_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".activity.login.CadastroLoginActivity">
+        tools:context=".view.CadastroLoginActivity">
 
 
         <LinearLayout
@@ -205,18 +205,18 @@
 
             </RelativeLayout>
 
-
             <TextView
                 android:paddingTop="15dp"
                 android:paddingBottom="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
+                android:gravity="center"
                 android:text="Aplicativo realizado pelos alunos de Sistemas / Projeto Aplicado - FHO 2019 / Aplicativo para estudo disponibizado em versão teste."
                 android:textColor="@color/colorCinza"
                 android:textSize="12sp"
                 app:fontFamily="@font/lato_regular"
-                android:layout_marginLeft="20dp" />
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"/>
 
         </LinearLayout>
 

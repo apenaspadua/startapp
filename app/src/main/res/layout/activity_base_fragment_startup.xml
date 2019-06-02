@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.home.BaseFragmentStartup">
+    tools:context=".view.MainFragmentStartupActivity">
 
     <include
         android:id="@+id/toolbar_startup"
@@ -61,6 +61,7 @@
         app:layout_constraintBottom_toTopOf="@+id/vp_pagina_startup_id"
         app:layout_constraintStart_toEndOf="@+id/imageview_home_startup_id"
         app:layout_constraintTop_toTopOf="@+id/toolbar_startup" />
+
 
     <ImageView
         android:id="@+id/imageview_chat_startup_id"

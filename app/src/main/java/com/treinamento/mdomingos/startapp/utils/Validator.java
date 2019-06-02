@@ -1,6 +1,5 @@
 package com.treinamento.mdomingos.startapp.utils;
 
-
 import java.util.InputMismatchException;
 
 public class Validator {
@@ -27,8 +26,6 @@ public class Validator {
         else
             return true;
     }
-
-
 
         public static boolean isCPF(String CPF) {
 
@@ -83,11 +80,6 @@ public class Validator {
                 return(false);
             }
         }
-
-
-
-
-
 
         public static boolean isCNPJ(String CNPJ) {
             if (CNPJ.equals("00000000000000") || CNPJ.equals("11111111111111") ||

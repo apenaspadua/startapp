@@ -1,6 +1,5 @@
 package com.treinamento.mdomingos.startapp.model;
 
-
 import com.google.firebase.database.DatabaseReference;
 import com.treinamento.mdomingos.startapp.utils.FirebaseConfig;
 
@@ -27,8 +26,8 @@ public class Startup {
     private String biografia;
     private String apresentacao;
     private String link;
-    private String imagemPerfil;
-
+    private String foto_perfil;
+    private int isImpulse;
 
     public Startup(){
 
@@ -72,6 +71,10 @@ public class Startup {
 //        databaseReference.child("Usuarios").child(id).child("detalhe_startup").child("foto_perfil").setValue(imagemPerfil);
 //    }
 
+    public void isImpulse(String id, int value){
+        DatabaseReference databaseReference = FirebaseConfig.getFirebase();
+        databaseReference.child("Usuarios").child(id).child("detalhe_startup").child("isImpulse").setValue(value);
+    }
 
     public void salvarMetaProgesso(String id){
         DatabaseReference databaseReference = FirebaseConfig.getFirebase();
@@ -199,11 +202,20 @@ public class Startup {
         this.link = link;
     }
 
-    public String getImagemPerfil() {
-        return imagemPerfil;
+    public String getFoto_perfil() {
+        return foto_perfil;
     }
 
-    public void setImagemPerfil(String imagemPerfil) {
-        this.imagemPerfil = imagemPerfil;
+    public void setFoto_perfil(String imagemPerfil) {
+        this.foto_perfil = foto_perfil;
+    }
+
+
+    public int getIsImpulse() {
+        return isImpulse;
+    }
+
+    public void setIsImpulse(int isImpulse) {
+        this.isImpulse = isImpulse;
     }
 }

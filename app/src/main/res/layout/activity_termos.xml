@@ -2,7 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".activity.login.LoginActivity">
+    tools:context=".view.LoginActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

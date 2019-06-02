@@ -2,7 +2,6 @@ package com.treinamento.mdomingos.startapp.model;
 
 import com.google.firebase.database.DatabaseReference;
 import com.treinamento.mdomingos.startapp.utils.FirebaseConfig;
-import com.treinamento.mdomingos.startapp.utils.UploadStorage;
 
 public class Publicacao {
 

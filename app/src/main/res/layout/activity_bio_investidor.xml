@@ -13,7 +13,7 @@
         android:id="@+id/scrollView_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".activity.login.CadastroLoginActivity">
+        tools:context=".view.CadastroLoginActivity">
 
 
         <LinearLayout
@@ -119,6 +119,18 @@
                 android:scrollbars="vertical"
                 android:inputType="textMultiLine"/>
 
+            <LinearLayout
+                style="@style/TextInputRegister"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    style="@style/SubTitleRegister"
+                    android:gravity="center"
+                    android:text="Muito bem, vamos avançar! ;)  "
+                    android:textSize="16dp"
+                    app:fontFamily="@font/lato_regular" />
+
+            </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/botao_bio_concluir_cadastro_login_id"
@@ -150,12 +162,13 @@
                 android:paddingBottom="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
+                android:gravity="center"
                 android:text="Aplicativo realizado pelos alunos de Sistemas / Projeto Aplicado - FHO 2019 / Aplicativo para estudo disponibizado em versão teste."
                 android:textColor="@color/colorCinza"
                 android:textSize="12sp"
                 app:fontFamily="@font/lato_regular"
-                android:layout_marginLeft="20dp" />
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"/>
 
 
 

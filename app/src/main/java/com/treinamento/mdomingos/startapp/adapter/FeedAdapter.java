@@ -14,8 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 import com.treinamento.mdomingos.startapp.R;
-import com.treinamento.mdomingos.startapp.activity.startup.PerfilVisitadoStartupActivity;
-import com.treinamento.mdomingos.startapp.model.Publicacao;
+import com.treinamento.mdomingos.startapp.view.PerfilVisitadoStartupActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 

@@ -9,7 +9,7 @@
         android:id="@+id/scrollView_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".activity.home.BaseFragmentStartup">
+        tools:context=".view.MainFragmentStartupActivity">
 
         <LinearLayout
             android:id="@+id/linearLayout_id"
@@ -150,12 +150,12 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/botao_iniciar_conversas_investidor_id"
+                android:id="@+id/botao_ver_salvos_investidor_id"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginLeft="70dp"
+                android:layout_marginLeft="50dp"
                 android:layout_marginTop="30dp"
-                android:layout_marginRight="70dp"
+                android:layout_marginRight="50dp"
                 android:background="@drawable/button_ronded"
                 android:gravity="clip_vertical|center_horizontal"
                 android:orientation="horizontal">
@@ -167,7 +167,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginTop="14dp"
                     android:layout_marginBottom="14dp"
-                    android:text="INICIAR CONVERSA "
+                    android:text="VER STARTUPS DO SEU INTERESSE "
                     android:textColor="@color/colorWhite"
                     android:textSize="14sp"
                     android:textStyle="bold"
@@ -201,7 +201,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="3dp"
                     android:layout_marginBottom="0dp"
-                    android:text="SOBRE O INVESTIDOR" />
+                    android:text="SOBRE VOCÊ" />
 
             </LinearLayout>
 
@@ -335,15 +335,17 @@
             </RelativeLayout>
 
             <TextView
-                style="@style/SubTitleCompany"
-                android:layout_marginTop="20sp"
+                android:paddingTop="15dp"
+                android:paddingBottom="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:gravity="center"
-                android:paddingBottom="10dp"
-                android:text="Aplicativo realizado pelos alunos de Sistemas
-                                                        Projeto Aplicado - FHO 2019"
-                android:textColor="@color/colorCinzaLight"
-                app:fontFamily="@font/lato_regular" />
-
+                android:text="Aplicativo realizado pelos alunos de Sistemas / Projeto Aplicado - FHO 2019 / Aplicativo para estudo disponibizado em versão teste."
+                android:textColor="@color/colorCinza"
+                android:textSize="12sp"
+                app:fontFamily="@font/lato_regular"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"/>
 
         </LinearLayout>
     </ScrollView>

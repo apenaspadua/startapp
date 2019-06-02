@@ -13,11 +13,12 @@
     <color name="Cadastrese">#3BC4F8</color>
     <color name="Twitter">#00ACED</color>
     <color name="Google">#DD4B39</color>
-    <color name="colorTransparenteDark">#286F6F6F</color>
+    <color name="colorTransparenteUltraDark">#806F6F6F</color>
+    <color name="colorTransparenteDark">#40DFDFDF</color>
     <color name="colorTranspatenteLight">#00CCCCCC</color>
     <color name="colorLink">#0289BE</color>
-    <color name="marine">#57BC90</color>
-    <color name="indigo">#32333C</color>
+    <color name="marine">#2FCE99</color>
+    <color name="indigo">#42CEA5</color>
 
 
 </resources>

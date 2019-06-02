@@ -13,7 +13,7 @@
     android:id="@+id/scrollView_id"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".activity.login.CadastroLoginActivity">
+    tools:context=".view.CadastroLoginActivity">
 
 
     <LinearLayout
@@ -55,89 +55,8 @@
                     android:paddingBottom="10dp"
                     android:textSize="18dp"
                     android:text="você pode "
+                    android:visibility="gone"
                     app:fontFamily="@font/lato_regular" />
-
-                <RelativeLayout
-                    android:id="@+id/botao__conecta_facebook_id"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_margin="6dp"
-                    android:background="@drawable/button_custom_twitter"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="25dp"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="22dp"
-                        android:layout_marginLeft="22dp"
-                        android:background="@drawable/ic_facebook_3x"
-                        android:scaleType="fitXY" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="85dp"
-                        android:layout_marginLeft="90dp"
-                        android:gravity="center_vertical"
-                        android:text="CONECTAR AO FACEBOOK"
-                        android:textAllCaps="false"
-                        android:textColor="#3B5998"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:fontFamily="@font/poppins_regular" />
-
-                    <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/ic_arrow_right" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/botao_conecta_twitter_id"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_margin="6dp"
-                    android:background="@drawable/button_custom_twitter"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="25dp"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="22dp"
-                        android:layout_marginLeft="22dp"
-                        android:background="@drawable/ic_twitter_3x"
-                        android:scaleType="fitXY" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="90dp"
-                        android:layout_marginLeft="85dp"
-                        android:gravity="center_vertical"
-                        android:text="CONECTAR AO TWITTER"
-                        android:textAllCaps="false"
-                        android:textColor="#00ACED"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:fontFamily="@font/poppins_regular" />
-
-                    <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/ic_arrow_right" />
-                </RelativeLayout>
 
             </LinearLayout>
 
@@ -152,6 +71,7 @@
                 android:gravity="center"
                 android:text=" ou se preferir"
                 android:textSize="18dp"
+                android:visibility="gone"
                 app:fontFamily="@font/lato_regular" />
         </LinearLayout>
 
@@ -235,9 +155,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:layout_marginStart="100dp"
-                android:layout_marginLeft="85dp"
-                android:gravity="center_vertical"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginEnd="100dp"
+                android:layout_marginRight="100dp"
+                android:gravity="center"
                 android:text="SOU INVESTIDOR"
                 android:textAllCaps="false"
                 android:textColor="#3B5998"
@@ -270,8 +198,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:layout_marginStart="100dp"
-                android:layout_marginLeft="85dp"
+                android:layout_marginLeft="100dp"
+                android:layout_marginEnd="100dp"
+                android:layout_marginRight="100dp"
                 android:gravity="center_vertical"
                 android:text="SOU UMA STARTUP"
                 android:textAllCaps="false"

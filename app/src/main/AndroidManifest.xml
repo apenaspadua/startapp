@@ -14,29 +14,34 @@
         android:roundIcon="@mipmap/ic_logo_app"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.others.SejaUmInvestidorActivity"></activity>
-        <activity android:name=".activity.others.EnvioNotifyActivity" />
-        <activity android:name=".activity.chat.MensagemActivity" />
-        <activity android:name=".activity.chat.UsersChatActivity" />
-        <activity android:name=".activity.chat.ChatActivity" />
-        <activity android:name=".activity.investidor.PerfilVisitadoInvestidorActivity" />
-        <activity android:name=".activity.startup.PerfilVisitadoStartupActivity" />
-        <activity android:name=".activity.startup.EnviaArquivosActivity" />
-        <activity android:name=".activity.startup.EditarPerfilStartupActivity" />
-        <activity android:name=".activity.startup.BioStartupActivity" />
-        <activity android:name=".activity.login.CadastroLoginActivity" />
-        <activity android:name=".activity.home.BaseFragmentStartup" />
-        <activity android:name=".activity.investidor.EditarPerfilInvestidorActivity" />
-        <activity android:name=".activity.startup.CadastroStartupActivity" />
-        <activity android:name=".activity.investidor.CadastroInvestidorActivity" />
-        <activity android:name=".activity.inicial.InicialActivity" />
-        <activity android:name=".activity.home.BaseFragmentInvestidor" />
-        <activity android:name=".activity.others.EnviandoEmailActivity" />
-        <activity android:name=".activity.others.SlidesPosCadastroActivity" />
-        <activity android:name=".activity.login.LoginActivity" />
-        <activity android:name=".activity.others.TermosActivity" />
-        <activity android:name=".activity.investidor.BioInvestidorActivity" />
-        <activity android:name=".activity.others.SplashScrean">
+        <activity android:name=".view.EnvioNotifyInvestidorActivity"></activity>
+        <activity android:name=".view.SemConexaoActivity" />
+        <activity android:name=".view.ConfigActivity" />
+        <activity android:name=".view.StartupsSalvasActivity" />
+        <activity android:name=".view.SlideActivity" />
+        <activity android:name=".view.SejaUmInvestidorActivity" />
+        <activity android:name=".view.EnvioNotifyActivityStartup" />
+        <activity android:name=".view.MensagemActivity" />
+        <activity android:name=".view.UsersChatActivity" />
+        <activity android:name=".view.ChatActivity" />
+        <activity android:name=".view.PerfilVisitadoInvestidorActivity" />
+        <activity android:name=".view.PerfilVisitadoStartupActivity" />
+        <activity android:name=".view.EnviaArquivosActivity" />
+        <activity android:name=".view.EditarPerfilStartupActivity" />
+        <activity android:name=".view.BioStartupActivity" />
+        <activity android:name=".view.CadastroLoginActivity" />
+        <activity android:name=".view.MainFragmentStartupActivity" />
+        <activity android:name=".view.EditarPerfilInvestidorActivity" />
+        <activity android:name=".view.CadastroStartupActivity" />
+        <activity android:name=".view.CadastroInvestidorActivity" />
+        <activity android:name=".view.InicialActivity" />
+        <activity android:name=".view.MainFragmentInvestidorActivity" />
+        <activity android:name=".view.EnviandoEmailActivity" />
+        <activity android:name=".view.SlidesPosCadastroActivity" />
+        <activity android:name=".view.LoginActivity" />
+        <activity android:name=".view.TermosActivity" />
+        <activity android:name=".view.BioInvestidorActivity" />
+        <activity android:name=".view.SplashScreanActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -45,7 +50,7 @@
         </activity>
 
         <service
-            android:name=".activity.chat.notifications.MyFirebaseIdService"
+            android:name=".service.notifications.MyFirebaseIdService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -53,7 +58,7 @@
             </intent-filter>
         </service>
         <service
-            android:name=".activity.chat.notifications.MyFirebaseMessage"
+            android:name=".service.notifications.MyFirebaseMessage"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
